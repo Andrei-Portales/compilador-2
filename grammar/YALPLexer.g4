@@ -1,10 +1,13 @@
 lexer grammar YALPLexer;
 
 
+
 // ----- Tokens -----
 INTEGER: [0-9]+;
 STRING: '"' .*? '"';
 ANY: '_';
+
+
 
 // ----- Reserved words -----
 CLASS: 'class';
@@ -22,40 +25,36 @@ TRUE: 'true';
 FALSE: 'false';
 
 IN: 'in';
-NOT: 'not';
 
 INHERITS: 'inherits';
-ISVOID: 'isvoid';
 LET: 'let';
 NEW: 'new';
+
+
+
+// ----- OPERATORS -----
+DOT: '.';
 SIGN: '@';
-
-
-
-// ----- Identifiers type tokens -----
-TYPE_ID: 'SELF_TYPE' | [A-Z]([A-Za-z] | [0-9] | '_')*;
-OBJECT_ID: 'self' | [a-z]([A-Za-z] | [0-9] | '_')*;
-
-
-
-// ----- Operators -----
-PLUS: '+';
-MINUS: '-';
+NEGATE: '~';
+ISVOID: 'isvoid';
 TIMES: '*';
 DIVIDE: '/';
+PLUS: '+';
+MINUS: '-';
 MOD: '%';
-
-LESS_THAN: '<';
 LESS_EQUAL: '<=';
+LESS_THAN: '<';
 EQUAL: '=';
+NOT: 'not';
+ASSIGN: '<-';
 AND: '&&';
 OR: '||';
-NEGATE: '~';
 
-ASSIGN: '<-';
+
+
+// ----- Punctuation -----
 COLON: ':';
 SEMICOLON: ';';
-DOT: '.';
 COMMA: ',';
 
 LPAREN: '(';
@@ -64,6 +63,12 @@ LBRACE: '{';
 RBRACE: '}';
 LBRAKE: '[';
 RBRAKE: ']';
+
+
+
+// ----- Identifiers type tokens -----
+TYPE_ID: 'SELF_TYPE' | [A-Z]([A-Za-z] | [0-9] | '_')*;
+OBJECT_ID: 'self' | [a-z]([A-Za-z] | [0-9] | '_')*;
 
 
 
