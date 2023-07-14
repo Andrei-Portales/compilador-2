@@ -14,9 +14,7 @@ def get_tree(grammar, lexgrammar, input_text, start):
     })
     
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    
     response = requests.post(url, data=json_string, headers=headers)
-    
     return response.json()
 
 def read_file(path):
