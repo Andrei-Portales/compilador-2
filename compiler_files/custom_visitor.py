@@ -18,6 +18,7 @@ class CustomVisitor(YALPParserVisitor):
         self.scope_context[-1].add(name, type_scope)
 
     def add_scope(self) -> None:
+        print('added scope')
         self.scope_context.append(SymbolTable())
 
     def remove_scope(self) -> None:
@@ -27,7 +28,7 @@ class CustomVisitor(YALPParserVisitor):
         return search_scope(type_name, self.scope_context)
 
     def check_type_exists(self, type_name) -> bool:
-        return  search_scope(type_name, self.scope_context) is not None
+        return search_scope(type_name, self.scope_context) is not None
 
     # Visit a parse tree produced by YALPParser#class.
     def visitClass(self, ctx: YALPParser.ClassContext) -> CompilerType:
@@ -64,7 +65,7 @@ class CustomVisitor(YALPParserVisitor):
     def visitMethodFeature(self, ctx: YALPParser.MethodFeatureContext):
         type_id = str(ctx.TYPE_ID())
         expr = ctx.expr()
-        
+
         # TODO: init_context
         self.add_scope()
 
@@ -153,7 +154,7 @@ class CustomVisitor(YALPParserVisitor):
             column = ctx.start.column
 
             self.errors.append(SemanticError(
-                f'Variable {object_id} don\'t exists in scope',
+                f'Variable \'{object_id}\' don\'t exists',
                 line,
                 column
             ))
