@@ -6,6 +6,7 @@ from antlr4 import FileStream, CommonTokenStream
 from gramar_generated.YALPLexer import YALPLexer
 from gramar_generated.YALPParser import YALPParser
 from util.generate_tree import generate_parse_tree
+from compiler_files.custom_visitor import CustomVisitor
 
 def main():
     parser = argparse.ArgumentParser(description="Procesa archivos.")
@@ -28,7 +29,13 @@ def main():
     if parser.getNumberOfSyntaxErrors() > 0:
         return print('\n\nTiene errores de sintaxis.\n\n')
 
-    generate_parse_tree(input_text_path, 'program')
+    # generate_parse_tree(input_text_path, 'program')
+    
+    visitor = CustomVisitor()
+    visitor.visit(tree)
+    
+    for error in visitor.errors:
+        print(error)
     
 
 if __name__ == '__main__':

@@ -6,4 +6,4 @@ from util.constants import *
 
 output_path = 'gramar_generated'
 
-subprocess.run(["java", "-jar", antlr_path, "-Dlanguage=Python3", '-o', output_path, lexer_path, parser_path])
+subprocess.run(["java", "-jar", antlr_path, "-Dlanguage=Python3", '-visitor','-o', output_path, lexer_path, parser_path])
