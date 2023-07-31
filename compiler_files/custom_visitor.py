@@ -24,10 +24,10 @@ class CustomVisitor(YALPParserVisitor):
         self.scope_context.pop()
 
     def get_type(self, type_name) -> CompilerType:
-        return self.scope_context[-1].consult(type_name)
+        return search_scope(type_name, self.scope_context)
 
     def check_type_exists(self, type_name) -> bool:
-        return self.scope_context[-1].consult(type_name) is not None
+        return  search_scope(type_name, self.scope_context) is not None
 
     # Visit a parse tree produced by YALPParser#class.
     def visitClass(self, ctx: YALPParser.ClassContext) -> CompilerType:
@@ -62,19 +62,18 @@ class CustomVisitor(YALPParserVisitor):
         return CompilerType(PrimitiveType.CUSTOM_TYPE, class_type)
 
     def visitMethodFeature(self, ctx: YALPParser.MethodFeatureContext):
-        pass
-        # type_id = str(ctx.TYPE_ID())
-        # expr = ctx.expr()
+        type_id = str(ctx.TYPE_ID())
+        expr = ctx.expr()
         
-        # # TODO: init_context
-        # self.add_scope()
+        # TODO: init_context
+        self.add_scope()
 
-        # # TODO: visit
-        # self.visit(expr)
+        # TODO: visit
+        self.visit(expr)
 
-        # # TODO: finish_context
-        # self.remove_scope()
-        # return CompilerType(PrimitiveType.CUSTOM_TYPE, type_id)
+        # TODO: finish_context
+        self.remove_scope()
+        return CompilerType(PrimitiveType.CUSTOM_TYPE, type_id)
 
     def visitVariableFeature(self, ctx: YALPParser.VariableFeatureContext) -> CompilerType:
         object_id = str(ctx.OBJECT_ID())
@@ -163,7 +162,7 @@ class CustomVisitor(YALPParserVisitor):
         child_type: CompilerType = self.visit(expr)
         var_type = self.get_type(object_id)
 
-        if not child_type.compare(var_type):
+        if var_type is not None and not child_type.compare(var_type):
             line = expr.start.line
             column = expr.start.column
 
