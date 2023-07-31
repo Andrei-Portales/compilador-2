@@ -3,12 +3,12 @@ class Main inherits IO {
    number: Integer <- 0;
    
    main(): SELF_TYPE {{
-      bool <- not true;
+      bool <- false;
       bool <- not false;
       bool <- false;
-      asdasd <- false;
 
-      number <- 10 + 20;
+      number <- 10 + false;
+      number <- 10 / "asdasd";
 
    }};
 };

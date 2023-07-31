@@ -2,9 +2,9 @@ from enum import Enum
 
 class PrimitiveType(Enum):
     INTEGER = 1
-    STRING = 3
-    BOOLEAN = 4
-    CUSTOM_TYPE = 7
+    STRING = 2
+    BOOLEAN = 3
+    CUSTOM_TYPE = 4
     
     
 class CompilerType:

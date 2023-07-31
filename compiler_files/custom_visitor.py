@@ -10,15 +10,10 @@ class CustomVisitor(YALPParserVisitor):
         self.scope_context: list[SymbolTable] = []
         self.errors = []
 
-    # # Visit a parse tree produced by YALPParser#program.
-    # def visitProgram(self, ctx:YALPParser.ProgramContext):
-    #     return self.visitChildren(ctx)
-
     def add_to_last_scope(self, name: str, type_scope: CompilerType) -> None:
         self.scope_context[-1].add(name, type_scope)
 
     def add_scope(self) -> None:
-        print('added scope')
         self.scope_context.append(SymbolTable())
 
     def remove_scope(self) -> None:
