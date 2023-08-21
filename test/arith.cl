@@ -1,21 +1,21 @@
 class A {
 
-   var : Int <- 0;
-   value() : Int { var };
+   var : Integer <- 0;
+   value() : Integer { var };
 
-   set_var(num : Int) : SELF_TYPE {
+   set_var(num : Integer) : SELF_TYPE {
       {
          var <- num;
          self;
       }
    };
 
-   method1(num : Int) : SELF_TYPE {  -- same
+   method1(num : Integer) : SELF_TYPE {  -- same
       self
    };
 
-   method2(num1 : Int, num2 : Int) : B {  -- plus
-      (let x : Int in
+   method2(num1 : Integer, num2 : Integer) : B {  -- plus
+      (let x : Integer in
 	 {
             x <- num1 + num2;
 	    (new B).set_var(x);
@@ -23,8 +23,8 @@ class A {
       )
    };
 
-   method3(num : Int) : C {  -- negate
-      (let x : Int in
+   method3(num : Integer) : C {  -- negate
+      (let x : Integer in
 	 {
             x <- ~num;
 	    (new C).set_var(x);
@@ -32,16 +32,16 @@ class A {
       )
    };
 
-   method4(num1 : Int, num2 : Int) : D {  -- diff
+   method4(num1 : Integer, num2 : Integer) : D {  -- diff
             if num2 < num1 then
-               (let x : Int in
+               (let x : Integer in
 		  {
                      x <- num1 - num2;
 	             (new D).set_var(x);
 	          }
                )
             else
-               (let x : Int in
+               (let x : Integer in
 		  {
 	             x <- num2 - num1;
 	             (new D).set_var(x);
@@ -50,10 +50,10 @@ class A {
             fi
    };
 
-   method5(num : Int) : E {  -- factorial
-      (let x : Int <- 1 in
+   method5(num : Integer) : E {  -- factorial
+      (let x : Integer <- 1 in
 	 {
-	    (let y : Int <- 1 in
+	    (let y : Integer <- 1 in
 	       while y <= num loop
 	          {
                      x <- x * y;
@@ -70,8 +70,8 @@ class A {
 
 class B inherits A {  -- B is a number squared
 
-   method5(num : Int) : E { -- square
-      (let x : Int in
+   method5(num : Integer) : E { -- square
+      (let x : Integer in
 	 {
             x <- num * num;
 	    (new E).set_var(x);
@@ -83,8 +83,8 @@ class B inherits A {  -- B is a number squared
 
 class C inherits B {
 
-   method6(num : Int) : A { -- negate
-      (let x : Int in
+   method6(num : Integer) : A { -- negate
+      (let x : Integer in
          {
             x <- ~num;
 	    (new A).set_var(x);
@@ -92,8 +92,8 @@ class C inherits B {
       )
    };
 
-   method5(num : Int) : E {  -- cube
-      (let x : Int in
+   method5(num : Integer) : E {  -- cube
+      (let x : Integer in
 	 {
             x <- num * num * num;
 	    (new E).set_var(x);
@@ -105,8 +105,8 @@ class C inherits B {
 
 class D inherits B {  
 		
-   method7(num : Int) : Bool {  -- divisible by 3
-      (let x : Int <- num in
+   method7(num : Integer) : Bool {  -- divisible by 3
+      (let x : Integer <- num in
             if x < 0 then method7(~x) else
             if 0 = x then true else
             if 1 = x then false else
@@ -120,8 +120,8 @@ class D inherits B {
 
 class E inherits D {
 
-   method6(num : Int) : A {  -- division
-      (let x : Int in
+   method6(num : Integer) : A {  -- division
+      (let x : Integer in
          {
             x <- num / 8;
 	    (new A).set_var(x);
@@ -141,8 +141,8 @@ class Main inherits IO {
 
 
 
-   is_even(num : Int) : Bool {
-      (let x : Int <- num in
+   is_even(num : Integer) : Bool {
+      (let x : Integer <- num in
             if x < 0 then is_even(~x) else
             if 0 = x then true else
 	    if 1 = x then false else

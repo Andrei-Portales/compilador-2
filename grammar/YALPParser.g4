@@ -17,7 +17,7 @@ feature:
 ;
 
 formal:
-    OBJECT_ID COLON TYPE_ID
+    OBJECT_ID COLON TYPE_ID # MethodParam
 ;
 
 expr:
@@ -40,9 +40,9 @@ expr:
   | NEW TYPE_ID # NewExpr
   | ISVOID expr # IsvoidExpr
   | expr MOD expr # ModExpr
+  | expr EQUAL expr # EqualExpr
   | expr LESS_THAN expr # LessThanExpr
   | expr LESS_EQUAL expr # LessEqualExpr
-  | expr EQUAL expr # EqualExpr
   | NOT expr # NotExpr
   | NEGATE expr # NegateExpr 
   | LPAREN expr RPAREN # ParenExpr

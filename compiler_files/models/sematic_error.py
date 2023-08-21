@@ -13,7 +13,7 @@ class SemanticError:
         
         if self.type_scope:
             type_error = self.type_scope
-        
+                                
         return f'{type_error} Error: {self.message} at line {self.line}, column {self.column}'
         
         

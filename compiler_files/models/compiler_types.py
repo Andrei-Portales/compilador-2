@@ -5,6 +5,7 @@ class PrimitiveType(Enum):
     STRING = 2
     BOOLEAN = 3
     CUSTOM_TYPE = 4
+    VOID = 5
     
     
 class CompilerType:
@@ -20,20 +21,19 @@ class CompilerType:
         elif type_scope == PrimitiveType.STRING:
             self.custom_type_name = 'String'
         elif type_scope == PrimitiveType.BOOLEAN:
-            self.custom_type_name = 'Boolean'       
+            self.custom_type_name = 'Boolean'     
+        elif type_scope == PrimitiveType.VOID:
+            self.custom_type_name = 'void'  
         else:
             self.custom_type_name = custom_type_name
             
     def compare(self, other: 'CompilerType') -> bool:
         if self.type_scope != other.type_scope:
             return False
+                
+        return self.custom_type_name == other.custom_type_name
         
-        if self.type_scope == PrimitiveType.CUSTOM_TYPE:
-            return self.custom_type_name == other.custom_type_name
-        else:
-            return True
-        
-    def check_type(self, primitive_type: PrimitiveType, custom_type: str | None = None) -> bool:
+    def check_type(self, primitive_type: 'CompilerType', custom_type: str | None = None) -> bool:
 
         if primitive_type == PrimitiveType.INTEGER:
             custom_type = 'Integer'
@@ -41,7 +41,9 @@ class CompilerType:
             custom_type = 'String'
         elif primitive_type == PrimitiveType.BOOLEAN:
             custom_type = 'Boolean' 
-
+        elif primitive_type == PrimitiveType.VOID:
+            custom_type = 'void'
+            
         return self.custom_type_name == custom_type
         
         

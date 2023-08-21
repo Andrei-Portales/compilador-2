@@ -44,12 +44,12 @@ class YALPParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by YALPParser#formal.
-    def enterFormal(self, ctx:YALPParser.FormalContext):
+    # Enter a parse tree produced by YALPParser#MethodParam.
+    def enterMethodParam(self, ctx:YALPParser.MethodParamContext):
         pass
 
-    # Exit a parse tree produced by YALPParser#formal.
-    def exitFormal(self, ctx:YALPParser.FormalContext):
+    # Exit a parse tree produced by YALPParser#MethodParam.
+    def exitMethodParam(self, ctx:YALPParser.MethodParamContext):
         pass
 
 

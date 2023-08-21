@@ -70,8 +70,8 @@ def serializedATN():
         0,156,157,5,25,0,0,157,196,3,8,4,26,158,159,10,24,0,0,159,160,5,
         22,0,0,160,196,3,8,4,25,161,162,10,23,0,0,162,163,5,23,0,0,163,196,
         3,8,4,24,164,165,10,9,0,0,165,166,5,26,0,0,166,196,3,8,4,10,167,
-        168,10,8,0,0,168,169,5,28,0,0,169,196,3,8,4,9,170,171,10,7,0,0,171,
-        172,5,27,0,0,172,196,3,8,4,8,173,174,10,6,0,0,174,175,5,29,0,0,175,
+        168,10,8,0,0,168,169,5,29,0,0,169,196,3,8,4,9,170,171,10,7,0,0,171,
+        172,5,28,0,0,172,196,3,8,4,8,173,174,10,6,0,0,174,175,5,27,0,0,175,
         196,3,8,4,7,176,179,10,17,0,0,177,178,5,19,0,0,178,180,5,43,0,0,
         179,177,1,0,0,0,179,180,1,0,0,0,180,181,1,0,0,0,181,182,5,18,0,0,
         182,183,5,44,0,0,183,192,5,37,0,0,184,189,3,8,4,0,185,186,5,36,0,
@@ -547,32 +547,42 @@ class YALPParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def OBJECT_ID(self):
-            return self.getToken(YALPParser.OBJECT_ID, 0)
-
-        def COLON(self):
-            return self.getToken(YALPParser.COLON, 0)
-
-        def TYPE_ID(self):
-            return self.getToken(YALPParser.TYPE_ID, 0)
 
         def getRuleIndex(self):
             return YALPParser.RULE_formal
 
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class MethodParamContext(FormalContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a YALPParser.FormalContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def OBJECT_ID(self):
+            return self.getToken(YALPParser.OBJECT_ID, 0)
+        def COLON(self):
+            return self.getToken(YALPParser.COLON, 0)
+        def TYPE_ID(self):
+            return self.getToken(YALPParser.TYPE_ID, 0)
+
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFormal" ):
-                listener.enterFormal(self)
+            if hasattr( listener, "enterMethodParam" ):
+                listener.enterMethodParam(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFormal" ):
-                listener.exitFormal(self)
+            if hasattr( listener, "exitMethodParam" ):
+                listener.exitMethodParam(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFormal" ):
-                return visitor.visitFormal(self)
+            if hasattr( visitor, "visitMethodParam" ):
+                return visitor.visitMethodParam(self)
             else:
                 return visitor.visitChildren(self)
-
 
 
 
@@ -581,6 +591,7 @@ class YALPParser ( Parser ):
         localctx = YALPParser.FormalContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_formal)
         try:
+            localctx = YALPParser.MethodParamContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
             self.state = 64
             self.match(YALPParser.OBJECT_ID)
@@ -1762,40 +1773,40 @@ class YALPParser ( Parser ):
                         pass
 
                     elif la_ == 6:
-                        localctx = YALPParser.LessThanExprContext(self, YALPParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = YALPParser.EqualExprContext(self, YALPParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 167
                         if not self.precpred(self._ctx, 8):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 8)")
                         self.state = 168
-                        self.match(YALPParser.LESS_THAN)
+                        self.match(YALPParser.EQUAL)
                         self.state = 169
                         self.expr(9)
                         pass
 
                     elif la_ == 7:
-                        localctx = YALPParser.LessEqualExprContext(self, YALPParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = YALPParser.LessThanExprContext(self, YALPParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 170
                         if not self.precpred(self._ctx, 7):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
                         self.state = 171
-                        self.match(YALPParser.LESS_EQUAL)
+                        self.match(YALPParser.LESS_THAN)
                         self.state = 172
                         self.expr(8)
                         pass
 
                     elif la_ == 8:
-                        localctx = YALPParser.EqualExprContext(self, YALPParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = YALPParser.LessEqualExprContext(self, YALPParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 173
                         if not self.precpred(self._ctx, 6):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 6)")
                         self.state = 174
-                        self.match(YALPParser.EQUAL)
+                        self.match(YALPParser.LESS_EQUAL)
                         self.state = 175
                         self.expr(7)
                         pass

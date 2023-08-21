@@ -34,9 +34,6 @@ def main():
     visitor = CustomVisitor()
     visitor.visit(tree)
     
-    for error in visitor.errors:
-        print(error)
-    
 
 if __name__ == '__main__':
     main()

@@ -29,8 +29,8 @@ class YALPParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by YALPParser#formal.
-    def visitFormal(self, ctx:YALPParser.FormalContext):
+    # Visit a parse tree produced by YALPParser#MethodParam.
+    def visitMethodParam(self, ctx:YALPParser.MethodParamContext):
         return self.visitChildren(ctx)
 
 

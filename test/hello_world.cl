@@ -7,8 +7,7 @@ class Main inherits IO {
       bool <- not false;
       bool <- false;
 
-      number <- 10 + false;
-      number <- 10 / "asdasd";
+      
 
    }};
 };
