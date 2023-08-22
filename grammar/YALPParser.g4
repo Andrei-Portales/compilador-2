@@ -36,7 +36,7 @@ expr:
   | IF expr THEN expr ELSE expr FI # IfExpr
   | WHILE expr LOOP expr POOL # WhileExpr
   | LBRACE (expr SEMICOLON)+ RBRACE # BlockExpr
-  | LET OBJECT_ID COLON TYPE_ID (ASSIGN expr)? (COMMA OBJECT_ID COLON TYPE_ID (ASSIGN expr)?)* IN expr # LetExpr
+  | LET feature (COMMA feature)* IN expr # LetExpr
   | NEW TYPE_ID # NewExpr
   | ISVOID expr # IsvoidExpr
   | expr MOD expr # ModExpr

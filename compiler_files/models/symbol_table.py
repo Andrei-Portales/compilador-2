@@ -4,14 +4,50 @@ from .compiler_types import CompilerType, PrimitiveType
 class SymbolTableValue:
     def __init__(self,
                  type: CompilerType = None,
-                 name: str = None
+                 name: str = None,
+                 var_value_type: CompilerType = None,
                  ) -> None:
 
         self.type: CompilerType = type
         self.name: str = name
+        self.var_value_type: CompilerType = var_value_type
+
+        if self.var_value_type is None and self.type is not None:
+            if self.type.compare(CompilerType(PrimitiveType.INTEGER)):
+                self.var_value_type = CompilerType(PrimitiveType.INTEGER)
+            elif self.type.compare(CompilerType(PrimitiveType.STRING)):
+                self.var_value_type = CompilerType(PrimitiveType.STRING)
+            elif self.type.compare(CompilerType(PrimitiveType.BOOLEAN)):
+                self.var_value_type = CompilerType(PrimitiveType.BOOLEAN)
+            else:
+                self.var_value_type = CompilerType(
+                    PrimitiveType.CUSTOM_TYPE, 'void')
 
     def to_string(self) -> str:
         return f'value {self.type} {self.name}'
+
+    def __str__(self) -> str:
+        return self.to_string()
+
+    def __repr__(self) -> str:
+        return self.to_string()
+
+
+class SymbolTableLet(SymbolTableValue):
+    def __init__(self,
+                 type: CompilerType = None,
+                 name: str = None,
+                 variables: dict[str, SymbolTableValue] = None,
+                 ) -> None:
+
+        super().__init__(type, name)
+        self.variables = variables or {}
+
+    def add_variable(self, name: str, variable: SymbolTableValue) -> None:
+        self.variables[name] = variable
+
+    def to_string(self) -> str:
+        return f'Let {self.name} {{\n\t{self.variables}\n}}'
 
     def __str__(self) -> str:
         return self.to_string()
@@ -72,7 +108,10 @@ class SymbolTableClass(SymbolTableValue):
 
         super().__init__(type, name)
         self.inherit: 'SymbolTableClass' = inherit
-        self.attrs: dict[str, SymbolTableValue] = attrs
+        self.attrs: dict[str, SymbolTableValue] = {
+            **attrs,
+            'self': SymbolTableValue(type, 'self', type),
+        }
         self.methods: dict[str, SymbolTableMethod] = methods
 
     def add_attr(self, name: str, attr: CompilerType) -> None:
@@ -100,12 +139,18 @@ class SymbolTableClass(SymbolTableValue):
 boolean_type = SymbolTableClass(
     CompilerType(PrimitiveType.BOOLEAN),
     'Boolean',
+    None,
+    {},
+    {},
 )
 
 # Integer
 integer_type = SymbolTableClass(
     CompilerType(PrimitiveType.INTEGER),
     'Integer',
+    None,
+    {},
+    {},
 )
 
 # String
@@ -140,6 +185,8 @@ string_type = SymbolTableClass(
 object_type = SymbolTableClass(
     CompilerType(PrimitiveType.CUSTOM_TYPE, 'Object'),
     'Object',
+    None,
+    {},
     {
         'abort': SymbolTableMethod(
             CompilerType(PrimitiveType.CUSTOM_TYPE, 'Object'),
@@ -191,12 +238,12 @@ PRIMITIVE_TYPES = {
 
 
 class SymbolTable:
-    def __init__(self, context: SymbolTableProgram | SymbolTableClass | SymbolTableMethod) -> None:
+    def __init__(self, context: SymbolTableProgram | SymbolTableClass | SymbolTableMethod | SymbolTableLet) -> None:
 
         if not context:
             raise Exception('Context is required')
 
-        self.scope_context: SymbolTableValue | SymbolTableClass | SymbolTableMethod = context
+        self.scope_context: SymbolTableValue | SymbolTableClass | SymbolTableMethod | SymbolTableLet = context
 
         if isinstance(self.scope_context, SymbolTableProgram):
             self.scope_context.classes = {
@@ -205,7 +252,7 @@ class SymbolTable:
                 'void': void_type,
             }
 
-    def add(self, name: str, type_scope: SymbolTableClass | SymbolTableMethod | SymbolTableValue, is_method_param=False) -> None:
+    def add(self, name: str, type_scope: SymbolTableClass | SymbolTableMethod | SymbolTableValue | SymbolTableLet, is_method_param=False) -> None:
 
         if isinstance(self.scope_context, SymbolTableProgram):
             if isinstance(type_scope, SymbolTableClass):
@@ -226,16 +273,24 @@ class SymbolTable:
             if isinstance(type_scope, SymbolTableValue):
                 if is_method_param:
                     self.scope_context.add_param(type_scope)
-                else:
+                else: # No hace nada por el momento
                     self.scope_context.add_local_var(name, type_scope)
             else:
                 raise Exception(
                     'Only local variables can be added to the method')
 
+        elif isinstance(self.scope_context, SymbolTableLet):
+            if isinstance(type_scope, SymbolTableValue):
+                self.scope_context.add_variable(name, type_scope)
+            else:
+                raise Exception('Only variables can be added to the let')
+
     def consult(self, name: str, search_in_parent=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
         if isinstance(self.scope_context, SymbolTableProgram):
             return self.scope_context.classes.get(name, None)
-        elif isinstance(self.scope_context, SymbolTableClass):
+        elif isinstance(self.scope_context, SymbolTableClass):            
+            if name == 'SELF_TYPE':
+                return self.scope_context
 
             if name in self.scope_context.attrs:
                 return self.scope_context.attrs[name]
@@ -252,11 +307,16 @@ class SymbolTable:
                     return self.scope_context.inherit.methods[name]
 
         elif isinstance(self.scope_context, SymbolTableMethod):
-            if name in self.scope_context.local_vars:
+            if name in self.scope_context.local_vars: # No hace nada ahorita
                 return self.scope_context.local_vars[name]
 
-            if name in self.scope_context.params:
-                return self.scope_context.params[name]
+            for param in self.scope_context.params:
+                if param.name == name:
+                    return param
+
+        elif isinstance(self.scope_context, SymbolTableLet):
+            if name in self.scope_context.variables:
+                return self.scope_context.variables[name]
 
         return None
 
@@ -270,9 +330,12 @@ class SymbolTable:
         return self.to_string()
 
 
-def search_scope(name: str, scope: list[SymbolTable], search_in_parent=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
-    for table in reversed(scope):
+def search_scope(name: str, scope: list[SymbolTable], search_in_parent=True, level_search=None) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
+    for level, table in enumerate(reversed(scope)):
         type_scope = table.consult(name, search_in_parent)
         if type_scope:
             return type_scope
+
+        if level_search is not None and (level + 1) == level_search:
+            return None
     return None
