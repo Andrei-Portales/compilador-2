@@ -46,6 +46,8 @@ class CompilerType:
             
         return self.custom_type_name == custom_type
         
+    def to_string(self) -> str:
+        return f'CompilerType({self.custom_type_name})'
         
     def __str__(self) -> str:
         if self.type_scope == PrimitiveType.CUSTOM_TYPE:
