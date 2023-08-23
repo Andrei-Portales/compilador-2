@@ -568,7 +568,7 @@ class CustomVisitor(YALPParserVisitor):
         
         if not expr_type.check_type(PrimitiveType.INTEGER):
             self.report_error(SemanticError(
-                f'Negate operator only works with \'Integer\', found \'{expr_type}\'',
+                f'Negate operator only works with \'Int\', found \'{expr_type}\'',
                 ctx.start.line,
                 ctx.start.column,
                 expr_type,

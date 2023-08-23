@@ -135,20 +135,43 @@ class SymbolTableClass(SymbolTableValue):
         return self.to_string()
 
 
+# OBJECT
+object_type = SymbolTableClass(
+    CompilerType(PrimitiveType.CUSTOM_TYPE, 'Object'),
+    'Object',
+    None,
+    {},
+    {
+        'abort': SymbolTableMethod(
+            CompilerType(PrimitiveType.CUSTOM_TYPE, 'Object'),
+            'abort',
+        ),
+        'type_name': SymbolTableMethod(
+            CompilerType(PrimitiveType.STRING),
+            'type_name',
+        ),
+        'copy': SymbolTableMethod(
+            CompilerType(PrimitiveType.CUSTOM_TYPE, 'SELF_TYPE'),
+            'copy',
+        ),
+    },
+)
+
+
 # BOOLEAN
 boolean_type = SymbolTableClass(
     CompilerType(PrimitiveType.BOOLEAN),
     'Boolean',
-    None,
+    object_type,
     {},
     {},
 )
 
-# Integer
+# Int
 integer_type = SymbolTableClass(
     CompilerType(PrimitiveType.INTEGER),
-    'Integer',
-    None,
+    'Int',
+    object_type,
     {},
     {},
 )
@@ -157,7 +180,7 @@ integer_type = SymbolTableClass(
 string_type = SymbolTableClass(
     CompilerType(PrimitiveType.STRING),
     'String',
-    None,
+    object_type,
     {
         'value': SymbolTableValue(CompilerType(PrimitiveType.STRING), 'value'),
     },
@@ -181,27 +204,37 @@ string_type = SymbolTableClass(
     },
 )
 
-# OBJECT
-object_type = SymbolTableClass(
-    CompilerType(PrimitiveType.CUSTOM_TYPE, 'Object'),
-    'Object',
-    None,
+io_type = SymbolTableClass(
+    CompilerType(PrimitiveType.CUSTOM_TYPE, 'IO'),
+    'IO',
+    object_type,
     {},
     {
-        'abort': SymbolTableMethod(
-            CompilerType(PrimitiveType.CUSTOM_TYPE, 'Object'),
-            'abort',
-        ),
-        'type_name': SymbolTableMethod(
-            CompilerType(PrimitiveType.STRING),
-            'type_name',
-        ),
-        'copy': SymbolTableMethod(
+        'out_string': SymbolTableMethod(
             CompilerType(PrimitiveType.CUSTOM_TYPE, 'SELF_TYPE'),
-            'copy',
+            'out_string',
+            params=[
+                SymbolTableValue(CompilerType(PrimitiveType.STRING), 'x'),
+            ],
         ),
-    },
+        'out_int': SymbolTableMethod(
+            CompilerType(PrimitiveType.CUSTOM_TYPE, 'SELF_TYPE'),
+            'out_int',
+            params=[
+                SymbolTableValue(CompilerType(PrimitiveType.INTEGER), 'x'),
+            ],
+        ),
+        'in_string': SymbolTableMethod(
+            CompilerType(PrimitiveType.STRING),
+            'in_string',
+        ),
+        'in_int': SymbolTableMethod(
+            CompilerType(PrimitiveType.INTEGER),
+            'in_int',
+        ),
+    }
 )
+
 
 # void
 void_type = SymbolTableClass(
@@ -232,7 +265,7 @@ class SymbolTableProgram:
 
 PRIMITIVE_TYPES = {
     'Boolean': boolean_type,
-    'Integer': integer_type,
+    'Int': integer_type,
     'String': string_type,
 }
 
@@ -249,6 +282,7 @@ class SymbolTable:
             self.scope_context.classes = {
                 **PRIMITIVE_TYPES,
                 'Object': object_type,
+                'IO': io_type,
                 'void': void_type,
             }
 
@@ -273,7 +307,7 @@ class SymbolTable:
             if isinstance(type_scope, SymbolTableValue):
                 if is_method_param:
                     self.scope_context.add_param(type_scope)
-                else: # No hace nada por el momento
+                else:  # No hace nada por el momento
                     self.scope_context.add_local_var(name, type_scope)
             else:
                 raise Exception(
@@ -288,7 +322,7 @@ class SymbolTable:
     def consult(self, name: str, search_in_parent=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
         if isinstance(self.scope_context, SymbolTableProgram):
             return self.scope_context.classes.get(name, None)
-        elif isinstance(self.scope_context, SymbolTableClass):            
+        elif isinstance(self.scope_context, SymbolTableClass):
             if name == 'SELF_TYPE':
                 return self.scope_context
 
@@ -307,7 +341,7 @@ class SymbolTable:
                     return self.scope_context.inherit.methods[name]
 
         elif isinstance(self.scope_context, SymbolTableMethod):
-            if name in self.scope_context.local_vars: # No hace nada ahorita
+            if name in self.scope_context.local_vars:  # No hace nada ahorita
                 return self.scope_context.local_vars[name]
 
             for param in self.scope_context.params:

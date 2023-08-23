@@ -17,7 +17,7 @@ class CompilerType:
         self.type_scope = PrimitiveType.CUSTOM_TYPE
         
         if type_scope == PrimitiveType.INTEGER:
-            self.custom_type_name = 'Integer'
+            self.custom_type_name = 'Int'
         elif type_scope == PrimitiveType.STRING:
             self.custom_type_name = 'String'
         elif type_scope == PrimitiveType.BOOLEAN:
@@ -36,7 +36,7 @@ class CompilerType:
     def check_type(self, primitive_type: 'CompilerType', custom_type: str | None = None) -> bool:
 
         if primitive_type == PrimitiveType.INTEGER:
-            custom_type = 'Integer'
+            custom_type = 'Int'
         elif primitive_type == PrimitiveType.STRING:
             custom_type = 'String'
         elif primitive_type == PrimitiveType.BOOLEAN:
