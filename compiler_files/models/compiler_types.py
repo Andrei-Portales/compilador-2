@@ -30,6 +30,11 @@ class CompilerType:
     def compare(self, other: 'CompilerType') -> bool:
         if self.type_scope != other.type_scope:
             return False
+        
+        if self.custom_type_name == 'Bool' and other.custom_type_name == 'Int':
+            return True
+        elif self.custom_type_name == 'Int' and other.custom_type_name == 'Bool':
+            return True
                 
         return self.custom_type_name == other.custom_type_name
         

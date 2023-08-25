@@ -50,6 +50,13 @@ class CustomVisitor(YALPParserVisitor):
 
     def search_recursive_type_parents(self, type_name: str, inherit_classes=[]) -> list[SymbolTableClass]:
         type_definition: SymbolTableClass = self.get_type_definition(type_name)
+        
+        if type_name == 'Bool' and 'Bool' not in inherit_classes:
+            inherit_classes.append('Int')
+            
+        if type_name == 'Int' and 'Int' not in inherit_classes:
+            inherit_classes.append('Bool')
+            
 
         if self.is_strict_mode:
             program_scope: SymbolTableProgram = self.scope_context[0].scope_context
@@ -401,8 +408,7 @@ class CustomVisitor(YALPParserVisitor):
         expr_type: CompilerType = self.visit(expr)
 
         var_type: CompilerType = self.get_type(object_id)
-        var_inherit_classes = self.search_recursive_type_parents(
-            var_type.custom_type_name, [])
+        var_inherit_classes = self.search_recursive_type_parents(var_type.custom_type_name, [])
 
         if expr_type.custom_type_name not in var_inherit_classes:
             line = expr.start.line
@@ -495,7 +501,7 @@ class CustomVisitor(YALPParserVisitor):
             ))
 
         variable: SymbolTableValue = self.get_type_definition(object_id)
-        return variable.var_value_type
+        return variable.type # FIXME: return variable.var_value_type
 
     def visitTypeExpr(self, ctx: YALPParser.TypeExprContext):
         type_id = str(ctx.TYPE_ID())
@@ -633,10 +639,8 @@ class CustomVisitor(YALPParserVisitor):
         if not if_true_type.compare(if_false_type):
 
             # Buscar un super tipo en comun
-            inherit_if_true = self.search_recursive_type_parents(
-                if_true_type.custom_type_name, [])
-            inherit_if_false = self.search_recursive_type_parents(
-                if_false_type.custom_type_name, [])
+            inherit_if_true = self.search_recursive_type_parents(if_true_type.custom_type_name, [])
+            inherit_if_false = self.search_recursive_type_parents(if_false_type.custom_type_name, [])
 
             if if_false_type.custom_type_name in inherit_if_true:
                 return if_true_type
@@ -829,7 +833,7 @@ class CustomVisitor(YALPParserVisitor):
 
         cast = ctx.SIGN()
         cast_type = str(ctx.TYPE_ID())
-
+        
         begin_object_type: CompilerType = self.visit(exprs[0])
         class_definition: SymbolTableClass = self.get_type_definition(
             begin_object_type.custom_type_name)
@@ -852,15 +856,12 @@ class CustomVisitor(YALPParserVisitor):
                 cast_type)
 
         return_type = None
+        
 
         # inicial scope de la clase
         self.add_scope(class_definition)
-        method_definition: SymbolTableMethod = self.get_type_definition(
-            object_id, level_search=1)
-        return_type = self.get_type_definition(
-            method_definition.type.custom_type_name).type
-        self.remove_scope()
-
+        method_definition: SymbolTableMethod = self.get_type_definition(object_id, level_search=1)
+        
         if not method_definition:
             self.report_error(SemanticError(
                 f'Method \'{object_id}\' don\'t exists in class \'{class_definition.name}\'',
@@ -869,6 +870,10 @@ class CustomVisitor(YALPParserVisitor):
                 CompilerType(PrimitiveType.CUSTOM_TYPE, object_id),
             ))
 
+        
+        return_type = self.get_type_definition(method_definition.type.custom_type_name).type
+        self.remove_scope()
+        
         current_method_params = exprs[1:]
 
         # Comprobar que las expresiones tengan el mismo tipo que los parametros o bien que sea tipos derivados implicitamente

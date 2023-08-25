@@ -21,7 +21,8 @@ class SymbolTableValue:
                 self.var_value_type = CompilerType(PrimitiveType.BOOLEAN)
             else:
                 # self.var_value_type = CompilerType(PrimitiveType.CUSTOM_TYPE, 'void') # FIXME: CAMBIAR A QUE SEA VOID
-                self.var_value_type = CompilerType(PrimitiveType.CUSTOM_TYPE, self.type.custom_type_name)
+                self.var_value_type = CompilerType(
+                    PrimitiveType.CUSTOM_TYPE, self.type.custom_type_name)
 
     def to_string(self) -> str:
         return f'value {self.type} {self.name}'
@@ -146,14 +147,20 @@ object_type = SymbolTableClass(
         'abort': SymbolTableMethod(
             CompilerType(PrimitiveType.CUSTOM_TYPE, 'Object'),
             'abort',
+            [],
+            {},
         ),
         'type_name': SymbolTableMethod(
             CompilerType(PrimitiveType.STRING),
             'type_name',
+            [],
+            {},
         ),
         'copy': SymbolTableMethod(
             CompilerType(PrimitiveType.CUSTOM_TYPE, 'SELF_TYPE'),
             'copy',
+            [],
+            {},
         ),
     },
 )
@@ -189,10 +196,14 @@ string_type = SymbolTableClass(
         'length': SymbolTableMethod(
             CompilerType(PrimitiveType.INTEGER),
             'length',
+            params=[],
+            local_vars={},
         ),
         'concat': SymbolTableMethod(
             CompilerType(PrimitiveType.STRING),
             'concat',
+            params=[],
+            local_vars={},
         ),
         'substr': SymbolTableMethod(
             CompilerType(PrimitiveType.STRING),
@@ -201,6 +212,7 @@ string_type = SymbolTableClass(
                 SymbolTableValue(CompilerType(PrimitiveType.INTEGER), 'i'),
                 SymbolTableValue(CompilerType(PrimitiveType.INTEGER), 'l'),
             ],
+            local_vars={},
         ),
     },
 )
@@ -217,6 +229,8 @@ io_type = SymbolTableClass(
             params=[
                 SymbolTableValue(CompilerType(PrimitiveType.STRING), 'x'),
             ],
+            local_vars={},
+
         ),
         'out_int': SymbolTableMethod(
             CompilerType(PrimitiveType.CUSTOM_TYPE, 'SELF_TYPE'),
@@ -224,14 +238,19 @@ io_type = SymbolTableClass(
             params=[
                 SymbolTableValue(CompilerType(PrimitiveType.INTEGER), 'x'),
             ],
+            local_vars={},
         ),
         'in_string': SymbolTableMethod(
             CompilerType(PrimitiveType.STRING),
             'in_string',
+            params=[],
+            local_vars={},
         ),
         'in_int': SymbolTableMethod(
             CompilerType(PrimitiveType.INTEGER),
             'in_int',
+            params=[],
+            local_vars={},
         ),
     }
 )
@@ -253,7 +272,7 @@ class SymbolTableProgram:
 
     def add_class(self, name: str, class_scope: SymbolTableClass) -> None:
         self.classes[name] = class_scope
-        
+
     def remove_class(self, name: str) -> None:
         del self.classes[name]
 
@@ -289,13 +308,12 @@ class SymbolTable:
                 'IO': io_type,
                 'void': void_type,
             }
-            
+
     def remove(self, name: str) -> None:
         if isinstance(self.scope_context, SymbolTableProgram):
             self.scope_context.remove_class(name)
         else:
             raise Exception('Only classes can be removed from the program')
-        
 
     def add(self, name: str, type_scope: SymbolTableClass | SymbolTableMethod | SymbolTableValue | SymbolTableLet, is_method_param=False) -> None:
 
@@ -330,23 +348,22 @@ class SymbolTable:
             else:
                 raise Exception('Only variables can be added to the let')
 
-    def consult(self, name: str, search_in_parent=True, define_context: list['SymbolTable']=None, search_in_define_context=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
-        
+    def consult(self, name: str, search_in_parent=True, define_context: list['SymbolTable'] = None, search_in_define_context=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
+
         define_types_clases: dict = None
-        
+
         if define_context and len(define_context) > 0:
             define_types_clases = define_context[0].scope_context.classes
-            
-        
+
         if isinstance(self.scope_context, SymbolTableProgram):
             found_type = self.scope_context.classes.get(name)
-            
+
             if found_type is None and define_types_clases is not None and search_in_define_context:
                 # print('Buscando en el contexto de definicion')
                 return define_types_clases.get(name)
-            
+
             return found_type
-        
+
         elif isinstance(self.scope_context, SymbolTableClass):
             if name == 'SELF_TYPE':
                 return self.scope_context
@@ -358,17 +375,18 @@ class SymbolTable:
                 return self.scope_context.methods[name]
 
             # Buscar metodos en la clase padre recursivamente
-            if search_in_parent and self.scope_context.inherit: # TODO: ARREGLAR PARA QUE SE PUEDA BUSCAR EN HERENCIA RECURSIVA
-                
+            # TODO: ARREGLAR PARA QUE SE PUEDA BUSCAR EN HERENCIA RECURSIVA
+            if search_in_parent and self.scope_context.inherit:
+
                 current_parent_class = self.scope_context.inherit
-                
+
                 while current_parent_class:
                     if name in current_parent_class.attrs:
                         return current_parent_class.attrs[name]
 
                     if name in current_parent_class.methods:
                         return current_parent_class.methods[name]
-                    
+
                     if current_parent_class.inherit:
                         current_parent_class = current_parent_class.inherit
                     else:
@@ -400,7 +418,8 @@ class SymbolTable:
 
 def search_scope(name: str, scope: list[SymbolTable], search_in_parent=True, level_search=None, define_context=None, search_in_define_context=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
     for level, table in enumerate(reversed(scope)):
-        type_scope = table.consult(name, search_in_parent, define_context=define_context, search_in_define_context=search_in_define_context)
+        type_scope = table.consult(name, search_in_parent, define_context=define_context,
+                                   search_in_define_context=search_in_define_context)
         if type_scope:
             return type_scope
 

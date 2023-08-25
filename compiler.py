@@ -37,7 +37,8 @@ def main():
     
     try:
         visitor.visit(tree)
-    except:
+    except Exception as e:
+        print(e)
         pass
         
     
