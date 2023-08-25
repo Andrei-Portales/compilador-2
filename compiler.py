@@ -32,6 +32,7 @@ def main():
     # generate_parse_tree(input_text_path, 'program')
     
     visitor = CustomVisitor()
+    
     visitor.visit(tree)
     
 

@@ -1,41 +1,20 @@
-class A {
-    var : Integer <- 0;
+class A inherits B {
+    var : Int <- 0;
 
-    method1(asd:Integer, das: String) : Integer { 10 };
+    method1(asd:Int, das: String) : Int { 10 };
 };
 
-class B inherits A {
-    var2: Integer <- 0;
-    var3: String <- "";
-    var4: B <- (new B);
-    isVar4Void: Boolean;
-};
+class B {
+    var1 : Int <- 0;
 
-class C inherits B {
-    var5: Integer <- 0;
-    var6: String <- "";
-    var7: B <- (new B);
-    isVar7Void: Boolean;
-
-    test() : A {
-        (new A) 
-    };
-};
-
-class D {
-    var1: C <- (new C);
-    var2: Integer <- 0;
-
-    run(asd: Integer): Integer {{
-        var0.dfgdfgdfg();
-    }};
+    method2(asd:Int, das: String) : Int { 10 };
 };
 
 class Main {
 
-    var: SELF_TYPE <- (new Main);
+    var: A <- new A;
 
-    main() : SELF_TYPE {{
-        self;
+    main() : Int {{
+        var.method2(10, "asd");
     }};
 };

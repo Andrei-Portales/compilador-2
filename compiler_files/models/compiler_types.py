@@ -21,7 +21,7 @@ class CompilerType:
         elif type_scope == PrimitiveType.STRING:
             self.custom_type_name = 'String'
         elif type_scope == PrimitiveType.BOOLEAN:
-            self.custom_type_name = 'Boolean'     
+            self.custom_type_name = 'Bool'     
         elif type_scope == PrimitiveType.VOID:
             self.custom_type_name = 'void'  
         else:
@@ -40,7 +40,7 @@ class CompilerType:
         elif primitive_type == PrimitiveType.STRING:
             custom_type = 'String'
         elif primitive_type == PrimitiveType.BOOLEAN:
-            custom_type = 'Boolean' 
+            custom_type = 'Bool' 
         elif primitive_type == PrimitiveType.VOID:
             custom_type = 'void'
             

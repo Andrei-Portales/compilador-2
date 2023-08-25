@@ -20,8 +20,8 @@ class SymbolTableValue:
             elif self.type.compare(CompilerType(PrimitiveType.BOOLEAN)):
                 self.var_value_type = CompilerType(PrimitiveType.BOOLEAN)
             else:
-                self.var_value_type = CompilerType(
-                    PrimitiveType.CUSTOM_TYPE, 'void')
+                # self.var_value_type = CompilerType(PrimitiveType.CUSTOM_TYPE, 'void') # FIXME: CAMBIAR A QUE SEA VOID
+                self.var_value_type = CompilerType(PrimitiveType.CUSTOM_TYPE, self.type.custom_type_name)
 
     def to_string(self) -> str:
         return f'value {self.type} {self.name}'
@@ -75,7 +75,7 @@ class SymbolTableMethod(SymbolTableValue):
         self.local_vars[name] = local_var
 
     def to_string(self) -> str:
-        return f'Method {self.name} {{\n\t{self.params}\n\t{self.local_vars}\n}}'
+        return f'Method {self.name} -> {self.type} {{\n\t{self.params}\n\t{self.local_vars}\n}}'
 
     def check_signiture(self, method: 'SymbolTableMethod') -> bool:
         if len(self.params) != len(method.params):
@@ -108,6 +108,7 @@ class SymbolTableClass(SymbolTableValue):
 
         super().__init__(type, name)
         self.inherit: 'SymbolTableClass' = inherit
+        self.temporal_inherit: CompilerType = None
         self.attrs: dict[str, SymbolTableValue] = {
             **attrs,
             'self': SymbolTableValue(type, 'self', type),
@@ -161,7 +162,7 @@ object_type = SymbolTableClass(
 # BOOLEAN
 boolean_type = SymbolTableClass(
     CompilerType(PrimitiveType.BOOLEAN),
-    'Boolean',
+    'Bool',
     object_type,
     {},
     {},
@@ -252,6 +253,9 @@ class SymbolTableProgram:
 
     def add_class(self, name: str, class_scope: SymbolTableClass) -> None:
         self.classes[name] = class_scope
+        
+    def remove_class(self, name: str) -> None:
+        del self.classes[name]
 
     def to_string(self) -> str:
         return f'Program {{\n\t{self.classes}\n}}'
@@ -264,7 +268,7 @@ class SymbolTableProgram:
 
 
 PRIMITIVE_TYPES = {
-    'Boolean': boolean_type,
+    'Bool': boolean_type,
     'Int': integer_type,
     'String': string_type,
 }
@@ -285,6 +289,13 @@ class SymbolTable:
                 'IO': io_type,
                 'void': void_type,
             }
+            
+    def remove(self, name: str) -> None:
+        if isinstance(self.scope_context, SymbolTableProgram):
+            self.scope_context.remove_class(name)
+        else:
+            raise Exception('Only classes can be removed from the program')
+        
 
     def add(self, name: str, type_scope: SymbolTableClass | SymbolTableMethod | SymbolTableValue | SymbolTableLet, is_method_param=False) -> None:
 
@@ -319,9 +330,23 @@ class SymbolTable:
             else:
                 raise Exception('Only variables can be added to the let')
 
-    def consult(self, name: str, search_in_parent=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
+    def consult(self, name: str, search_in_parent=True, define_context: list['SymbolTable']=None, search_in_define_context=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
+        
+        define_types_clases: dict = None
+        
+        if define_context and len(define_context) > 0:
+            define_types_clases = define_context[0].scope_context.classes
+            
+        
         if isinstance(self.scope_context, SymbolTableProgram):
-            return self.scope_context.classes.get(name, None)
+            found_type = self.scope_context.classes.get(name)
+            
+            if found_type is None and define_types_clases is not None and search_in_define_context:
+                # print('Buscando en el contexto de definicion')
+                return define_types_clases.get(name)
+            
+            return found_type
+        
         elif isinstance(self.scope_context, SymbolTableClass):
             if name == 'SELF_TYPE':
                 return self.scope_context
@@ -332,13 +357,22 @@ class SymbolTable:
             if name in self.scope_context.methods:
                 return self.scope_context.methods[name]
 
-            # Buscar metodos en la clase padre
-            if search_in_parent:
-                if self.scope_context.inherit and name in self.scope_context.inherit.attrs:
-                    return self.scope_context.inherit.attrs[name]
+            # Buscar metodos en la clase padre recursivamente
+            if search_in_parent and self.scope_context.inherit: # TODO: ARREGLAR PARA QUE SE PUEDA BUSCAR EN HERENCIA RECURSIVA
+                
+                current_parent_class = self.scope_context.inherit
+                
+                while current_parent_class:
+                    if name in current_parent_class.attrs:
+                        return current_parent_class.attrs[name]
 
-                if self.scope_context.inherit and name in self.scope_context.inherit.methods:
-                    return self.scope_context.inherit.methods[name]
+                    if name in current_parent_class.methods:
+                        return current_parent_class.methods[name]
+                    
+                    if current_parent_class.inherit:
+                        current_parent_class = current_parent_class.inherit
+                    else:
+                        current_parent_class = None
 
         elif isinstance(self.scope_context, SymbolTableMethod):
             if name in self.scope_context.local_vars:  # No hace nada ahorita
@@ -364,9 +398,9 @@ class SymbolTable:
         return self.to_string()
 
 
-def search_scope(name: str, scope: list[SymbolTable], search_in_parent=True, level_search=None) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
+def search_scope(name: str, scope: list[SymbolTable], search_in_parent=True, level_search=None, define_context=None, search_in_define_context=True) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
     for level, table in enumerate(reversed(scope)):
-        type_scope = table.consult(name, search_in_parent)
+        type_scope = table.consult(name, search_in_parent, define_context=define_context, search_in_define_context=search_in_define_context)
         if type_scope:
             return type_scope
 
