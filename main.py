@@ -10,7 +10,15 @@ import os
 import keyword
 import pkgutil
 
-# pip install QScintilla
+import argparse
+from antlr4 import *
+from antlr4.tree.Trees import Trees
+from antlr4 import FileStream, CommonTokenStream
+
+from gramar_generated.YALPLexer import YALPLexer
+from gramar_generated.YALPParser import YALPParser
+from util.generate_tree import generate_parse_tree
+from compiler_files.custom_visitor import CustomVisitor
 
 
 class MainWindow(QMainWindow):
@@ -261,14 +269,52 @@ class MainWindow(QMainWindow):
 
 
 #-------------------Run Function-------------------
+    # def on_tree_view_clicked(self, index: QModelIndex):
+    #     path = self.model.filePath(index)
+    #     # print(path)
+    #     self.set_new_tab(Path(path))
 
     def run(self):
         editor = self.tab_view.currentWidget()
         if editor is not None:
+            # guardar archivo
+            self.save_file()
+            # correr archivo
             self.statusBar().showMessage('Running...', 2000)
-            text = editor.text()
-            # show text in output
-            self.terminal_text.setText(text)
+            code = editor.text()
+            index = self.tree_view.currentIndex()
+            path = self.model.filePath(index)
+            # print(path)
+            input_stream = FileStream(path)
+            lexer = YALPLexer(input_stream)
+            token_stream = CommonTokenStream(lexer)
+            token_stream.fill()
+            parser = YALPParser(token_stream)
+            tree = parser.program()
+
+            def error_callback(x):
+                print('error_callback', x)
+                # change to terminal tab if not already
+                if not (self.terminal_frame in self.hsplit.children()):
+                    self.hsplit.replaceWidget(0, self.terminal_frame)
+                self.terminal_text.setText(f"Error_callback {x}")
+            
+            # # check errors
+            # if parser.getNumberOfSyntaxErrors() > 0:
+            #     return error_callback(parser.getNumberOfSyntaxErrors())
+
+            visitor = CustomVisitor(error_callback)
+    
+            try:
+                visitor.visit(tree)
+                if not (self.terminal_frame in self.hsplit.children()):
+                    self.hsplit.replaceWidget(0, self.terminal_frame)
+                self.terminal_text.setText("Compilation successful")
+            except:
+                pass
+
+            # show text in output in terminal GUI
+            # self.terminal_text.setText(code)
             # print(text)
             self.statusBar().showMessage('Done', 2000)
 
@@ -532,7 +578,7 @@ class MainWindow(QMainWindow):
 
     def on_tree_view_clicked(self, index: QModelIndex):
         path = self.model.filePath(index)
-        print(path)
+        # print(path)
         self.set_new_tab(Path(path))
 
 
