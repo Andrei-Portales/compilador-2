@@ -25,15 +25,21 @@ def main():
     parser = YALPParser(token_stream)
     tree = parser.program()
     
+    
+    def error_callback(x):
+        print('error_callback', x)
+    
     # check errors
     if parser.getNumberOfSyntaxErrors() > 0:
-        return print('\n\nTiene errores de sintaxis.\n\n')
+        return error_callback(parser.getNumberOfSyntaxErrors())
 
-    # generate_parse_tree(input_text_path, 'program')
+    visitor = CustomVisitor(error_callback)
     
-    visitor = CustomVisitor()
-    
-    visitor.visit(tree)
+    try:
+        visitor.visit(tree)
+    except:
+        pass
+        
     
 
 if __name__ == '__main__':
