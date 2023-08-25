@@ -178,7 +178,7 @@ class CustomVisitor(YALPParserVisitor):
                 CompilerType(PrimitiveType.CUSTOM_TYPE, 'Main'),
             ))
 
-        if main_defition.inherit:
+        if main_defition.inherit and main_defition.inherit.type.custom_type_name != 'Object':
             self.report_error(SemanticError(
                 f'Main class cannot inherit from another class',
                 ctx.start.line,
