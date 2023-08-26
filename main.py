@@ -19,6 +19,16 @@ from gramar_generated.YALPLexer import YALPLexer
 from gramar_generated.YALPParser import YALPParser
 from util.generate_tree import generate_parse_tree
 from compiler_files.custom_visitor import CustomVisitor
+from antlr4.error.ErrorListener import ErrorListener
+
+class CustomErrorListener(ErrorListener):
+    def __init__(self, error_callback):
+        super().__init__()
+        self.error_callback = error_callback
+
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        error_message = f"Line {line}:{column} -> {msg}"
+        self.error_callback(error_message)
 
 
 class MainWindow(QMainWindow):
@@ -273,8 +283,20 @@ class MainWindow(QMainWindow):
     #     path = self.model.filePath(index)
     #     # print(path)
     #     self.set_new_tab(Path(path))
+    
+    def error_callback(self, x):
+        print('error_callback', x)
+        # change to terminal tab if not already
+        if not (self.terminal_frame in self.hsplit.children()):
+            self.hsplit.replaceWidget(0, self.terminal_frame)
+        # self.terminal_text.setText(f"Error_callback {x}")
+        
+        # append error to terminal GUI
+        self.terminal_text.append(f"> {x}")
 
     def run(self):
+        self.terminal_text.setText("")
+        
         editor = self.tab_view.currentWidget()
         if editor is not None:
             # guardar archivo
@@ -287,23 +309,16 @@ class MainWindow(QMainWindow):
             # print(path)
             input_stream = FileStream(path)
             lexer = YALPLexer(input_stream)
+            lexer.addErrorListener(CustomErrorListener(self.error_callback))
+            
             token_stream = CommonTokenStream(lexer)
             token_stream.fill()
             parser = YALPParser(token_stream)
+            parser.addErrorListener(CustomErrorListener(self.error_callback))
+            
             tree = parser.program()
 
-            def error_callback(x):
-                print('error_callback', x)
-                # change to terminal tab if not already
-                if not (self.terminal_frame in self.hsplit.children()):
-                    self.hsplit.replaceWidget(0, self.terminal_frame)
-                self.terminal_text.setText(f"Error_callback {x}")
-            
-            # # check errors
-            # if parser.getNumberOfSyntaxErrors() > 0:
-            #     return error_callback(parser.getNumberOfSyntaxErrors())
-
-            visitor = CustomVisitor(error_callback)
+            visitor = CustomVisitor(self.error_callback)
     
             try:
                 visitor.visit(tree)
