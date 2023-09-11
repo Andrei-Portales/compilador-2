@@ -210,6 +210,8 @@ class CustomVisitor(YALPParserVisitor):
                 ctx.start.column,
                 CompilerType(PrimitiveType.CUSTOM_TYPE, 'Main'),
             ))
+            
+        print(self.scope_context[0])
 
         self.remove_scope()
 

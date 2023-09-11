@@ -25,7 +25,7 @@ class Fibonacci {
   
   };
 
-class Main inherits IO {
+class Main {
     n: Int <- 10;
   	facto: Factorial;
   	fibo: Fibonacci;
@@ -34,8 +34,6 @@ class Main inherits IO {
 	{
 	    facto <- new Factorial;
       	fibo <- new Fibonacci;
-      	--out_int(facto.factorial(n));
-      	out_int(fibo.fibonacci(n));
       	self;
 	}
     };

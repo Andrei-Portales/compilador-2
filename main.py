@@ -324,7 +324,7 @@ class MainWindow(QMainWindow):
                 visitor.visit(tree)
                 if not (self.terminal_frame in self.hsplit.children()):
                     self.hsplit.replaceWidget(0, self.terminal_frame)
-                self.terminal_text.setText("Compilation successful")
+                self.terminal_text.setText("> Compilation successful")
             except:
                 pass
 
