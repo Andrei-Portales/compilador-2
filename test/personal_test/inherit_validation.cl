@@ -1,38 +1,35 @@
 class A {
-    var1: String <- "hello";
+    var3: Int <- 1;
+    var4: Bool <- true;
 
-    method1(param1: Int): String {
-        var1
-    };
-};
+    method0(param1: Int, param2: String): Int {{
+        
 
+        0;
+    }};
 
-class B inherits A {
-    var2: String <- "world";
+    method1(param1: Int): Int {{
+        var3 <- var3 + param1 % 5;
+        var4 <- false && (true || false);
 
-    method1(param1: Int): String {
-        "Hola mundo!"
-    };
+        --if (false = (var3 <= 20)) then {
+        --    var3 <- 2;
+        --} else {
+        --    var3 <- 2 + 10;
+        --} fi;
 
-    method2(): String {
-        var2
-    };
-};
+        --while 10 < 30 loop {
+        --    var3 <- var3 + ~1;
+        --    var3 <- var3 + 20 * 50 / 60;
+        --} pool;
 
-class C {
-    class_a: A <- new A;
-    class_b: B <- new B;
+        method0(var3, "2");
 
-    test(): String {{
-        class_a <- class_b;
-
-        class_a.method1(1);
-
-        class_b.method1(1);
-
-        class_a@Object.type_name();
+        var3;
     }};
 };
+
+
 
 class Main {
     main(): SELF_TYPE {

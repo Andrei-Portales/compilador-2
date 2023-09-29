@@ -21,10 +21,19 @@ formal:
 ;
 
 expr:
-    expr PLUS expr # PlusExpr
-  | expr MINUS expr # MinusExpr
-  | expr TIMES expr # TimesExpr
+    expr TIMES expr # TimesExpr
   | expr DIVIDE expr # DivideExpr
+  | expr MOD expr # ModExpr
+  | expr PLUS expr # PlusExpr
+  | expr MINUS expr # MinusExpr
+  | expr EQUAL expr # EqualExpr
+  | expr LESS_EQUAL expr # LessEqualExpr
+  | expr LESS_THAN expr # LessThanExpr
+  | expr AND expr # AndExpr
+  | expr OR expr # OrExpr
+  | NOT expr # NotExpr
+  | NEGATE expr # NegateExpr 
+
   | INTEGER # IntExpr
   | STRING # StringExpr
   | TRUE # TrueExpr
@@ -39,12 +48,6 @@ expr:
   | LET feature (COMMA feature)* IN expr # LetExpr
   | NEW TYPE_ID # NewExpr
   | ISVOID expr # IsvoidExpr
-  | expr MOD expr # ModExpr
-  | expr EQUAL expr # EqualExpr
-  | expr LESS_THAN expr # LessThanExpr
-  | expr LESS_EQUAL expr # LessEqualExpr
-  | NOT expr # NotExpr
-  | NEGATE expr # NegateExpr 
   | LPAREN expr RPAREN # ParenExpr
   | OBJECT_ID # IdExpr
   | TYPE_ID # TypeExpr

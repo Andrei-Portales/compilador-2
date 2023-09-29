@@ -12,6 +12,7 @@ class SymbolTableValue:
         self.name: str = name
         self.var_value_type: CompilerType = var_value_type
         self.bytes: int = 0
+        
 
         if self.var_value_type is None and self.type is not None:
             if self.type.compare(CompilerType(PrimitiveType.INTEGER)):

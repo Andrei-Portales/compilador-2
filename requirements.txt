@@ -3,3 +3,4 @@ antlr4-tools==0.2
 requests
 QScintilla
 PyQt5
+jinja2

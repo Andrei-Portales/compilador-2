@@ -1,4 +1,5 @@
 from enum import Enum
+from .three_address import ThreeAddressString, ThreeAddressInteger, ThreeAddressBoolean, ThreeAddressTemporal, ThreeAddressVariable, ThreeAddressOperation
 
 class PrimitiveType(Enum):
     INTEGER = 1
@@ -11,10 +12,24 @@ class PrimitiveType(Enum):
 class CompilerType:
     def __init__(self, 
                  type_scope: PrimitiveType, 
-                 custom_type_name: str | None = None
+                 custom_type_name: str | None = None,
+                 associated_code: list[
+                     ThreeAddressString | 
+                     ThreeAddressInteger | 
+                     ThreeAddressBoolean | 
+                     ThreeAddressTemporal | 
+                     ThreeAddressVariable | 
+                     ThreeAddressOperation] | None = None
                  ) -> None:
         
         self.type_scope = PrimitiveType.CUSTOM_TYPE
+        self.associated_code: list[
+                     ThreeAddressString | 
+                     ThreeAddressInteger | 
+                     ThreeAddressBoolean | 
+                     ThreeAddressTemporal | 
+                     ThreeAddressVariable | 
+                     ThreeAddressOperation] = associated_code or []
         
         if type_scope == PrimitiveType.INTEGER:
             self.custom_type_name = 'Int'

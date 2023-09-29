@@ -1,0 +1,10 @@
+----- DECLARACION DE VARIABLES -----
+
+{% for function in functions %}
+{{ function['name'] }}:
+    BeginFunc {{ function['bytes'] }};
+        {%- for code in function['body'] %}
+        {{ code }}
+        {%- endfor %}
+    EndFunc;
+{% endfor  %}

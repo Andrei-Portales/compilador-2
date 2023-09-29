@@ -39,6 +39,11 @@ class YALPParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by YALPParser#AndExpr.
+    def visitAndExpr(self, ctx:YALPParser.AndExprContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by YALPParser#StringExpr.
     def visitStringExpr(self, ctx:YALPParser.StringExprContext):
         return self.visitChildren(ctx)
@@ -134,13 +139,18 @@ class YALPParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by YALPParser#IsvoidExpr.
-    def visitIsvoidExpr(self, ctx:YALPParser.IsvoidExprContext):
+    # Visit a parse tree produced by YALPParser#OrExpr.
+    def visitOrExpr(self, ctx:YALPParser.OrExprContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by YALPParser#NegateExpr.
     def visitNegateExpr(self, ctx:YALPParser.NegateExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by YALPParser#IsvoidExpr.
+    def visitIsvoidExpr(self, ctx:YALPParser.IsvoidExprContext):
         return self.visitChildren(ctx)
 
 

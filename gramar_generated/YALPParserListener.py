@@ -62,6 +62,15 @@ class YALPParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by YALPParser#AndExpr.
+    def enterAndExpr(self, ctx:YALPParser.AndExprContext):
+        pass
+
+    # Exit a parse tree produced by YALPParser#AndExpr.
+    def exitAndExpr(self, ctx:YALPParser.AndExprContext):
+        pass
+
+
     # Enter a parse tree produced by YALPParser#StringExpr.
     def enterStringExpr(self, ctx:YALPParser.StringExprContext):
         pass
@@ -233,12 +242,12 @@ class YALPParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by YALPParser#IsvoidExpr.
-    def enterIsvoidExpr(self, ctx:YALPParser.IsvoidExprContext):
+    # Enter a parse tree produced by YALPParser#OrExpr.
+    def enterOrExpr(self, ctx:YALPParser.OrExprContext):
         pass
 
-    # Exit a parse tree produced by YALPParser#IsvoidExpr.
-    def exitIsvoidExpr(self, ctx:YALPParser.IsvoidExprContext):
+    # Exit a parse tree produced by YALPParser#OrExpr.
+    def exitOrExpr(self, ctx:YALPParser.OrExprContext):
         pass
 
 
@@ -248,6 +257,15 @@ class YALPParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by YALPParser#NegateExpr.
     def exitNegateExpr(self, ctx:YALPParser.NegateExprContext):
+        pass
+
+
+    # Enter a parse tree produced by YALPParser#IsvoidExpr.
+    def enterIsvoidExpr(self, ctx:YALPParser.IsvoidExprContext):
+        pass
+
+    # Exit a parse tree produced by YALPParser#IsvoidExpr.
+    def exitIsvoidExpr(self, ctx:YALPParser.IsvoidExprContext):
         pass
 
 

@@ -1,0 +1,14 @@
+Funciones:
+    PushParam <- empujar un parametro a la pila
+    PopParam <- sacar un parametro de la pila
+    FuncCall <- llamar a una funcion
+    <nombre de funcion>: <- cada funcion tendra un nombre o identificador
+    BeginFunc <- definir el inicio de una Funciones
+    Return <- retornar un valor si es que tiene un retorno
+    EndFunc <- definir el final de una funcion
+
+Condicionales:
+    Ifz <- condicion a probar
+
+Operadores:
+    Goto <- operador para poder ir a otro identificador de codigo en todo el codigo
