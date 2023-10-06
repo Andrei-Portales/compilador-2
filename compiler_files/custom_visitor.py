@@ -184,6 +184,7 @@ class CustomVisitor(YALPParserVisitor):
         ])
 
     def report_error(self, SemanticError):
+        print("error report_error", SemanticError.__str__())
         if self.error_callback:
             self.error_callback(SemanticError.__str__())
         else:

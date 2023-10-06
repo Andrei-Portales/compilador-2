@@ -296,6 +296,7 @@ class MainWindow(QMainWindow):
 
     def run(self):
         self.terminal_text.setText("")
+        self.ci_text.setText("")
         
         editor = self.tab_view.currentWidget()
         if editor is not None:
@@ -333,6 +334,7 @@ class MainWindow(QMainWindow):
                     self.hsplit.replaceWidget(0, self.ci_frame)
                 # self.hsplit.replaceWidget(0, self.ci_frame)
             except:
+                #
                 pass
 
             # show text in output in terminal GUI

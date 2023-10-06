@@ -13,9 +13,15 @@ method2:
 
 method3:
     BeginFunc 0;
-        x = 2;
-        y = "hello";
-        Return x;
+        FCall method1;
+        PopParams 0;
+        _t0 = "a";
+        PushParam _t0;
+        _t1 = 1;
+        PushParam _t1;
+        FCall method2;
+        PopParams 2;
+        Return self;
     EndFunc;
 
 main:
