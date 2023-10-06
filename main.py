@@ -322,9 +322,16 @@ class MainWindow(QMainWindow):
     
             try:
                 visitor.visit(tree)
-                if not (self.terminal_frame in self.hsplit.children()):
-                    self.hsplit.replaceWidget(0, self.terminal_frame)
+                # if not (self.terminal_frame in self.hsplit.children()):
+                #     self.hsplit.replaceWidget(0, self.terminal_frame)
                 self.terminal_text.setText("> Compilation successful")
+                # read file in compiler_files/outputs/intern_code.ac
+                with open('compiler_files/outputs/intern_code.ac', 'r') as f:
+                    intern_code = f.read()
+                self.ci_text.setText(intern_code)
+                if not (self.ci_frame in self.hsplit.children()):
+                    self.hsplit.replaceWidget(0, self.ci_frame)
+                # self.hsplit.replaceWidget(0, self.ci_frame)
             except:
                 pass
 
@@ -419,7 +426,7 @@ class MainWindow(QMainWindow):
                                     ''')
         side_bar_layout = QVBoxLayout()
         side_bar_layout.setContentsMargins(5, 10, 5, 0)
-        side_bar_layout.setSpacing(0)
+        side_bar_layout.setSpacing(5)
         side_bar_layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
 
         #set lables
@@ -428,6 +435,8 @@ class MainWindow(QMainWindow):
         self.side_bar.setLayout(side_bar_layout)
         terminal_label = self.get_side_bar_label('gui/icons/terminal.svg', 'Terminal')
         side_bar_layout.addWidget(terminal_label)
+        ci_label = self.get_side_bar_label('gui/icons/ci.png', 'CI')
+        side_bar_layout.addWidget(ci_label)
 
         self.side_bar.setLayout(side_bar_layout)
 
@@ -512,6 +521,31 @@ class MainWindow(QMainWindow):
         terminal_frame_layout.addWidget(self.terminal_text)
         self.terminal_frame.setLayout(terminal_frame_layout)
 
+        # CI (Codigo Intermedio) view
+        self.ci_frame = self.get_frame()
+        self.ci_frame.setMaximumWidth(400)
+        self.ci_frame.setMinimumWidth(200)
+
+        ci_frame_layout = QVBoxLayout()
+        ci_frame_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        ci_frame_layout.setContentsMargins(0, 10, 0, 0)
+        ci_frame_layout.setSpacing(0)
+        
+
+        self.ci_text = QTextEdit()
+        self.ci_text.setReadOnly(True)
+        self.ci_text.setFont(self.window_font)
+        self.ci_text.setAlignment(Qt.AlignmentFlag.AlignTop)
+        self.ci_text.setStyleSheet('''
+                                        background-color: #21252b;
+                                        border-radius: 5px;
+                                        border: none;
+                                        padding: 5px;
+                                        color: #D3D3D3;
+                                        ''')
+        ci_frame_layout.addWidget(self.ci_text)
+        self.ci_frame.setLayout(ci_frame_layout)
+
         # setup layout
         tree_frame_layout.addWidget(self.tree_view)
         self.tree_frame.setLayout(tree_frame_layout)
@@ -578,6 +612,9 @@ class MainWindow(QMainWindow):
         elif type == 'Terminal':
             if not (self.terminal_frame in self.hsplit.children()):
                 self.hsplit.replaceWidget(0, self.terminal_frame)
+        elif type == 'CI':
+            if not (self.ci_frame in self.hsplit.children()):
+                self.hsplit.replaceWidget(0, self.ci_frame)
         
         if self.current_side_bar == type:
             frame = self.hsplit.children()[0]

@@ -15,7 +15,7 @@ class Main {
             x;
         };
 
-        x; -- dara error ya que x no esta definido en este scope solo en let
+        --x; -- dara error ya que x no esta definido en este scope solo en let
     }};
 
     main(): SELF_TYPE{

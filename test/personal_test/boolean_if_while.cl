@@ -1,22 +1,34 @@
+class A {
+    var3: Int <- 1;
+    var4: Bool <- true;
 
-class BooleanIfWhile {
-    a: Int;
-    b: Bool <- true;
+    method0(param1: Int, param2: String): Int {{
+        
 
-    method1(): Int {{
+        0;
+    }};
 
-        while 10 < 30 loop {
-            a;
-        } pool;
+    method1(param1: Int): Int {{
+        var3 <- var3 + param1 % 5;
+        var4 <- false && (true || false);
 
+        --if (false = (var3 <= 20)) then {
+        --    var3 <- 2;
+        --} else {
+        --    var3 <- 2 + 10;
+        --} fi;
 
-        if b then {
-            a;
-        } else {
-            2;
-        } fi;
+        --while 10 < 30 loop {
+        --    var3 <- var3 + ~1;
+        --    var3 <- var3 + 20 * 50 / 60;
+        --} pool;
+
+        method0(var3, "2");
+
+        var3;
     }};
 };
+
 
 
 class Main {

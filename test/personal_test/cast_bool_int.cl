@@ -1,25 +1,184 @@
-class CastBoolInt {
-    a: Int;
-    b: Bool;
+class A {
 
-    method1(): Int {{
-        b <- 0; -- se esta asignando un bool a un int y la funcion retorna 'b' cuando deberia retornar un int pero hay casteo implicito
-    }};
+   var : Int <- 0;
+   value() : Int { var };
 
-    method2(param1: Int, param2: Bool): Int {
-        false
-    };
+   set_var(num : Int) : SELF_TYPE {
+      {
+         var <- num;
+         self;
+      }
+   };
 
-    method3(): Bool {{
-        self.method2(true, 5); -- se esta usando self para acceder a un metodo de la clase al igual que se hace casteo implicito de tipos de la funcion
+   method1(num : Int) : SELF_TYPE {  -- same
+      self
+   };
 
-        method2(false, 0); -- se esta llamando a un metodo de la clase sin usar self y hay casteo implicito. Se retorna tipo int de 'method2' cuando la funcion devuelve Bool
-    }};
+   method2(num1 : Int, num2 : Int) : B {  -- plus
+      (let x : Int in
+	 {
+            x <- num1 + num2;
+	    (new B).set_var(x);
+	 }
+      )
+   };
+
+   method3(num : Int) : C {  -- negate
+      (let x : Int in
+	 {
+            x <- ~num;
+	    (new C).set_var(x);
+	 }
+      )
+   };
+
+   method4(num1 : Int, num2 : Int) : D {  -- diff
+            if num2 < num1 then
+               (let x : Int in
+		  {
+                     x <- num1 - num2;
+	             (new D).set_var(x);
+	          }
+               )
+            else
+               (let x : Int in
+		  {
+	             x <- num2 - num1;
+	             (new D).set_var(x);
+		  }
+               )
+            fi
+   };
+
+   method5(num : Int) : E {  -- factorial
+      (let x : Int <- 1 in
+	 {
+	    (let y : Int <- 1 in
+	       while y <= num loop
+	          {
+                     x <- x * y;
+	             y <- y + 1;
+	          }
+	       pool
+	    );
+	    (new E).set_var(x);
+	 }
+      )
+   };
+
+};
+
+class B inherits A {  -- B is a number squared
+
+   method5(num : Int) : E { -- square
+      (let x : Int in
+	 {
+            x <- num * num;
+	    (new E).set_var(x);
+	 }
+      )
+   };
+
+};
+
+class C inherits B {
+
+   method6(num : Int) : A { -- negate
+      (let x : Int in
+         {
+            x <- ~num;
+	    (new A).set_var(x);
+         }
+      )
+   };
+
+   method5(num : Int) : E {  -- cube
+      (let x : Int in
+	 {
+            x <- num * num * num;
+	    (new E).set_var(x);
+	 }
+      )
+   };
+
+};
+
+class D inherits B {  
+		
+   method7(num : Int) : Bool {  -- divisible by 3
+      (let x : Int <- num in
+            if x < 0 then method7(~x) else
+            if 0 = x then true else
+            if 1 = x then false else
+	    if 2 = x then false else
+	       method7(x - 3)
+	    fi fi fi fi
+      )
+   };
+
+};
+
+class E inherits D {
+
+   method6(num : Int) : A {  -- division
+      (let x : Int in
+         {
+            x <- num / 8;
+	    (new A).set_var(x);
+         }
+      )
+   };
+
 };
 
 
 class Main {
-    main(): SELF_TYPE {
-        self
-    };
+   
+   char : String;
+   avar : A; 
+   a_var : A;
+   flag : Bool <- true;
+
+
+
+   is_even(num : Int) : Bool {
+      (let x : Int <- num in
+            if x < 0 then is_even(~x) else
+            if 0 = x then true else
+	    if 1 = x then false else
+	          is_even(x - 2)
+	    fi fi fi
+      )
+   };
+
+   main() : Object {
+      {
+         avar <- (new A);
+         avar.set_var(2);
+        
+	     
+         a_var <- (new A).set_var(3);
+	      avar <- (new B).method2(avar.value(), a_var.value());
+        
+         
+         
+         avar <- (new C).method6(avar.value());
+         
+        
+         a_var <- (new A).set_var(5);
+         avar <- (new D).method4(avar.value(), a_var.value());
+       
+        
+         avar.set_var(5);
+         avar <- (new C)@A.method5(avar.value());
+        
+      	 
+         avar.set_var(6);
+         avar <- (new C)@B.method5(avar.value());
+         
+
+      }
+   };
+
 };
+
