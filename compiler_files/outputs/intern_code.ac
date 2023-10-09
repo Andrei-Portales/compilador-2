@@ -1,30 +1,89 @@
------ DECLARACION DE VARIABLES -----
+class A:
+    var3 <- 30;
+    var4 <- true;
+    var5 <- "Hello World";
+    
+    method0:
+        BeginFunc 0;
+            Return 0;
+        EndFunc;
+    
+    method1:
+        BeginFunc 0;
+            _t0 = var3 * 50;
+            _t1 = _t0 * 60;
+            _t0 = _t1 * 60;
+            _t1 = _t0 * var3;
+            _t0 = 10 % _t1;
+            var3 = 60 + _t0;
+            _t0 = var3 * var3;
+            _t1 = 50;
+            var3 = _t0 + _t1;
+            var4 = ! _t1;
+            _t0 = var3 <= 20;
+            Ifz _t0 Goto _L0;
+            var3 = 12;
+            Goto _L1;
+            _L0:
+            var3 = 2;
+            _L1:
+            _t1 = var3 <= 20;
+            Ifz _t1 Goto _L2;
+            var3 = 12;
+            Goto _L3;
+            _L2:
+            var3 = 2;
+            _L3:
+            _t2 = var3 <= 20;
+            Ifz _t2 Goto _L4;
+            var3 = 12;
+            Goto _L5;
+            _L4:
+            var3 = 2;
+            _L5:
+            _L6:
+            _t0 = true;
+            Ifz _t0 Goto _L7;
+            _t1 = ~ 1;
+            var3 = var3 + _t1;
+            _t1 = 1000;
+            _t2 = _t1 / 60;
+            var3 = var3 + _t2;
+            Goto _L6;
+            _L7:
+            x = 30 + var3;
+            _t1 = var3;
+            PushParam _t1;
+            _t0 = 10;
+            PushParam _t0;
+            _t2 = var3;
+            PushParam _t2;
+            _t3 = 10;
+            PushParam _t3;
+            _t4 = 10;
+            PushParam _t4;
+            FCall method0;
+            PopParams 5;
+            Return var3;
+        EndFunc;
+    
+    method2:
+        BeginFunc 0;
+            var5 = "Hello asdasd";
+            var3 = 10;
+            _t5 = 1000;
+            _t6 = _t5 / var3;
+            _t5 = _t6 + 10;
+            _t6 = _t5 + 10;
+            var3 = _t6 + 20;
+            Return var3;
+        EndFunc;
+    
+class Main:
+    
+    main:
+        BeginFunc 0;
+            Return 0;
+        EndFunc;
+    
 
-
-method1:
-    BeginFunc 0;
-        Return 1;
-    EndFunc;
-
-method2:
-    BeginFunc 0;
-        Return param1;
-    EndFunc;
-
-method3:
-    BeginFunc 0;
-        FCall method1;
-        PopParams 0;
-        _t0 = "a";
-        PushParam _t0;
-        _t1 = 1;
-        PushParam _t1;
-        FCall method2;
-        PopParams 2;
-        Return self;
-    EndFunc;
-
-main:
-    BeginFunc 0;
-        Return self;
-    EndFunc;

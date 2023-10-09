@@ -41,6 +41,12 @@ class ThreeAddressString:
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressString):
+            return False
+        
+        return self.value == other.value
 
 
 class ThreeAddressInteger:
@@ -55,6 +61,12 @@ class ThreeAddressInteger:
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressInteger):
+            return False
+        
+        return self.value == other.value
 
 
 class ThreeAddressBoolean:
@@ -62,13 +74,35 @@ class ThreeAddressBoolean:
         self.value: bool = value
 
     def to_string(self) -> str:
-        return str(self.value)
+        return 'true' if self.value else 'false'
 
     def __str__(self) -> str:
         return self.to_string()
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressBoolean):
+            return False
+        
+        return self.value == other.value
+    
+class ThreeAddressVoid:
+    def to_string(self) -> str:
+        return 'null'
+
+    def __str__(self) -> str:
+        return self.to_string()
+
+    def __repr__(self) -> str:
+        return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressVoid):
+            return False
+        
+        return True
 
 
 class ThreeAddressTemporal:
@@ -83,6 +117,12 @@ class ThreeAddressTemporal:
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressTemporal):
+            return False
+        
+        return self.temporal_id == other.temporal_id
 
 class ThreeAddressFunctionCall:
     def __init__(self, function_name: str):
@@ -96,6 +136,12 @@ class ThreeAddressFunctionCall:
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressFunctionCall):
+            return False
+        
+        return self.function_name == other.function_name
 
 class ThreeAddressLabel:
     def __init__(self, label_id: int):
@@ -109,20 +155,47 @@ class ThreeAddressLabel:
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressLabel):
+            return False
+        
+        return self.label_id == other.label_id
 
 
 class ThreeAddressVariable:
-    def __init__(self, name: str):
+    def __init__(
+            self, 
+            name: str, 
+            value: ThreeAddressInteger | ThreeAddressString | ThreeAddressBoolean | ThreeAddressVoid | None = None
+        ):
+        
         self.name: str = name
+        self.value:  ThreeAddressInteger | ThreeAddressString | ThreeAddressBoolean | ThreeAddressVoid | None = value
 
     def to_string(self) -> str:
         return self.name
+    
+    def get_var_value(self) -> ThreeAddressInteger | ThreeAddressString | ThreeAddressBoolean | ThreeAddressVoid | None:
+        return self.value
 
     def __str__(self) -> str:
         return self.to_string()
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressVariable):
+            return False
+        
+        return self.name == other.name
+    
+    def get_three_code(self):
+        return {
+            'name': self.name,
+            'value': str(self.value),
+        }
 
 
 class ThreeAddressIf:
@@ -138,6 +211,13 @@ class ThreeAddressIf:
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressIf):
+            return False
+        
+        return self.condition == other.condition \
+            and self.label == other.label
 
 
 class ThreeAddressOperation:
@@ -153,6 +233,46 @@ class ThreeAddressOperation:
         self.left_exp = left_exp
         self.right_exp = right_exp
         self.result: ThreeAddressTemporal | ThreeAddressVariable | ThreeAddressOperators | None = result
+        
+        self.optimize()
+
+    def optimize(self): # OPMITIZACION DE OPERACIONES
+        is_trivial = type(self.left_exp) in [ThreeAddressInteger, ThreeAddressBoolean] \
+            and type(self.right_exp) in [ThreeAddressInteger, ThreeAddressBoolean]
+            
+        result = None
+            
+        if is_trivial:
+            if self.operator == ThreeAddressOperators.PLUS:
+                result = ThreeAddressInteger(self.left_exp.value + self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.MINUS:
+                result = ThreeAddressInteger(self.left_exp.value - self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.TIMES:
+                result = ThreeAddressInteger(self.left_exp.value * self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.DIVIDE:
+                result = ThreeAddressInteger(self.left_exp.value / self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.MOD:
+                result = ThreeAddressInteger(self.left_exp.value % self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.LESS_THAN:
+                result = ThreeAddressBoolean(self.left_exp.value < self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.LESS_EQUAL:
+                result = ThreeAddressBoolean(self.left_exp.value <= self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.EQUAL:
+                result = ThreeAddressBoolean(self.left_exp.value == self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.OR:
+                result = ThreeAddressBoolean(self.left_exp.value or self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.AND:
+                result = ThreeAddressBoolean(self.left_exp.value and self.right_exp.value)
+            elif self.operator == ThreeAddressOperators.NOT:
+                result = ThreeAddressBoolean(not self.left_exp.value)
+            elif self.operator == ThreeAddressOperators.NEGATE:
+                result = ThreeAddressInteger(-self.left_exp.value)
+        
+            if result is not None:
+                self.right_exp = None
+                self.left_exp = result
+                self.operator = ThreeAddressOperators.ASSIGN
+                
 
     def to_string(self) -> str:
         text = 'NOT IMPLEMENTED'
@@ -184,6 +304,7 @@ class ThreeAddressOperation:
         ]
 
         is_assign = self.operator == ThreeAddressOperators.ASSIGN
+        
 
         if is_two_way:
             text = f"{self.result} = {self.left_exp} {self.operator.value} {self.right_exp};"
@@ -201,6 +322,15 @@ class ThreeAddressOperation:
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def __eq__(self, other):
+        if not isinstance(other, ThreeAddressOperation):
+            return False
+        
+        return self.operator == other.operator \
+            and self.left_exp == other.left_exp \
+            and self.right_exp == other.right_exp \
+            and self.result == other.result
 
 
 class ThreeAddressFunction:
@@ -213,15 +343,12 @@ class ThreeAddressFunction:
     def add_operation(self, operation: ThreeAddressOperation):
         self.code.append(operation)
 
-    def get_code(self) -> list[ThreeAddressOperation]:
-        return [*self.code]
-
     def to_string(self) -> str:
-
         codes = ''
 
         for code in self.code:
-            codes += f"\t\t{code}\n"
+            if len(code.to_string().strip()) > 0:
+                codes += f"\t\t{code}\n"
 
         text = f"{self.name}:\n" \
             f"\tBeginFunc {self.bytes};\n" \
@@ -235,15 +362,33 @@ class ThreeAddressFunction:
 
     def __repr__(self) -> str:
         return self.to_string()
+    
+    def optimize(self):
+        new_code = []
+        
+        for code in self.code:
+            if len(new_code) > 0:
+                if code == new_code[-1] and isinstance(code.result, ThreeAddressVariable):
+                    continue
+                
+            new_code.append(code)
+            
+        self.code = new_code
 
     def get_three_code(self):
+        self.optimize()
         all_code = []
 
         for code in self.code:
+            
+            if code is None:
+                return ''
+            
             if isinstance(code, ThreeAddressLabel):
                 all_code.append(f'{code}:')
             else:
-                all_code.append(str(code))
+                if len(code.to_string().strip()) > 0:
+                    all_code.append(code.to_string())
 
         return {
             'name': self.name,
@@ -252,20 +397,67 @@ class ThreeAddressFunction:
             'body': all_code,
         }
 
+class ThreeAddressClass:
+    def __init__(self, name: str):
+        self.name: str = name
+        self.functions: list[ThreeAddressFunction] = []
+        self.variables: list[ThreeAddressVariable] = []
+        
+    def add_code(self, function):
+        if isinstance(function, ThreeAddressFunction):
+            self.functions.append(function)
+        elif isinstance(function, ThreeAddressVariable):
+            self.variables.append(function)
+        
+    def get_three_code(self):
+        all_code = []
+        all_variables = []
+        
+        for function in self.functions:
+            all_code.append(function.get_three_code())
+            
+        for variable in self.variables:
+            all_variables.append(variable.get_three_code())
+            
+        return {
+            'name': self.name,
+            'functions': all_code,
+            'variables': all_variables,
+        }
+        
+    def to_string(self):
+        codes = ''
+        
+        for function in self.functions:
+            codes += f'{function}\n'
+        
+        return f'class {self.name}:\n{codes}'
+    
+    def __str__(self):
+        return self.to_string()
+    
+    def __repr__(self):
+        return self.to_string()
 
 class ThreeAddress:
     def __init__(self):
         self.temporals_count = 0
         self.label_count = 0
-        self.functions: ThreeAddressFunction = []
+        self.classes: list[ThreeAddressClass] = []
+        self.recycled_temporals: list[ThreeAddressTemporal] = []
+        
+    def add_recycled_temporal(self, temporal: ThreeAddressTemporal):
+        self.recycled_temporals.append(temporal)
 
-    def get_functions(self) -> list[ThreeAddressFunction]:
-        return [*self.functions]
-
-    def add_function(self, function: ThreeAddressFunction):
-        self.functions.append(function)
+    def add_class(self, clas: ThreeAddressClass):
+        self.classes.append(clas)
 
     def get_temporal(self) -> ThreeAddressTemporal:
+        if len(self.recycled_temporals) > 0:
+            new_temporal = self.recycled_temporals[0]
+            del self.recycled_temporals[0]
+            return new_temporal
+        
         new_temporal = ThreeAddressTemporal(self.temporals_count)
         self.temporals_count += 1
         return new_temporal
@@ -281,6 +473,8 @@ class ThreeAddress:
             return assosiated_code.result  # Variable o Temporal
         elif isinstance(assosiated_code, ThreeAddressBoolean):
             return assosiated_code
+        elif isinstance(assosiated_code, ThreeAddressVoid):
+            return assosiated_code
         elif isinstance(assosiated_code, ThreeAddressInteger):
             return assosiated_code
         elif isinstance(assosiated_code, ThreeAddressString):
@@ -288,6 +482,9 @@ class ThreeAddress:
         elif isinstance(assosiated_code, ThreeAddressTemporal):
             return assosiated_code
         elif isinstance(assosiated_code, ThreeAddressVariable):
+            if assosiated_code.value is not None:
+                return assosiated_code.value
+            
             return assosiated_code
         elif isinstance(assosiated_code, ThreeAddressLabel):
             return assosiated_code

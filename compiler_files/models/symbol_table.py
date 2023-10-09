@@ -1,4 +1,5 @@
 from .compiler_types import CompilerType, PrimitiveType
+from .three_address import ThreeAddressBoolean, ThreeAddressInteger, ThreeAddressString, ThreeAddressVoid
 
 
 class SymbolTableValue:
@@ -16,15 +17,27 @@ class SymbolTableValue:
 
         if self.var_value_type is None and self.type is not None:
             if self.type.compare(CompilerType(PrimitiveType.INTEGER)):
-                self.var_value_type = CompilerType(PrimitiveType.INTEGER)
+                self.var_value_type = CompilerType(
+                    PrimitiveType.INTEGER,
+                    associated_code=[ThreeAddressInteger(0)]
+                )
             elif self.type.compare(CompilerType(PrimitiveType.STRING)):
-                self.var_value_type = CompilerType(PrimitiveType.STRING)
+                self.var_value_type = CompilerType(
+                    PrimitiveType.STRING,
+                    associated_code=[ThreeAddressString('')]
+                )
             elif self.type.compare(CompilerType(PrimitiveType.BOOLEAN)):
-                self.var_value_type = CompilerType(PrimitiveType.BOOLEAN)
+                self.var_value_type = CompilerType(
+                    PrimitiveType.BOOLEAN,
+                    associated_code=[ThreeAddressBoolean(False)]
+                )
             else:
                 # self.var_value_type = CompilerType(PrimitiveType.CUSTOM_TYPE, 'void') # FIXME: CAMBIAR A QUE SEA VOID
                 self.var_value_type = CompilerType(
-                    PrimitiveType.CUSTOM_TYPE, self.type.custom_type_name)
+                    PrimitiveType.CUSTOM_TYPE, 
+                    self.type.custom_type_name,
+                    associated_code=[ThreeAddressVoid()]
+                )
 
     def to_string(self) -> str:
         return f'value {self.type} {self.name}'

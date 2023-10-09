@@ -1,10 +1,16 @@
------ DECLARACION DE VARIABLES -----
+{%- for class in classes -%}
+class {{ class['name'] }}:
+    {% for variable in class['variables'] -%}
+    {{ variable['name'] }} <- {{ variable['value'] }};
+    {% endfor -%}
 
-{% for function in functions %}
-{{ function['name'] }}:
-    BeginFunc {{ function['bytes'] }};
-        {%- for code in function['body'] %}
-        {{ code }}
-        {%- endfor %}
-    EndFunc;
+    {% for function in class['functions'] %}
+    {{ function['name'] }}:
+        BeginFunc {{ function['bytes'] }};
+            {%- for code in function['body'] %}
+            {{ code }}
+            {%- endfor %}
+        EndFunc;
+    {% endfor  %}
 {% endfor  %}
+
