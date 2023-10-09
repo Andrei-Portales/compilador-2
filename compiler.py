@@ -50,11 +50,11 @@ def main():
 
     visitor = CustomVisitor(error_callback)
     
-    # try:
-    visitor.visit(tree)
-    # except Exception as e:
-    #     print(e)
-    #     pass
+    try:
+        visitor.visit(tree)
+    except Exception as e:
+        print(e)
+        pass
         
     
 

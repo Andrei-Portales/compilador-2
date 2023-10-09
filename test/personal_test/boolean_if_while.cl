@@ -12,16 +12,16 @@ class A {
         var3 <- var3 + param1 % 5;
         var4 <- false && (true || false);
 
-        --if (false = (var3 <= 20)) then {
-        --    var3 <- 2;
-        --} else {
-        --    var3 <- 2 + 10;
-        --} fi;
+        if (false = (var3 <= 20)) then {
+            var3 <- 2;
+        } else {
+            var3 <- 2 + 10;
+        } fi;
 
-        --while 10 < 30 loop {
-        --    var3 <- var3 + ~1;
-        --    var3 <- var3 + 20 * 50 / 60;
-        --} pool;
+        while 10 < 30 loop {
+            var3 <- var3 + ~1;
+            var3 <- var3 + 20 * 50 / 60;
+        } pool;
 
         method0(var3, "2");
 

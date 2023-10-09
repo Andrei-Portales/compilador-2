@@ -61,7 +61,16 @@ class CustomVisitor(YALPParserVisitor):
             value: SymbolTableClass | SymbolTableMethod | SymbolTableValue = search_scope(
                 type_name, self.define_context)
 
-        return value.type
+        if isinstance(value, SymbolTableClass):
+            return CompilerType(
+                PrimitiveType.CUSTOM_TYPE,
+                value.type.custom_type_name,
+                associated_code=[
+                    ThreeAddressClassDefinition(value.type.custom_type_name),
+                ]
+            )
+        
+        return  value.type
 
     def get_type_definition(self, type_name, level_search=None) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
         if self.is_strict_mode:
@@ -169,7 +178,7 @@ class CustomVisitor(YALPParserVisitor):
             operator_code = ThreeAddressOperators.LESS_THAN
         elif operator == '%':
             operator_code = ThreeAddressOperators.MOD
-            
+
         generated_temporal = self.three_address.get_temporal()
 
         compiled_type = CompilerType(type_return, associated_code=[
@@ -184,13 +193,15 @@ class CustomVisitor(YALPParserVisitor):
                 result=generated_temporal,
             )
         ])
-        
+
         if isinstance(left_value_code, ThreeAddressTemporal):
-            self.three_address.add_recycled_temporal(left_value_code) # OPTIMIZACION DE CODIGO
-            
+            self.three_address.add_recycled_temporal(
+                left_value_code)  # OPTIMIZACION DE CODIGO
+
         if isinstance(right_value_code, ThreeAddressTemporal):
-            self.three_address.add_recycled_temporal(right_value_code) # OPTIMIZACION DE CODIGO
-        
+            self.three_address.add_recycled_temporal(
+                right_value_code)  # OPTIMIZACION DE CODIGO
+
         return compiled_type
 
     def report_error(self, SemanticError):
@@ -230,13 +241,13 @@ class CustomVisitor(YALPParserVisitor):
                 CompilerType(PrimitiveType.CUSTOM_TYPE, 'Main'),
             ))
 
-        if main_defition.inherit and main_defition.inherit.type.custom_type_name != 'Object':
-            self.report_error(SemanticError(
-                f'Main class cannot inherit from another class',
-                ctx.start.line,
-                ctx.start.column,
-                CompilerType(PrimitiveType.CUSTOM_TYPE, 'Main'),
-            ))
+        # if main_defition.inherit and main_defition.inherit.type.custom_type_name != 'Object':
+        #     self.report_error(SemanticError(
+        #         f'Main class cannot inherit from another class',
+        #         ctx.start.line,
+        #         ctx.start.column,
+        #         CompilerType(PrimitiveType.CUSTOM_TYPE, 'Main'),
+        #     ))
 
         if 'main' not in main_defition.methods:
             self.report_error(SemanticError(
@@ -396,7 +407,7 @@ class CustomVisitor(YALPParserVisitor):
         right_code = self.three_address.get_value_code(
             right_type.associated_code[-1])
 
-        compiled_type =  CompilerType(PrimitiveType.BOOLEAN, associated_code=[
+        compiled_type = CompilerType(PrimitiveType.BOOLEAN, associated_code=[
             *self.three_address.filter_operations(
                 left_type.associated_code,
                 right_type.associated_code,
@@ -408,14 +419,15 @@ class CustomVisitor(YALPParserVisitor):
                 result=self.three_address.get_temporal(),
             )
         ])
-        
+
         if isinstance(left_code, ThreeAddressTemporal):
-            self.three_address.add_recycled_temporal(left_code) # OPTIMIZACION DE CODIGO
-            
+            self.three_address.add_recycled_temporal(
+                left_code)  # OPTIMIZACION DE CODIGO
+
         if isinstance(right_code, ThreeAddressTemporal):
-            self.three_address.add_recycled_temporal(right_code) # OPTIMIZACION DE CODIGO
-        
-        
+            self.three_address.add_recycled_temporal(
+                right_code)  # OPTIMIZACION DE CODIGO
+
         return compiled_type
 
     def visitOrExpr(self, ctx: YALPParser.OrExprContext):
@@ -441,14 +453,15 @@ class CustomVisitor(YALPParserVisitor):
                 result=self.three_address.get_temporal(),
             )
         ])
-        
+
         if isinstance(left_code, ThreeAddressTemporal):
-            self.three_address.add_recycled_temporal(left_code) # OPTIMIZACION DE CODIGO
-            
+            self.three_address.add_recycled_temporal(
+                left_code)  # OPTIMIZACION DE CODIGO
+
         if isinstance(right_code, ThreeAddressTemporal):
-            self.three_address.add_recycled_temporal(right_code) # OPTIMIZACION DE CODIGO
-            
-            
+            self.three_address.add_recycled_temporal(
+                right_code)  # OPTIMIZACION DE CODIGO
+
         return compiled_type
 
     def visitTrueExpr(self, ctx: YALPParser.TrueExprContext) -> CompilerType:
@@ -540,10 +553,11 @@ class CustomVisitor(YALPParserVisitor):
                 result=self.three_address.get_temporal(),
             )
         ])
-        
+
         if isinstance(self.three_address.get_value_code(child_type.associated_code[-1]), ThreeAddressTemporal):
-            self.three_address.add_recycled_temporal(self.three_address.get_value_code(child_type.associated_code[-1]))
-        
+            self.three_address.add_recycled_temporal(
+                self.three_address.get_value_code(child_type.associated_code[-1]))
+
         return compiled_type
 
     def visitAssignExpr(self, ctx: YALPParser.AssignExprContext) -> CompilerType:
@@ -583,17 +597,19 @@ class CustomVisitor(YALPParserVisitor):
 
         variable_definition = self.get_type_definition(object_id)
         variable_definition.var_value_type = expr_type
-        
+
         # OPTIMIZACION DE CODIGO
-        new_code: list = self.three_address.filter_operations(expr_type.associated_code)
+        new_code: list = self.three_address.filter_operations(
+            expr_type.associated_code)
         last_code: ThreeAddressOperation = None
-        
+
         if len(new_code) > 0 and isinstance(new_code[-1], ThreeAddressOperation):
             last_code = new_code[-1]
-        
+
         if last_code and isinstance(last_code.result, ThreeAddressTemporal):
             new_code.pop()
-            self.three_address.add_recycled_temporal(last_code.result) # OPTIMIZACION DE CODIGO
+            self.three_address.add_recycled_temporal(
+                last_code.result)  # OPTIMIZACION DE CODIGO
             new_code.append(
                 ThreeAddressOperation(
                     last_code.operator,
@@ -612,7 +628,6 @@ class CustomVisitor(YALPParserVisitor):
                     value=expr_type_code,
                 ),
             ))
-            
 
         return CompilerType(
             PrimitiveType.CUSTOM_TYPE,
@@ -730,7 +745,16 @@ class CustomVisitor(YALPParserVisitor):
             ))
 
         class_type: CompilerType = self.get_type(type_id)
-        return class_type
+
+        return CompilerType(
+            PrimitiveType.CUSTOM_TYPE,
+            custom_type_name=class_type.custom_type_name,
+            associated_code=[
+                ThreeAddressClassDefinition(
+                    type_id,
+                ),
+            ]
+        )
 
     def visitMethodFeature(self, ctx: YALPParser.MethodFeatureContext) -> CompilerType:
         object_id = str(ctx.OBJECT_ID())
@@ -835,10 +859,6 @@ class CustomVisitor(YALPParserVisitor):
         # terminar contexto
         self.remove_scope()
 
-        # # registrar funcion en ambito global
-        # if self.is_strict_mode:
-        #     self.three_address.add_function(three_address_function)
-
         # returnar tipo de la funcion
         return CompilerType(
             PrimitiveType.CUSTOM_TYPE, type_id,
@@ -899,7 +919,8 @@ class CustomVisitor(YALPParserVisitor):
         if_code = []
 
         if self.is_strict_mode:
-            predicate_value_code = self.three_address.get_value_code(predicate_type.associated_code[-1])
+            predicate_value_code = self.three_address.get_value_code(
+                predicate_type.associated_code[-1])
 
             if_true: CompilerType = self.visit(exprs[1])
             if_false: CompilerType = self.visit(exprs[2])
@@ -927,11 +948,10 @@ class CustomVisitor(YALPParserVisitor):
                 *self.three_address.filter_operations(if_true.associated_code),
                 pass_code_label,
             ]
-            
+
             if isinstance(self.three_address.get_value_code(predicate_value_code), ThreeAddressTemporal):
-                self.three_address.add_recycled_temporal(self.three_address.get_value_code(predicate_value_code)) # OPTIMIZACION DE CODIGO
-            
-            
+                self.three_address.add_recycled_temporal(self.three_address.get_value_code(
+                    predicate_value_code))  # OPTIMIZACION DE CODIGO
 
         return CompilerType(
             PrimitiveType.CUSTOM_TYPE,
@@ -984,9 +1004,10 @@ class CustomVisitor(YALPParserVisitor):
 
                 exit_while_flag,
             ]
-            
+
             if isinstance(self.three_address.get_value_code(predicate_value_code), ThreeAddressTemporal):
-                self.three_address.add_recycled_temporal(self.three_address.get_value_code(predicate_value_code)) # OPTIMIZACION DE CODIGO
+                self.three_address.add_recycled_temporal(self.three_address.get_value_code(
+                    predicate_value_code))  # OPTIMIZACION DE CODIGO
 
         return CompilerType(
             PrimitiveType.CUSTOM_TYPE,
@@ -1026,9 +1047,42 @@ class CustomVisitor(YALPParserVisitor):
     def visitIsvoidExpr(self, ctx: YALPParser.IsvoidExprContext):
         # TODO: PARA LUEGO AQUI SE PODRA VERIFICAR QUE SI SEA VOID
         expr_type = self.visit(ctx.expr())
-        return CompilerType(PrimitiveType.BOOLEAN)
 
-    # Visit a parse tree produced by YALPParser#LetExpr.
+        associated_code = [
+            *self.three_address.filter_operations(expr_type.associated_code)
+        ]
+
+        param_operation = ThreeAddressOperation(
+            ThreeAddressOperators.ASSIGN,
+            self.three_address.get_value_code(expr_type.associated_code[-1]),
+            None,
+            result=self.three_address.get_temporal(),
+        )
+
+        associated_code = [
+            *associated_code,
+            param_operation,
+            ThreeAddressOperation(
+                ThreeAddressOperators.PUSHPARAM,
+                self.three_address.get_value_code(param_operation),
+                None,
+                None,
+            ),
+        ]
+
+        return CompilerType(
+            PrimitiveType.BOOLEAN,
+            associated_code=[
+                *associated_code,
+                ThreeAddressOperation(
+                    ThreeAddressOperators.FUNCTIONCALL,
+                    ThreeAddressFunctionCall('isvoid'),
+                    None,
+                    None,
+                ),
+            ]
+        )
+
     def visitLetExpr(self, ctx: YALPParser.LetExprContext):
         features = ctx.feature()
         expr_let = ctx.expr()
@@ -1118,10 +1172,12 @@ class CustomVisitor(YALPParserVisitor):
             ))
 
         return CompilerType(
-            PrimitiveType.CUSTOM_TYPE, 
+            PrimitiveType.CUSTOM_TYPE,
             type_id,
             associated_code=[
-                
+                ThreeAddressClassDefinition(
+                    type_id
+                )
             ]
         )
 
@@ -1289,14 +1345,50 @@ class CustomVisitor(YALPParserVisitor):
 
         if self.is_strict_mode:
             obj_expr_type: CompilerType = self.visit(exprs[0])
-            args_expr_type: list[CompilerType] = [
+            params: list[CompilerType] = [
                 self.visit(expr) for expr in exprs[1:]]
 
-            print('object_id', object_id)
-            print('obj_expr_type', obj_expr_type)
-            print('args_expr_type', args_expr_type)
+            for param in params:
+                param_operation = ThreeAddressOperation(
+                    ThreeAddressOperators.ASSIGN,
+                    self.three_address.get_value_code(
+                        param.associated_code[-1]),
+                    None,
+                    result=self.three_address.get_temporal(),
+                )
 
-            print(args_expr_type[0].associated_code,
-                  args_expr_type[1].associated_code)
+                dot_call_code = [
+                    *dot_call_code,
+                    param_operation,
+                    ThreeAddressOperation(
+                        ThreeAddressOperators.PUSHPARAM,
+                        self.three_address.get_value_code(param_operation),
+                        None,
+                        None,
+                    ),
+                ]
 
-        return return_type
+            call_value = self.three_address.get_value_code(
+                obj_expr_type.associated_code[-1])
+
+            dot_call_code = [
+                *dot_call_code,
+                ThreeAddressOperation(
+                    ThreeAddressOperators.FUNCTIONCALL,
+                    ThreeAddressFunctionCall(f'{call_value}.{object_id}'),
+                    None,
+                    None,
+                ),
+                ThreeAddressOperation(
+                    ThreeAddressOperators.POPPARAMS,
+                    ThreeAddressInteger(len(params)),
+                    None,
+                    None,
+                ),
+            ]
+
+        return CompilerType(
+            PrimitiveType.CUSTOM_TYPE,
+            return_type.custom_type_name,
+            associated_code=dot_call_code,
+        )

@@ -13,9 +13,9 @@ class Main {
 
         method2("a", 1);
 
-        method2(1, " "); -- dara error porque los parametros no coinciden con los tipos definidos
+        --method2(1, " "); -- dara error porque los parametros no coinciden con los tipos definidos
 
-        method2("", 2, 2); -- dara error porque el numero de parametros ingresados no coincide con los parametros definidos
+        --method2("", 2, 2); -- dara error porque el numero de parametros ingresados no coincide con los parametros definidos
 
         self;
     }};

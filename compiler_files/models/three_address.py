@@ -396,6 +396,19 @@ class ThreeAddressFunction:
             'bytes': self.bytes,
             'body': all_code,
         }
+        
+class ThreeAddressClassDefinition:
+    def __init__(self, name: str):
+        self.name: str = name
+        
+    def to_string(self) -> str:
+        return f'{self.name}'
+    
+    def __str__(self) -> str:
+        return self.to_string()
+    
+    def __repr__(self) -> str:
+        return self.to_string()
 
 class ThreeAddressClass:
     def __init__(self, name: str):
@@ -480,6 +493,8 @@ class ThreeAddress:
         elif isinstance(assosiated_code, ThreeAddressString):
             return assosiated_code
         elif isinstance(assosiated_code, ThreeAddressTemporal):
+            return assosiated_code
+        elif isinstance(assosiated_code, ThreeAddressClassDefinition):
             return assosiated_code
         elif isinstance(assosiated_code, ThreeAddressVariable):
             if assosiated_code.value is not None:

@@ -232,6 +232,7 @@ string_type = SymbolTableClass(
     },
 )
 
+# IO
 io_type = SymbolTableClass(
     CompilerType(PrimitiveType.CUSTOM_TYPE, 'IO'),
     'IO',
