@@ -1,242 +1,40 @@
-class A:
+class Factorial:
     var <- 0;
     
-    value:
+    factorial:
         BeginFunc 0;
-            Return var;
-        EndFunc;
-    
-    set_var:
-        BeginFunc 0;
-            var = num;
-            Return self;
-        EndFunc;
-    
-    method1:
-        BeginFunc 0;
-            Return self;
-        EndFunc;
-    
-    method2:
-        BeginFunc 0;
-            x = num1 + num2;
-            _t0 = x;
-            PushParam _t0;
-            FCall B.set_var;
+            _t0 = n == 0;
+            Ifz _t0 Goto _L4;
+            _t8 = n == 1;
+            Ifz _t8 Goto _L2;
+            _t13 = _t12;
+            PushParam _t13;
+            FCall factorial;
             PopParams 1;
-            Return None;
-        EndFunc;
-    
-    method3:
-        BeginFunc 0;
-            x = ~ num;
-            _t1 = x;
-            PushParam _t1;
-            FCall C.set_var;
-            PopParams 1;
-            Return None;
-        EndFunc;
-    
-    method4:
-        BeginFunc 0;
-            _t2 = num2 < num1;
-            Ifz _t2 Goto _L0;
-            x = num2 - num1;
-            _t6 = x;
-            PushParam _t6;
-            FCall D.set_var;
-            PopParams 1;
-            Goto _L1;
-            _L0:
-            x = num1 - num2;
-            _t5 = x;
-            PushParam _t5;
-            FCall D.set_var;
-            PopParams 1;
-            _L1:
-            Return _L1;
-        EndFunc;
-    
-    method5:
-        BeginFunc 0;
+            f = n * None;
+            Goto _L3;
             _L2:
-            _t2 = y <= num;
-            Ifz _t2 Goto _L3;
-            x = x * y;
-            y = y + 1;
-            Goto _L2;
+            f = 1;
             _L3:
-            _t7 = x;
-            PushParam _t7;
-            FCall E.set_var;
-            PopParams 1;
-            Return None;
-        EndFunc;
-    
-class B:
-    
-    method5:
-        BeginFunc 0;
-            x = num * num;
-            _t2 = x;
-            PushParam _t2;
-            FCall E.set_var;
-            PopParams 1;
-            Return None;
-        EndFunc;
-    
-class C:
-    
-    method6:
-        BeginFunc 0;
-            x = ~ num;
-            _t8 = x;
-            PushParam _t8;
-            FCall A.set_var;
-            PopParams 1;
-            Return None;
-        EndFunc;
-    
-    method5:
-        BeginFunc 0;
-            _t9 = num * num;
-            x = _t9 * num;
-            _t9 = x;
-            PushParam _t9;
-            FCall E.set_var;
-            PopParams 1;
-            Return None;
-        EndFunc;
-    
-class D:
-    
-    method7:
-        BeginFunc 0;
-            _t10 = x < 0;
-            Ifz _t10 Goto _L32;
-            _t41 = 0 == x;
-            Ifz _t41 Goto _L30;
-            _t43 = 1 == x;
-            Ifz _t43 Goto _L28;
-            _t42 = 2 == x;
-            Ifz _t42 Goto _L26;
-            _t67 = _t66;
-            PushParam _t67;
-            FCall method7;
-            PopParams 1;
-            Goto _L27;
-            _L26:
-            _L27:
-            Goto _L29;
-            _L28:
-            _L29:
-            Goto _L31;
-            _L30:
-            _L31:
-            Goto _L33;
-            _L32:
-            _t67 = _t66;
-            PushParam _t67;
-            FCall method7;
-            PopParams 1;
-            _L33:
-            Return _L33;
-        EndFunc;
-    
-class E:
-    
-    method6:
-        BeginFunc 0;
-            x = num / 8;
-            _t43 = x;
-            PushParam _t43;
-            FCall A.set_var;
-            PopParams 1;
-            Return None;
+            Goto _L5;
+            _L4:
+            f = 0;
+            _L5:
+            Return _L5;
         EndFunc;
     
 class Main:
-    char <- ;
-    avar <- null;
-    a_var <- null;
-    flag <- true;
-    
-    is_even:
-        BeginFunc 0;
-            _t41 = x < 0;
-            Ifz _t41 Goto _L46;
-            _t84 = 0 == x;
-            Ifz _t84 Goto _L44;
-            _t85 = 1 == x;
-            Ifz _t85 Goto _L42;
-            _t97 = _t96;
-            PushParam _t97;
-            FCall is_even;
-            PopParams 1;
-            Goto _L43;
-            _L42:
-            _L43:
-            Goto _L45;
-            _L44:
-            _L45:
-            Goto _L47;
-            _L46:
-            _t97 = _t96;
-            PushParam _t97;
-            FCall is_even;
-            PopParams 1;
-            _L47:
-            Return _L47;
-        EndFunc;
+    n <- 4;
+    myFactorial <- null;
     
     main:
         BeginFunc 0;
-            avar = A;
-            _t85 = 2;
-            PushParam _t85;
-            FCall avar.set_var;
+            myFactorial = Factorial;
+            _t0 = None;
+            PushParam _t0;
+            FCall out_int;
             PopParams 1;
-            _t84 = 3;
-            PushParam _t84;
-            FCall a_var.set_var;
-            PopParams 1;
-            _t41 = None;
-            PushParam _t41;
-            _t98 = None;
-            PushParam _t98;
-            FCall avar.method2;
-            PopParams 2;
-            _t99 = None;
-            PushParam _t99;
-            FCall avar.method6;
-            PopParams 1;
-            _t100 = 5;
-            PushParam _t100;
-            FCall a_var.set_var;
-            PopParams 1;
-            _t101 = None;
-            PushParam _t101;
-            _t102 = None;
-            PushParam _t102;
-            FCall avar.method4;
-            PopParams 2;
-            _t103 = 5;
-            PushParam _t103;
-            FCall avar.set_var;
-            PopParams 1;
-            _t104 = None;
-            PushParam _t104;
-            FCall avar.method5;
-            PopParams 1;
-            _t105 = 6;
-            PushParam _t105;
-            FCall avar.set_var;
-            PopParams 1;
-            _t106 = None;
-            PushParam _t106;
-            FCall avar.method5;
-            PopParams 1;
-            Return None;
+            Return self;
         EndFunc;
     
 
