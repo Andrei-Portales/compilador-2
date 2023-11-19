@@ -90,8 +90,7 @@ class ThreeAddressCodeCustomVisitor(ParseTreeVisitor):
         # Visit a parse tree produced by ThreeAddressCodeParser#globalVarDeclaration.
     def visitGlobalVarDeclaration(self, ctx:ThreeAddressCodeParser.GlobalVarDeclarationContext):
         variable = ctx.IDENTIFIER().getText()
-        print(variable)
-        value = ctx.IDENTIFIER().getText()
+        value = ctx.expression().getText()
         print(variable, value)
         self.set_variable_value(variable, value)
         return self.visitChildren(ctx)
@@ -99,21 +98,21 @@ class ThreeAddressCodeCustomVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by ThreeAddressCodeParser#methodDeclaration.
     def visitMethodDeclaration(self, ctx:ThreeAddressCodeParser.MethodDeclarationContext):
-        function_name = ctx.IDENTIFIER(0).getText()
+        function_name = ctx.IDENTIFIER().getText()
         print(function_name)
         parameters = []
-        for i in range(1, len(ctx.IDENTIFIER())):
-            parameters.append(ctx.IDENTIFIER(i).getText())
-        self.functions[function_name] = {'parameters': parameters}
+        # for i in range(1, len(ctx.IDENTIFIER())):
+        #     parameters.append(ctx.IDENTIFIER(i).getText())
+        # self.functions[function_name] = {'parameters': parameters}
 
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by ThreeAddressCodeParser#instruction.
     def visitInstruction(self, ctx:ThreeAddressCodeParser.InstructionContext):
-        if ctx.ASSIGN():
-            dest =ctx.IDENTIFIER(0).getText()
-            src = ctx.IDENTIFIER(1).getText()
+        if ctx.EQUAL():
+            dest =ctx.IDENTIFIER().getText()
+            src = ctx.expression.getText()
             reg = self.get_register()
 
             self.code.append(f"move {reg}, {src}")
@@ -152,26 +151,27 @@ class ThreeAddressCodeCustomVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by ThreeAddressCodeParser#expression.
     def visitExpression(self, ctx:ThreeAddressCodeParser.ExpressionContext):
-        if ctx.OP().getText() == "+":
-            dest = ctx.IDENTIFIER(0).getText()
-            src1 = ctx.IDENTIFIER(1).getText()
-            src2 = ctx.IDENTIFIER(2).getText()
-            self.code.append(f"add {dest}, {src1}, {src2}")
-        elif ctx.OP().getText() == "-":
-            dest = ctx.IDENTIFIER(0).getText()
-            src1 = ctx.IDENTIFIER(1).getText()
-            src2 = ctx.IDENTIFIER(2).getText()
-            self.code.append(f"sub {dest}, {src1}, {src2}")
-        elif ctx.OP().getText() == "*":
-            dest = ctx.IDENTIFIER(0).getText()
-            src1 = ctx.IDENTIFIER(1).getText()
-            src2 = ctx.IDENTIFIER(2).getText()
-            self.code.append(f"mul {dest}, {src1}, {src2}")
-        elif ctx.OP().getText() == "/":
-            dest = ctx.IDENTIFIER(0).getText()
-            src1 = ctx.IDENTIFIER(1).getText()
-            src2 = ctx.IDENTIFIER(2).getText()
-            self.code.append(f"div {dest}, {src1}, {src2}")
+        if ctx.OP() is not None:
+            if ctx.OP().getText() == "+":
+                dest = ctx.IDENTIFIER(0).getText()
+                src1 = ctx.IDENTIFIER(1).getText()
+                src2 = ctx.IDENTIFIER(2).getText()
+                self.code.append(f"add {dest}, {src1}, {src2}")
+            elif ctx.OP().getText() == "-":
+                dest = ctx.IDENTIFIER(0).getText()
+                src1 = ctx.IDENTIFIER(1).getText()
+                src2 = ctx.IDENTIFIER(2).getText()
+                self.code.append(f"sub {dest}, {src1}, {src2}")
+            elif ctx.OP().getText() == "*":
+                dest = ctx.IDENTIFIER(0).getText()
+                src1 = ctx.IDENTIFIER(1).getText()
+                src2 = ctx.IDENTIFIER(2).getText()
+                self.code.append(f"mul {dest}, {src1}, {src2}")
+            elif ctx.OP().getText() == "/":
+                dest = ctx.IDENTIFIER(0).getText()
+                src1 = ctx.IDENTIFIER(1).getText()
+                src2 = ctx.IDENTIFIER(2).getText()
+                self.code.append(f"div {dest}, {src1}, {src2}")
         return self.visitChildren(ctx)
 
 

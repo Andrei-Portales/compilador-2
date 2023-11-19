@@ -9,5 +9,3 @@ class Main:
             var1 = 1.3333333333333333;
             Return self;
         EndFunc;
-    
-
