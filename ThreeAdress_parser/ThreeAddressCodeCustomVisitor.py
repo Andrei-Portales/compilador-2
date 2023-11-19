@@ -19,6 +19,8 @@ class ThreeAddressCodeCustomVisitor(ParseTreeVisitor):
         self.functions = {}
         self.classes = []
         self.code = []
+        self.actual_function = None
+        self.actual_class = None
     
     def print_code(self):
         for line in self.code:
@@ -85,6 +87,7 @@ class ThreeAddressCodeCustomVisitor(ParseTreeVisitor):
         class_name = ctx.IDENTIFIER().getText()
         print(class_name)
         self.classes.append(class_name)
+        self.actual_class = class_name
         return self.visitChildren(ctx)
 
         # Visit a parse tree produced by ThreeAddressCodeParser#globalVarDeclaration.
@@ -93,6 +96,8 @@ class ThreeAddressCodeCustomVisitor(ParseTreeVisitor):
         value = ctx.expression().getText()
         print(variable, value)
         self.set_variable_value(variable, value)
+        self.code.append(f".data")
+        self.code.append(f"{variable}: .word {value}")
         return self.visitChildren(ctx)
 
 
@@ -111,14 +116,11 @@ class ThreeAddressCodeCustomVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by ThreeAddressCodeParser#instruction.
     def visitInstruction(self, ctx:ThreeAddressCodeParser.InstructionContext):
         if ctx.EQUAL():
-            dest =ctx.IDENTIFIER().getText()
-            src = ctx.expression.getText()
-            reg = self.get_register()
-
-            self.code.append(f"move {reg}, {src}")
-            self.code.append(f"move {dest}, {reg}")
+            dest = ctx.IDENTIFIER(0).getText()
+            src = ctx.expression().getText()
+            self.code.append(f"move {dest}, {src}")
         elif ctx.RETURN():
-            value = ctx.IDENTIFIER(0).getText()
+            value = ctx.expression().getText()
             self.code.append(f"move $v0, {value}")
             self.code.append("jr $ra")
         elif ctx.IFZ():

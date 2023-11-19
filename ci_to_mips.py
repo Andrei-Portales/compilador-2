@@ -18,8 +18,8 @@ def main():
     parser = ThreeAddressCodeParser(token_stream)
     tree = parser.program()
     visitor = ThreeAddressCodeCustomVisitor()
-    visitor.visit(tree)
-    visitor.print_code()
+    # visitor.visit(tree)
+    # visitor.print_code()
     # print strucutre of tree
     print(Trees.toStringTree(tree, None, parser))
     print("done")
