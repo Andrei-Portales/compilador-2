@@ -1,39 +1,12 @@
-class Factorial:
-    var <- 0;
-    
-    factorial:
-        BeginFunc 0;
-            _t0 = n == 0;
-            Ifz _t0 Goto _L4;
-            _t8 = n == 1;
-            Ifz _t8 Goto _L2;
-            _t13 = _t12;
-            PushParam _t13;
-            FCall factorial;
-            PopParams 1;
-            f = n * None;
-            Goto _L3;
-            _L2:
-            f = 1;
-            _L3:
-            Goto _L5;
-            _L4:
-            f = 0;
-            _L5:
-            Return _L5;
-        EndFunc;
-    
 class Main:
-    n <- 4;
-    myFactorial <- null;
+    var1 <- 1;
     
     main:
         BeginFunc 0;
-            myFactorial = Factorial;
-            _t0 = None;
-            PushParam _t0;
-            FCall out_int;
-            PopParams 1;
+            var1 = 50;
+            var1 = 10.0;
+            var1 = 600;
+            var1 = 1.3333333333333333;
             Return self;
         EndFunc;
     
