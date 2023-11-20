@@ -10,6 +10,6 @@
 {%- for function in text['functions'] %}
 {{ function['name']}}:
     {%- for instruction in function['instructions'] %}
-    {{ instruction }};
-    {% endfor  %}
+    {{ instruction['instruction'] }}{{ ";" if instruction['has_semicolon'] else "" }}
+    {%- endfor  %}
 {% endfor  %}

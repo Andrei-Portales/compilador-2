@@ -3,9 +3,19 @@ class A {
     var5: Int <- 20;
     var6: Bool <- false;
 
-    method1(param1: Int): String {
-        var1
-    };
+    method1(param1: Int): String {{
+        var1 <- "Adios";
+        var5 <- 30 + 40;
+        var5 <- 30 + var5;
+
+        if var6 then {
+            var5;
+        } else {
+            var5;
+        } fi;
+
+        var1;
+    }};
 };
 
 

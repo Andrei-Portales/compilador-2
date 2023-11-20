@@ -10,9 +10,80 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         self.variables = {}
         self.functions = {}
         # {'class_name': {'var1': 'asdgdfg'}}
-        self.classes_vars_map: Record[str, Record[str, str]] = {}
+        # Record[str, Record[str, str]]Record[str, Record[str, str]]
+        self.classes_vars_map = {}
         self.actual_class = None
         self.actual_function = None
+
+    def insertIOFunctions(self):
+        self.functions['out_int'] = {
+            'name': 'out_int',
+            'instructions': [
+                {
+                    'instruction': 'li $v0, 1',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'syscall',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'jr $ra',
+                    'has_semicolon': True,
+                },
+            ],
+        }
+        self.functions['out_string'] = {
+            'name': 'out_string',
+            'instructions': [
+                {
+                    'instruction': 'li $v0, 4',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'syscall',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'jr $ra',
+                    'has_semicolon': True,
+                },
+            ],
+        }
+        self.functions['in_int'] = {
+            'name': 'in_int',
+            'instructions': [
+                {
+                    'instruction': 'li $v0, 5',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'syscall',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'jr $ra',
+                    'has_semicolon': True,
+                },
+            ],
+        }
+        self.functions['in_string'] = {
+            'name': 'in_string',
+            'instructions': [
+                {
+                    'instruction': 'li $v0, 8',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'syscall',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'jr $ra',
+                    'has_semicolon': True,
+                },
+            ],
+        }
 
     def fillTemplate(self):
         TEMPLATE_PATH = 'ci_to_cm/templates/mips_code_template.j2'
@@ -31,15 +102,21 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
             f.write(output)
 
     def rename_vars(self, var_name: str):
+        if not self.classes_vars_map[self.actual_class].get('out_int'):
+            self.classes_vars_map[self.actual_class]['out_int'] = 'out_int'
+
+        var_name = str(var_name)
         if not self.classes_vars_map[self.actual_class].get(var_name):
             self.classes_vars_map[self.actual_class][var_name] = generateRandomVariable(
             )
 
         return self.classes_vars_map[self.actual_class][var_name]
 
-    def add_instruction(self, instruction: str):
-        self.functions[self.actual_function]['instructions'].append(
-            instruction)
+    def add_instruction(self, instruction: str, has_semicolon: bool = True):
+        self.functions[self.actual_function]['instructions'].append({
+            'instruction': instruction,
+            'has_semicolon': has_semicolon,
+        })
 
     # ----------------------------------------------------------------------------------------
 
@@ -65,7 +142,7 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
         self.actual_class = None
 
-    def visitGlobalVarDeclaration(self, ctx: ThreeAddressCodeParser.GlobalVarDeclarationContext): # ✅  # ✅
+    def visitGlobalVarDeclaration(self, ctx: ThreeAddressCodeParser.GlobalVarDeclarationContext):  # ✅  # ✅
         id_name = self.rename_vars(ctx.IDENTIFIER())
         exp = self.visit(ctx.expression())
 
@@ -103,13 +180,35 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         self.actual_function = None
 
     def visitReturnInstr(self, ctx: ThreeAddressCodeParser.ReturnInstrContext):
-        return self.visitChildren(ctx)
+        if ctx.expression():
+            expr = self.visit(ctx.expression())
+
+            if type(expr) == str:
+                self.add_instruction(f'la $v0, {expr}')
+            elif isinstance(expr, IntermediateCodeType):
+                if expr.type == IntermediateCodeTypeEnum.INTEGER:
+                    self.add_instruction(f'li $vo, {expr.value}')
+                elif expr.type == IntermediateCodeTypeEnum.STRING:
+                    # No se como manejar en este caso cadenas
+                    pass
+
+        elif ctx.SELF():
+            self.add_instruction('move $v0, $s0')
+
+        self.add_instruction('jr $ra')
 
     def visitAssignInstr(self, ctx: ThreeAddressCodeParser.AssignInstrContext):
         return self.visitChildren(ctx)
 
     def visitEqualInstr(self, ctx: ThreeAddressCodeParser.EqualInstrContext):
-        return self.visitChildren(ctx)
+        identifier = self.rename_vars(str(ctx.IDENTIFIER()))
+        expr = self.visit(ctx.expression())
+
+        value = expr.value if expr is not None else 'None'  # FIXME: Arreglar None
+
+        self.add_instruction(f'la $t0, {identifier}')
+        self.add_instruction(f'li $t1, {value}')
+        self.add_instruction(f'sw $t1, 0($t0)')
 
     def visitNegateInstr(self, ctx: ThreeAddressCodeParser.NegateInstrContext):
         return self.visitChildren(ctx)
@@ -118,7 +217,11 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         return self.visitChildren(ctx)
 
     def visitIfInstr(self, ctx: ThreeAddressCodeParser.IfInstrContext):
-        return self.visitChildren(ctx)
+        id = self.rename_vars(ctx.IDENTIFIER())
+        label = ctx.LABEL()
+
+        print(id, label)
+        pass
 
     def visitGotoInstr(self, ctx: ThreeAddressCodeParser.GotoInstrContext):
         return self.visitChildren(ctx)
@@ -132,39 +235,38 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
     def visitFCallInstr(self, ctx: ThreeAddressCodeParser.FCallInstrContext):
         return self.visitChildren(ctx)
 
-    def visitLabelInstr(self, ctx: ThreeAddressCodeParser.LabelInstrContext):
-        return self.visitChildren(ctx)
+    def visitLabelInstr(self, ctx: ThreeAddressCodeParser.LabelInstrContext):  # ✅
+        self.add_instruction(f'{ctx.LABEL()}:', has_semicolon=False)
 
     def visitFCallStatement(self, ctx: ThreeAddressCodeParser.FCallStatementContext):
         return self.visitChildren(ctx)
 
-    def visitSelfExpr(self, ctx: ThreeAddressCodeParser.SelfExprContext): # ✅
+    def visitSelfExpr(self, ctx: ThreeAddressCodeParser.SelfExprContext):  # ✅
         return 'self'
 
-    def visitIdExpr(self, ctx: ThreeAddressCodeParser.IdExprContext): # ✅
+    def visitIdExpr(self, ctx: ThreeAddressCodeParser.IdExprContext):  # ✅
         return self.rename_vars(ctx.IDENTIFIER())
 
-    def visitNumberExpr(self, ctx: ThreeAddressCodeParser.NumberExprContext): # ✅
+    def visitNumberExpr(self, ctx: ThreeAddressCodeParser.NumberExprContext):  # ✅
         return IntermediateCodeType(
             value=ctx.NUMBER(),
             type=IntermediateCodeTypeEnum.INTEGER,
         )
 
-    def visitStringExpr(self, ctx: ThreeAddressCodeParser.StringExprContext): # ✅
+    def visitStringExpr(self, ctx: ThreeAddressCodeParser.StringExprContext):  # ✅
         return IntermediateCodeType(
             value=ctx.STRING(),
             type=IntermediateCodeTypeEnum.STRING,
         )
 
-    def visitBoolExpr(self, ctx:ThreeAddressCodeParser.BoolExprContext): # ✅        
+    def visitBoolExpr(self, ctx: ThreeAddressCodeParser.BoolExprContext):  # ✅
         return IntermediateCodeType(
-            value= 1 if str(ctx.BOOLEAN()) == 'true' else 0,
+            value=1 if str(ctx.BOOLEAN()) == 'true' else 0,
             type=IntermediateCodeTypeEnum.BOOLEAN,
         )
 
-
-    def visitLabelExpr(self, ctx: ThreeAddressCodeParser.LabelExprContext):
-        return self.visitChildren(ctx)
+    def visitLabelExpr(self, ctx: ThreeAddressCodeParser.LabelExprContext):  # ✅
+        return str(ctx.LABEL())
 
     def visitOperatorExpr(self, ctx: ThreeAddressCodeParser.OperatorExprContext):
         return self.visitChildren(ctx)

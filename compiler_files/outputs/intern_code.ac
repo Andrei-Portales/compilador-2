@@ -5,6 +5,13 @@ class A:
     
     method1:
         BeginFunc 0;
+            var1 = "Adios";
+            var5 = 70;
+            var5 = 30 + var5;
+            Ifz var6 Goto _L0;
+            Goto _L1;
+            _L0:
+            _L1:
             Return var1;
         EndFunc;
     
