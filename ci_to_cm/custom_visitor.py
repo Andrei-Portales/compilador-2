@@ -4,7 +4,8 @@ import jinja2
 
 class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
     def __init__(self):
-        pass
+        self.variables = {}
+        self.functions = []
     
     def fillTemplate(self):
         TEMPLATE_PATH = 'ci_to_cm/templates/mips_code_template.j2'
