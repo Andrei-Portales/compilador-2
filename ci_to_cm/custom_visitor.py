@@ -215,21 +215,21 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
         self.add_instruction('jr $ra')
 
-    def visitEqualInstr(self, ctx: ThreeAddressCodeParser.EqualInstrContext):
-        # identifier = self.rename_vars(str(ctx.IDENTIFIER()))
-        
+    def visitEqualInstr(self, ctx: ThreeAddressCodeParser.EqualInstrContext):        
         expr = ctx.expression()
         
         left = self.visit(expr[0])
         right = self.visit(expr[1])
         
-        print(left, right)
 
-        # value = expr.value if expr is not None else 'None'  # FIXME: Arreglar None
+        value = None
+        
+        if isinstance(right, IntermediateCodeType):
+            value = right.value
 
-        # self.add_instruction(f'la $t0, {identifier}')
-        # self.add_instruction(f'li $t1, {value}')
-        # self.add_instruction(f'sw $t1, 0($t0)')
+        self.add_instruction(f'la $t0, {left}')
+        self.add_instruction(f'li $t1, {right}')
+        self.add_instruction(f'sw $t1, 0($t0)')
 
     def visitNegateInstr(self, ctx: ThreeAddressCodeParser.NegateInstrContext):
         return self.visitChildren(ctx)
