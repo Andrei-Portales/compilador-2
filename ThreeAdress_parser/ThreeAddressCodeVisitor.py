@@ -1,4 +1,4 @@
-# Generated from ThreeAdress_parser/ThreeAddressCode.g4 by ANTLR 4.13.1
+# Generated from ThreeAdress_parser/ThreeAddressCode.g4 by ANTLR 4.13.0
 from antlr4 import *
 if "." in __name__:
     from .ThreeAddressCodeParser import ThreeAddressCodeParser
@@ -29,8 +29,58 @@ class ThreeAddressCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ThreeAddressCodeParser#instruction.
-    def visitInstruction(self, ctx:ThreeAddressCodeParser.InstructionContext):
+    # Visit a parse tree produced by ThreeAddressCodeParser#returnInstr.
+    def visitReturnInstr(self, ctx:ThreeAddressCodeParser.ReturnInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#assignInstr.
+    def visitAssignInstr(self, ctx:ThreeAddressCodeParser.AssignInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#equalInstr.
+    def visitEqualInstr(self, ctx:ThreeAddressCodeParser.EqualInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#negateInstr.
+    def visitNegateInstr(self, ctx:ThreeAddressCodeParser.NegateInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#ltInstr.
+    def visitLtInstr(self, ctx:ThreeAddressCodeParser.LtInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#ifInstr.
+    def visitIfInstr(self, ctx:ThreeAddressCodeParser.IfInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#gotoInstr.
+    def visitGotoInstr(self, ctx:ThreeAddressCodeParser.GotoInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#pushParamInstr.
+    def visitPushParamInstr(self, ctx:ThreeAddressCodeParser.PushParamInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#popParamInstr.
+    def visitPopParamInstr(self, ctx:ThreeAddressCodeParser.PopParamInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#fCallInstr.
+    def visitFCallInstr(self, ctx:ThreeAddressCodeParser.FCallInstrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#labelInstr.
+    def visitLabelInstr(self, ctx:ThreeAddressCodeParser.LabelInstrContext):
         return self.visitChildren(ctx)
 
 

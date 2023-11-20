@@ -1,4 +1,4 @@
-# Generated from ThreeAdress_parser/ThreeAddressCode.g4 by ANTLR 4.13.1
+# Generated from ThreeAdress_parser/ThreeAddressCode.g4 by ANTLR 4.13.0
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -112,7 +112,7 @@ class ThreeAddressCodeParser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.13.1")
+        self.checkVersion("4.13.0")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -435,73 +435,334 @@ class ThreeAddressCodeParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def RETURN(self):
-            return self.getToken(ThreeAddressCodeParser.RETURN, 0)
 
+        def getRuleIndex(self):
+            return ThreeAddressCodeParser.RULE_instruction
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class EqualInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IDENTIFIER(self):
+            return self.getToken(ThreeAddressCodeParser.IDENTIFIER, 0)
+        def EQUAL(self):
+            return self.getToken(ThreeAddressCodeParser.EQUAL, 0)
         def expression(self):
             return self.getTypedRuleContext(ThreeAddressCodeParser.ExpressionContext,0)
-
 
         def SEMI(self):
             return self.getToken(ThreeAddressCodeParser.SEMI, 0)
 
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterEqualInstr" ):
+                listener.enterEqualInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitEqualInstr" ):
+                listener.exitEqualInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEqualInstr" ):
+                return visitor.visitEqualInstr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AssignInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def IDENTIFIER(self):
             return self.getToken(ThreeAddressCodeParser.IDENTIFIER, 0)
-
         def ASSIGN(self):
             return self.getToken(ThreeAddressCodeParser.ASSIGN, 0)
+        def expression(self):
+            return self.getTypedRuleContext(ThreeAddressCodeParser.ExpressionContext,0)
 
-        def EQUAL(self):
-            return self.getToken(ThreeAddressCodeParser.EQUAL, 0)
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
 
-        def NEGATE(self):
-            return self.getToken(ThreeAddressCodeParser.NEGATE, 0)
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAssignInstr" ):
+                listener.enterAssignInstr(self)
 
-        def LT(self):
-            return self.getToken(ThreeAddressCodeParser.LT, 0)
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAssignInstr" ):
+                listener.exitAssignInstr(self)
 
-        def IFZ(self):
-            return self.getToken(ThreeAddressCodeParser.IFZ, 0)
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignInstr" ):
+                return visitor.visitAssignInstr(self)
+            else:
+                return visitor.visitChildren(self)
 
-        def GOTO(self):
-            return self.getToken(ThreeAddressCodeParser.GOTO, 0)
 
-        def LABEL(self):
-            return self.getToken(ThreeAddressCodeParser.LABEL, 0)
+    class PopParamInstrContext(InstructionContext):
 
-        def PUSH_PARAM(self):
-            return self.getToken(ThreeAddressCodeParser.PUSH_PARAM, 0)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def POP_PARAMS(self):
             return self.getToken(ThreeAddressCodeParser.POP_PARAMS, 0)
-
         def NUMBER(self):
             return self.getToken(ThreeAddressCodeParser.NUMBER, 0)
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPopParamInstr" ):
+                listener.enterPopParamInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPopParamInstr" ):
+                listener.exitPopParamInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPopParamInstr" ):
+                return visitor.visitPopParamInstr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PushParamInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PUSH_PARAM(self):
+            return self.getToken(ThreeAddressCodeParser.PUSH_PARAM, 0)
+        def IDENTIFIER(self):
+            return self.getToken(ThreeAddressCodeParser.IDENTIFIER, 0)
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPushParamInstr" ):
+                listener.enterPushParamInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPushParamInstr" ):
+                listener.exitPushParamInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPushParamInstr" ):
+                return visitor.visitPushParamInstr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class NegateInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IDENTIFIER(self):
+            return self.getToken(ThreeAddressCodeParser.IDENTIFIER, 0)
+        def NEGATE(self):
+            return self.getToken(ThreeAddressCodeParser.NEGATE, 0)
+        def expression(self):
+            return self.getTypedRuleContext(ThreeAddressCodeParser.ExpressionContext,0)
+
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterNegateInstr" ):
+                listener.enterNegateInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitNegateInstr" ):
+                listener.exitNegateInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNegateInstr" ):
+                return visitor.visitNegateInstr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class GotoInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def GOTO(self):
+            return self.getToken(ThreeAddressCodeParser.GOTO, 0)
+        def LABEL(self):
+            return self.getToken(ThreeAddressCodeParser.LABEL, 0)
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterGotoInstr" ):
+                listener.enterGotoInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitGotoInstr" ):
+                listener.exitGotoInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGotoInstr" ):
+                return visitor.visitGotoInstr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class IfInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IFZ(self):
+            return self.getToken(ThreeAddressCodeParser.IFZ, 0)
+        def IDENTIFIER(self):
+            return self.getToken(ThreeAddressCodeParser.IDENTIFIER, 0)
+        def GOTO(self):
+            return self.getToken(ThreeAddressCodeParser.GOTO, 0)
+        def LABEL(self):
+            return self.getToken(ThreeAddressCodeParser.LABEL, 0)
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIfInstr" ):
+                listener.enterIfInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIfInstr" ):
+                listener.exitIfInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIfInstr" ):
+                return visitor.visitIfInstr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class FCallInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def fCallStatement(self):
             return self.getTypedRuleContext(ThreeAddressCodeParser.FCallStatementContext,0)
 
 
-        def COLON(self):
-            return self.getToken(ThreeAddressCodeParser.COLON, 0)
-
-        def getRuleIndex(self):
-            return ThreeAddressCodeParser.RULE_instruction
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInstruction" ):
-                listener.enterInstruction(self)
+            if hasattr( listener, "enterFCallInstr" ):
+                listener.enterFCallInstr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInstruction" ):
-                listener.exitInstruction(self)
+            if hasattr( listener, "exitFCallInstr" ):
+                listener.exitFCallInstr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitInstruction" ):
-                return visitor.visitInstruction(self)
+            if hasattr( visitor, "visitFCallInstr" ):
+                return visitor.visitFCallInstr(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class ReturnInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def RETURN(self):
+            return self.getToken(ThreeAddressCodeParser.RETURN, 0)
+        def expression(self):
+            return self.getTypedRuleContext(ThreeAddressCodeParser.ExpressionContext,0)
+
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterReturnInstr" ):
+                listener.enterReturnInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitReturnInstr" ):
+                listener.exitReturnInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitReturnInstr" ):
+                return visitor.visitReturnInstr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class LabelInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def LABEL(self):
+            return self.getToken(ThreeAddressCodeParser.LABEL, 0)
+        def COLON(self):
+            return self.getToken(ThreeAddressCodeParser.COLON, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterLabelInstr" ):
+                listener.enterLabelInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitLabelInstr" ):
+                listener.exitLabelInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLabelInstr" ):
+                return visitor.visitLabelInstr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class LtInstrContext(InstructionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.InstructionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IDENTIFIER(self):
+            return self.getToken(ThreeAddressCodeParser.IDENTIFIER, 0)
+        def LT(self):
+            return self.getToken(ThreeAddressCodeParser.LT, 0)
+        def expression(self):
+            return self.getTypedRuleContext(ThreeAddressCodeParser.ExpressionContext,0)
+
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterLtInstr" ):
+                listener.enterLtInstr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitLtInstr" ):
+                listener.exitLtInstr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLtInstr" ):
+                return visitor.visitLtInstr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -514,6 +775,7 @@ class ThreeAddressCodeParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
             if la_ == 1:
+                localctx = ThreeAddressCodeParser.ReturnInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 47
                 self.match(ThreeAddressCodeParser.RETURN)
@@ -524,6 +786,7 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 2:
+                localctx = ThreeAddressCodeParser.AssignInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 51
                 self.match(ThreeAddressCodeParser.IDENTIFIER)
@@ -536,6 +799,7 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 3:
+                localctx = ThreeAddressCodeParser.EqualInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 56
                 self.match(ThreeAddressCodeParser.IDENTIFIER)
@@ -548,6 +812,7 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 4:
+                localctx = ThreeAddressCodeParser.NegateInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 61
                 self.match(ThreeAddressCodeParser.IDENTIFIER)
@@ -560,6 +825,7 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 5:
+                localctx = ThreeAddressCodeParser.LtInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 66
                 self.match(ThreeAddressCodeParser.IDENTIFIER)
@@ -572,6 +838,7 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 6:
+                localctx = ThreeAddressCodeParser.IfInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
                 self.state = 71
                 self.match(ThreeAddressCodeParser.IFZ)
@@ -586,6 +853,7 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 7:
+                localctx = ThreeAddressCodeParser.GotoInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
                 self.state = 76
                 self.match(ThreeAddressCodeParser.GOTO)
@@ -596,6 +864,7 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 8:
+                localctx = ThreeAddressCodeParser.PushParamInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 8)
                 self.state = 79
                 self.match(ThreeAddressCodeParser.PUSH_PARAM)
@@ -606,6 +875,7 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 9:
+                localctx = ThreeAddressCodeParser.PopParamInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 9)
                 self.state = 82
                 self.match(ThreeAddressCodeParser.POP_PARAMS)
@@ -616,12 +886,14 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 10:
+                localctx = ThreeAddressCodeParser.FCallInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 10)
                 self.state = 85
                 self.fCallStatement()
                 pass
 
             elif la_ == 11:
+                localctx = ThreeAddressCodeParser.LabelInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 11)
                 self.state = 86
                 self.match(ThreeAddressCodeParser.LABEL)

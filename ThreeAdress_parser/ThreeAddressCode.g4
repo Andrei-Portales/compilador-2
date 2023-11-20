@@ -36,17 +36,17 @@ globalVarDeclaration: IDENTIFIER ASSIGN expression SEMI ;
 methodDeclaration: IDENTIFIER COLON BEGIN_FUNC SEMI instruction* END_FUNC SEMI ;
 
 instruction
-    : 'Return' expression SEMI
-    | IDENTIFIER ASSIGN expression SEMI
-    | IDENTIFIER EQUAL expression SEMI
-    | IDENTIFIER NEGATE expression SEMI
-    | IDENTIFIER LT expression SEMI
-    | IFZ IDENTIFIER GOTO LABEL SEMI
-    | GOTO LABEL SEMI
-    | PUSH_PARAM IDENTIFIER SEMI
-    | POP_PARAMS NUMBER SEMI
-    | fCallStatement
-    | LABEL COLON
+    : 'Return' expression SEMI # returnInstr
+    | IDENTIFIER ASSIGN expression SEMI # assignInstr
+    | IDENTIFIER EQUAL expression SEMI # equalInstr
+    | IDENTIFIER NEGATE expression SEMI # negateInstr
+    | IDENTIFIER LT expression SEMI # ltInstr
+    | IFZ IDENTIFIER GOTO LABEL SEMI # ifInstr
+    | GOTO LABEL SEMI # gotoInstr
+    | PUSH_PARAM IDENTIFIER SEMI # pushParamInstr
+    | POP_PARAMS NUMBER SEMI # popParamInstr
+    | fCallStatement # fCallInstr
+    | LABEL COLON # labelInstr
     ;
 
 fCallStatement: (FCALL IDENTIFIER DOT IDENTIFIER SEMI)|(FCALL IDENTIFIER SEMI);
