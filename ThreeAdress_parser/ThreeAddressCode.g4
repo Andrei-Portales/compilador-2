@@ -4,6 +4,7 @@ grammar ThreeAddressCode;
 CLASS: 'class';
 
 NUMBER: [0-9]+('.'[0-9]+)?;
+STRING: '"' .*? '"';
 ASSIGN: '<-';
 EQUAL: '=';
 NEGATE: '~';
@@ -12,7 +13,7 @@ LT_EQUAL: '<=';
 COMPARE: '==';
 DOT: '.';
 RETURN: 'Return';
-BEGIN_FUNC: 'BeginFunc 0';
+BEGIN_FUNC: 'BeginFunc';
 END_FUNC: 'EndFunc';
 IFZ: 'Ifz';
 GOTO: 'Goto';
@@ -33,7 +34,7 @@ classDeclaration: CLASS IDENTIFIER COLON (globalVarDeclaration | methodDeclarati
 
 globalVarDeclaration: IDENTIFIER ASSIGN expression SEMI ;
 
-methodDeclaration: IDENTIFIER COLON BEGIN_FUNC SEMI instruction* END_FUNC SEMI ;
+methodDeclaration: IDENTIFIER COLON BEGIN_FUNC NUMBER SEMI instruction* END_FUNC SEMI ;
 
 instruction
     : 'Return' expression SEMI # returnInstr
@@ -56,6 +57,7 @@ fCallStatement: (FCALL IDENTIFIER DOT IDENTIFIER SEMI)|(FCALL IDENTIFIER SEMI);
 expression
     : IDENTIFIER
     | NUMBER
+    | STRING
     | LABEL
     | (NUMBER|IDENTIFIER) OP (NUMBER|IDENTIFIER)
     | NEGATE (NUMBER|IDENTIFIER)

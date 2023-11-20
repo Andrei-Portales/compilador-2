@@ -1,0 +1,15 @@
+{% if data|length > 0 %}
+.data
+{% for var in data -%}
+{{ var['name'] }}: .word {{ var['bytes'] }}
+{% endfor -%}
+{% endif %}
+
+
+.text
+{%- for function in text['functions'] %}
+{{ function['name']}}:
+    {%- for instruction in function['instructions'] -%}
+        instruccion{{ loop.index0 }};
+    {% endfor  %}
+{% endfor  %}
