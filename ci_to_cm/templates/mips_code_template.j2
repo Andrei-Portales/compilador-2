@@ -1,7 +1,7 @@
 {% if data|length > 0 %}
 .data
 {% for var in data -%}
-{{ var['name'] }}: .word {{ var['bytes'] }}
+{{ var['name'] }}: {{ var['type'] }} {{ var['value'] }} ;
 {% endfor -%}
 {% endif %}
 
@@ -9,7 +9,7 @@
 .text
 {%- for function in text['functions'] %}
 {{ function['name']}}:
-    {%- for instruction in function['instructions'] -%}
-        instruccion{{ loop.index0 }};
+    {%- for instruction in function['instructions'] %}
+    {{ instruction }};
     {% endfor  %}
 {% endfor  %}

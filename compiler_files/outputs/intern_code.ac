@@ -1,5 +1,7 @@
 class A:
     var1 <- "hello";
+    var5 <- 20;
+    var6 <- false;
     
     method1:
         BeginFunc 0;
@@ -17,26 +19,6 @@ class B:
     method2:
         BeginFunc 0;
             Return var2;
-        EndFunc;
-    
-class C:
-    class_a <- A;
-    class_b <- B;
-    
-    test:
-        BeginFunc 0;
-            class_a = class_b;
-            _t0 = 1;
-            PushParam _t0;
-            FCall class_a.method1;
-            PopParams 1;
-            _t1 = 1;
-            PushParam _t1;
-            FCall class_b.method1;
-            PopParams 1;
-            FCall class_a.type_name;
-            PopParams 0;
-            Return None;
         EndFunc;
     
 class Main:

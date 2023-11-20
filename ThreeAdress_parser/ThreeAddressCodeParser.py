@@ -10,47 +10,49 @@ else:
 
 def serializedATN():
     return [
-        4,1,24,122,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,26,126,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,1,0,4,0,16,8,0,11,0,12,0,17,1,1,1,1,1,1,1,1,1,1,5,1,25,8,1,10,
         1,12,1,28,9,1,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,3,5,3,41,
-        8,3,10,3,12,3,44,9,3,1,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,
+        8,3,10,3,12,3,44,9,3,1,3,1,3,1,3,1,4,1,4,1,4,3,4,52,8,4,1,4,1,4,
         1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,
         1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,
-        1,4,3,4,90,8,4,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,3,5,100,8,5,1,6,1,
-        6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,
-        6,3,6,120,8,6,1,6,0,0,7,0,2,4,6,8,10,12,0,1,2,0,2,2,23,23,137,0,
-        15,1,0,0,0,2,19,1,0,0,0,4,29,1,0,0,0,6,34,1,0,0,0,8,89,1,0,0,0,10,
-        99,1,0,0,0,12,119,1,0,0,0,14,16,3,2,1,0,15,14,1,0,0,0,16,17,1,0,
-        0,0,17,15,1,0,0,0,17,18,1,0,0,0,18,1,1,0,0,0,19,20,5,1,0,0,20,21,
-        5,23,0,0,21,26,5,21,0,0,22,25,3,4,2,0,23,25,3,6,3,0,24,22,1,0,0,
-        0,24,23,1,0,0,0,25,28,1,0,0,0,26,24,1,0,0,0,26,27,1,0,0,0,27,3,1,
-        0,0,0,28,26,1,0,0,0,29,30,5,23,0,0,30,31,5,4,0,0,31,32,3,12,6,0,
-        32,33,5,20,0,0,33,5,1,0,0,0,34,35,5,23,0,0,35,36,5,21,0,0,36,37,
-        5,12,0,0,37,38,5,2,0,0,38,42,5,20,0,0,39,41,3,8,4,0,40,39,1,0,0,
-        0,41,44,1,0,0,0,42,40,1,0,0,0,42,43,1,0,0,0,43,45,1,0,0,0,44,42,
-        1,0,0,0,45,46,5,13,0,0,46,47,5,20,0,0,47,7,1,0,0,0,48,49,5,11,0,
-        0,49,50,3,12,6,0,50,51,5,20,0,0,51,90,1,0,0,0,52,53,5,23,0,0,53,
-        54,5,4,0,0,54,55,3,12,6,0,55,56,5,20,0,0,56,90,1,0,0,0,57,58,5,23,
-        0,0,58,59,5,5,0,0,59,60,3,12,6,0,60,61,5,20,0,0,61,90,1,0,0,0,62,
-        63,5,23,0,0,63,64,5,6,0,0,64,65,3,12,6,0,65,66,5,20,0,0,66,90,1,
-        0,0,0,67,68,5,23,0,0,68,69,5,7,0,0,69,70,3,12,6,0,70,71,5,20,0,0,
-        71,90,1,0,0,0,72,73,5,14,0,0,73,74,5,23,0,0,74,75,5,15,0,0,75,76,
-        5,22,0,0,76,90,5,20,0,0,77,78,5,15,0,0,78,79,5,22,0,0,79,90,5,20,
-        0,0,80,81,5,16,0,0,81,82,5,23,0,0,82,90,5,20,0,0,83,84,5,17,0,0,
-        84,85,5,2,0,0,85,90,5,20,0,0,86,90,3,10,5,0,87,88,5,22,0,0,88,90,
-        5,21,0,0,89,48,1,0,0,0,89,52,1,0,0,0,89,57,1,0,0,0,89,62,1,0,0,0,
-        89,67,1,0,0,0,89,72,1,0,0,0,89,77,1,0,0,0,89,80,1,0,0,0,89,83,1,
-        0,0,0,89,86,1,0,0,0,89,87,1,0,0,0,90,9,1,0,0,0,91,92,5,18,0,0,92,
-        93,5,23,0,0,93,94,5,10,0,0,94,95,5,23,0,0,95,100,5,20,0,0,96,97,
-        5,18,0,0,97,98,5,23,0,0,98,100,5,20,0,0,99,91,1,0,0,0,99,96,1,0,
-        0,0,100,11,1,0,0,0,101,120,5,23,0,0,102,120,5,2,0,0,103,120,5,3,
-        0,0,104,120,5,22,0,0,105,106,7,0,0,0,106,107,5,19,0,0,107,120,7,
-        0,0,0,108,109,5,6,0,0,109,120,7,0,0,0,110,111,7,0,0,0,111,112,5,
-        7,0,0,112,120,7,0,0,0,113,114,7,0,0,0,114,115,5,8,0,0,115,120,7,
-        0,0,0,116,117,7,0,0,0,117,118,5,9,0,0,118,120,7,0,0,0,119,101,1,
-        0,0,0,119,102,1,0,0,0,119,103,1,0,0,0,119,104,1,0,0,0,119,105,1,
-        0,0,0,119,108,1,0,0,0,119,110,1,0,0,0,119,113,1,0,0,0,119,116,1,
-        0,0,0,120,13,1,0,0,0,7,17,24,26,42,89,99,119
+        1,4,1,4,1,4,1,4,3,4,92,8,4,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,3,5,102,
+        8,5,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,
+        1,6,1,6,1,6,1,6,1,6,3,6,124,8,6,1,6,0,0,7,0,2,4,6,8,10,12,0,1,2,
+        0,2,2,25,25,144,0,15,1,0,0,0,2,19,1,0,0,0,4,29,1,0,0,0,6,34,1,0,
+        0,0,8,91,1,0,0,0,10,101,1,0,0,0,12,123,1,0,0,0,14,16,3,2,1,0,15,
+        14,1,0,0,0,16,17,1,0,0,0,17,15,1,0,0,0,17,18,1,0,0,0,18,1,1,0,0,
+        0,19,20,5,1,0,0,20,21,5,25,0,0,21,26,5,23,0,0,22,25,3,4,2,0,23,25,
+        3,6,3,0,24,22,1,0,0,0,24,23,1,0,0,0,25,28,1,0,0,0,26,24,1,0,0,0,
+        26,27,1,0,0,0,27,3,1,0,0,0,28,26,1,0,0,0,29,30,5,25,0,0,30,31,5,
+        6,0,0,31,32,3,12,6,0,32,33,5,22,0,0,33,5,1,0,0,0,34,35,5,25,0,0,
+        35,36,5,23,0,0,36,37,5,14,0,0,37,38,5,2,0,0,38,42,5,22,0,0,39,41,
+        3,8,4,0,40,39,1,0,0,0,41,44,1,0,0,0,42,40,1,0,0,0,42,43,1,0,0,0,
+        43,45,1,0,0,0,44,42,1,0,0,0,45,46,5,15,0,0,46,47,5,22,0,0,47,7,1,
+        0,0,0,48,51,5,13,0,0,49,52,3,12,6,0,50,52,5,3,0,0,51,49,1,0,0,0,
+        51,50,1,0,0,0,52,53,1,0,0,0,53,92,5,22,0,0,54,55,5,25,0,0,55,56,
+        5,6,0,0,56,57,3,12,6,0,57,58,5,22,0,0,58,92,1,0,0,0,59,60,5,25,0,
+        0,60,61,5,7,0,0,61,62,3,12,6,0,62,63,5,22,0,0,63,92,1,0,0,0,64,65,
+        5,25,0,0,65,66,5,8,0,0,66,67,3,12,6,0,67,68,5,22,0,0,68,92,1,0,0,
+        0,69,70,5,25,0,0,70,71,5,9,0,0,71,72,3,12,6,0,72,73,5,22,0,0,73,
+        92,1,0,0,0,74,75,5,16,0,0,75,76,5,25,0,0,76,77,5,17,0,0,77,78,5,
+        24,0,0,78,92,5,22,0,0,79,80,5,17,0,0,80,81,5,24,0,0,81,92,5,22,0,
+        0,82,83,5,18,0,0,83,84,5,25,0,0,84,92,5,22,0,0,85,86,5,19,0,0,86,
+        87,5,2,0,0,87,92,5,22,0,0,88,92,3,10,5,0,89,90,5,24,0,0,90,92,5,
+        23,0,0,91,48,1,0,0,0,91,54,1,0,0,0,91,59,1,0,0,0,91,64,1,0,0,0,91,
+        69,1,0,0,0,91,74,1,0,0,0,91,79,1,0,0,0,91,82,1,0,0,0,91,85,1,0,0,
+        0,91,88,1,0,0,0,91,89,1,0,0,0,92,9,1,0,0,0,93,94,5,20,0,0,94,95,
+        5,25,0,0,95,96,5,12,0,0,96,97,5,25,0,0,97,102,5,22,0,0,98,99,5,20,
+        0,0,99,100,5,25,0,0,100,102,5,22,0,0,101,93,1,0,0,0,101,98,1,0,0,
+        0,102,11,1,0,0,0,103,124,5,3,0,0,104,124,5,25,0,0,105,124,5,5,0,
+        0,106,124,5,2,0,0,107,124,5,4,0,0,108,124,5,24,0,0,109,110,7,0,0,
+        0,110,111,5,21,0,0,111,124,7,0,0,0,112,113,5,8,0,0,113,124,7,0,0,
+        0,114,115,7,0,0,0,115,116,5,9,0,0,116,124,7,0,0,0,117,118,7,0,0,
+        0,118,119,5,10,0,0,119,124,7,0,0,0,120,121,7,0,0,0,121,122,5,11,
+        0,0,122,124,7,0,0,0,123,103,1,0,0,0,123,104,1,0,0,0,123,105,1,0,
+        0,0,123,106,1,0,0,0,123,107,1,0,0,0,123,108,1,0,0,0,123,109,1,0,
+        0,0,123,112,1,0,0,0,123,114,1,0,0,0,123,117,1,0,0,0,123,120,1,0,
+        0,0,124,13,1,0,0,0,8,17,24,26,42,51,91,101,123
     ]
 
 class ThreeAddressCodeParser ( Parser ):
@@ -63,16 +65,17 @@ class ThreeAddressCodeParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'class'", "<INVALID>", "<INVALID>", "'<-'", 
-                     "'='", "'~'", "'<'", "'<='", "'=='", "'.'", "'Return'", 
-                     "'BeginFunc'", "'EndFunc'", "'Ifz'", "'Goto'", "'PushParam'", 
-                     "'PopParams'", "'FCall'", "<INVALID>", "';'", "':'" ]
+    literalNames = [ "<INVALID>", "'class'", "<INVALID>", "'self'", "<INVALID>", 
+                     "<INVALID>", "'<-'", "'='", "'~'", "'<'", "'<='", "'=='", 
+                     "'.'", "'Return'", "'BeginFunc'", "'EndFunc'", "'Ifz'", 
+                     "'Goto'", "'PushParam'", "'PopParams'", "'FCall'", 
+                     "<INVALID>", "';'", "':'" ]
 
-    symbolicNames = [ "<INVALID>", "CLASS", "NUMBER", "STRING", "ASSIGN", 
-                      "EQUAL", "NEGATE", "LT", "LT_EQUAL", "COMPARE", "DOT", 
-                      "RETURN", "BEGIN_FUNC", "END_FUNC", "IFZ", "GOTO", 
-                      "PUSH_PARAM", "POP_PARAMS", "FCALL", "OP", "SEMI", 
-                      "COLON", "LABEL", "IDENTIFIER", "WHITESPACE" ]
+    symbolicNames = [ "<INVALID>", "CLASS", "NUMBER", "SELF", "STRING", 
+                      "BOOLEAN", "ASSIGN", "EQUAL", "NEGATE", "LT", "LT_EQUAL", 
+                      "COMPARE", "DOT", "RETURN", "BEGIN_FUNC", "END_FUNC", 
+                      "IFZ", "GOTO", "PUSH_PARAM", "POP_PARAMS", "FCALL", 
+                      "OP", "SEMI", "COLON", "LABEL", "IDENTIFIER", "WHITESPACE" ]
 
     RULE_program = 0
     RULE_classDeclaration = 1
@@ -89,28 +92,30 @@ class ThreeAddressCodeParser ( Parser ):
     EOF = Token.EOF
     CLASS=1
     NUMBER=2
-    STRING=3
-    ASSIGN=4
-    EQUAL=5
-    NEGATE=6
-    LT=7
-    LT_EQUAL=8
-    COMPARE=9
-    DOT=10
-    RETURN=11
-    BEGIN_FUNC=12
-    END_FUNC=13
-    IFZ=14
-    GOTO=15
-    PUSH_PARAM=16
-    POP_PARAMS=17
-    FCALL=18
-    OP=19
-    SEMI=20
-    COLON=21
-    LABEL=22
-    IDENTIFIER=23
-    WHITESPACE=24
+    SELF=3
+    STRING=4
+    BOOLEAN=5
+    ASSIGN=6
+    EQUAL=7
+    NEGATE=8
+    LT=9
+    LT_EQUAL=10
+    COMPARE=11
+    DOT=12
+    RETURN=13
+    BEGIN_FUNC=14
+    END_FUNC=15
+    IFZ=16
+    GOTO=17
+    PUSH_PARAM=18
+    POP_PARAMS=19
+    FCALL=20
+    OP=21
+    SEMI=22
+    COLON=23
+    LABEL=24
+    IDENTIFIER=25
+    WHITESPACE=26
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -249,7 +254,7 @@ class ThreeAddressCodeParser ( Parser ):
             self.state = 26
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==23:
+            while _la==25:
                 self.state = 24
                 self._errHandler.sync(self)
                 la_ = self._interp.adaptivePredict(self._input,1,self._ctx)
@@ -415,7 +420,7 @@ class ThreeAddressCodeParser ( Parser ):
             self.state = 42
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 13092864) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 52371456) != 0):
                 self.state = 39
                 self.instruction()
                 self.state = 44
@@ -694,11 +699,13 @@ class ThreeAddressCodeParser ( Parser ):
 
         def RETURN(self):
             return self.getToken(ThreeAddressCodeParser.RETURN, 0)
+        def SEMI(self):
+            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
         def expression(self):
             return self.getTypedRuleContext(ThreeAddressCodeParser.ExpressionContext,0)
 
-        def SEMI(self):
-            return self.getToken(ThreeAddressCodeParser.SEMI, 0)
+        def SELF(self):
+            return self.getToken(ThreeAddressCodeParser.SELF, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterReturnInstr" ):
@@ -778,133 +785,145 @@ class ThreeAddressCodeParser ( Parser ):
         localctx = ThreeAddressCodeParser.InstructionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_instruction)
         try:
-            self.state = 89
+            self.state = 91
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
             if la_ == 1:
                 localctx = ThreeAddressCodeParser.ReturnInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 48
                 self.match(ThreeAddressCodeParser.RETURN)
-                self.state = 49
-                self.expression()
-                self.state = 50
+                self.state = 51
+                self._errHandler.sync(self)
+                la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
+                if la_ == 1:
+                    self.state = 49
+                    self.expression()
+                    pass
+
+                elif la_ == 2:
+                    self.state = 50
+                    self.match(ThreeAddressCodeParser.SELF)
+                    pass
+
+
+                self.state = 53
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 2:
                 localctx = ThreeAddressCodeParser.AssignInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 52
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
-                self.state = 53
-                self.match(ThreeAddressCodeParser.ASSIGN)
                 self.state = 54
-                self.expression()
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 55
+                self.match(ThreeAddressCodeParser.ASSIGN)
+                self.state = 56
+                self.expression()
+                self.state = 57
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 3:
                 localctx = ThreeAddressCodeParser.EqualInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 57
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
-                self.state = 58
-                self.match(ThreeAddressCodeParser.EQUAL)
                 self.state = 59
-                self.expression()
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 60
+                self.match(ThreeAddressCodeParser.EQUAL)
+                self.state = 61
+                self.expression()
+                self.state = 62
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 4:
                 localctx = ThreeAddressCodeParser.NegateInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 62
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
-                self.state = 63
-                self.match(ThreeAddressCodeParser.NEGATE)
                 self.state = 64
-                self.expression()
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 65
+                self.match(ThreeAddressCodeParser.NEGATE)
+                self.state = 66
+                self.expression()
+                self.state = 67
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 5:
                 localctx = ThreeAddressCodeParser.LtInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
-                self.state = 67
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
-                self.state = 68
-                self.match(ThreeAddressCodeParser.LT)
                 self.state = 69
-                self.expression()
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 70
+                self.match(ThreeAddressCodeParser.LT)
+                self.state = 71
+                self.expression()
+                self.state = 72
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 6:
                 localctx = ThreeAddressCodeParser.IfInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
-                self.state = 72
-                self.match(ThreeAddressCodeParser.IFZ)
-                self.state = 73
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 74
-                self.match(ThreeAddressCodeParser.GOTO)
+                self.match(ThreeAddressCodeParser.IFZ)
                 self.state = 75
-                self.match(ThreeAddressCodeParser.LABEL)
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 76
+                self.match(ThreeAddressCodeParser.GOTO)
+                self.state = 77
+                self.match(ThreeAddressCodeParser.LABEL)
+                self.state = 78
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 7:
                 localctx = ThreeAddressCodeParser.GotoInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
-                self.state = 77
-                self.match(ThreeAddressCodeParser.GOTO)
-                self.state = 78
-                self.match(ThreeAddressCodeParser.LABEL)
                 self.state = 79
+                self.match(ThreeAddressCodeParser.GOTO)
+                self.state = 80
+                self.match(ThreeAddressCodeParser.LABEL)
+                self.state = 81
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 8:
                 localctx = ThreeAddressCodeParser.PushParamInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 8)
-                self.state = 80
-                self.match(ThreeAddressCodeParser.PUSH_PARAM)
-                self.state = 81
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 82
+                self.match(ThreeAddressCodeParser.PUSH_PARAM)
+                self.state = 83
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
+                self.state = 84
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 9:
                 localctx = ThreeAddressCodeParser.PopParamInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 9)
-                self.state = 83
-                self.match(ThreeAddressCodeParser.POP_PARAMS)
-                self.state = 84
-                self.match(ThreeAddressCodeParser.NUMBER)
                 self.state = 85
+                self.match(ThreeAddressCodeParser.POP_PARAMS)
+                self.state = 86
+                self.match(ThreeAddressCodeParser.NUMBER)
+                self.state = 87
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 10:
                 localctx = ThreeAddressCodeParser.FCallInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 10)
-                self.state = 86
+                self.state = 88
                 self.fCallStatement()
                 pass
 
             elif la_ == 11:
                 localctx = ThreeAddressCodeParser.LabelInstrContext(self, localctx)
                 self.enterOuterAlt(localctx, 11)
-                self.state = 87
+                self.state = 89
                 self.match(ThreeAddressCodeParser.LABEL)
-                self.state = 88
+                self.state = 90
                 self.match(ThreeAddressCodeParser.COLON)
                 pass
 
@@ -965,30 +984,30 @@ class ThreeAddressCodeParser ( Parser ):
         localctx = ThreeAddressCodeParser.FCallStatementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_fCallStatement)
         try:
-            self.state = 99
+            self.state = 101
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 91
-                self.match(ThreeAddressCodeParser.FCALL)
-                self.state = 92
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 93
-                self.match(ThreeAddressCodeParser.DOT)
+                self.match(ThreeAddressCodeParser.FCALL)
                 self.state = 94
                 self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 95
+                self.match(ThreeAddressCodeParser.DOT)
+                self.state = 96
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
+                self.state = 97
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 96
-                self.match(ThreeAddressCodeParser.FCALL)
-                self.state = 97
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 self.state = 98
+                self.match(ThreeAddressCodeParser.FCALL)
+                self.state = 99
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
+                self.state = 100
                 self.match(ThreeAddressCodeParser.SEMI)
                 pass
 
@@ -1009,56 +1028,322 @@ class ThreeAddressCodeParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+
+        def getRuleIndex(self):
+            return ThreeAddressCodeParser.RULE_expression
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class StringExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def STRING(self):
+            return self.getToken(ThreeAddressCodeParser.STRING, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterStringExpr" ):
+                listener.enterStringExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitStringExpr" ):
+                listener.exitStringExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStringExpr" ):
+                return visitor.visitStringExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class NegateExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def NEGATE(self):
+            return self.getToken(ThreeAddressCodeParser.NEGATE, 0)
+        def NUMBER(self):
+            return self.getToken(ThreeAddressCodeParser.NUMBER, 0)
+        def IDENTIFIER(self):
+            return self.getToken(ThreeAddressCodeParser.IDENTIFIER, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterNegateExpr" ):
+                listener.enterNegateExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitNegateExpr" ):
+                listener.exitNegateExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNegateExpr" ):
+                return visitor.visitNegateExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ComparateExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def COMPARE(self):
+            return self.getToken(ThreeAddressCodeParser.COMPARE, 0)
+        def NUMBER(self, i:int=None):
+            if i is None:
+                return self.getTokens(ThreeAddressCodeParser.NUMBER)
+            else:
+                return self.getToken(ThreeAddressCodeParser.NUMBER, i)
         def IDENTIFIER(self, i:int=None):
             if i is None:
                 return self.getTokens(ThreeAddressCodeParser.IDENTIFIER)
             else:
                 return self.getToken(ThreeAddressCodeParser.IDENTIFIER, i)
 
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterComparateExpr" ):
+                listener.enterComparateExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitComparateExpr" ):
+                listener.exitComparateExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitComparateExpr" ):
+                return visitor.visitComparateExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SelfExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def SELF(self):
+            return self.getToken(ThreeAddressCodeParser.SELF, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSelfExpr" ):
+                listener.enterSelfExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSelfExpr" ):
+                listener.exitSelfExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSelfExpr" ):
+                return visitor.visitSelfExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class NumberExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def NUMBER(self):
+            return self.getToken(ThreeAddressCodeParser.NUMBER, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterNumberExpr" ):
+                listener.enterNumberExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitNumberExpr" ):
+                listener.exitNumberExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNumberExpr" ):
+                return visitor.visitNumberExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class OperatorExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def OP(self):
+            return self.getToken(ThreeAddressCodeParser.OP, 0)
         def NUMBER(self, i:int=None):
             if i is None:
                 return self.getTokens(ThreeAddressCodeParser.NUMBER)
             else:
                 return self.getToken(ThreeAddressCodeParser.NUMBER, i)
+        def IDENTIFIER(self, i:int=None):
+            if i is None:
+                return self.getTokens(ThreeAddressCodeParser.IDENTIFIER)
+            else:
+                return self.getToken(ThreeAddressCodeParser.IDENTIFIER, i)
 
-        def STRING(self):
-            return self.getToken(ThreeAddressCodeParser.STRING, 0)
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterOperatorExpr" ):
+                listener.enterOperatorExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitOperatorExpr" ):
+                listener.exitOperatorExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOperatorExpr" ):
+                return visitor.visitOperatorExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class LabelExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def LABEL(self):
             return self.getToken(ThreeAddressCodeParser.LABEL, 0)
 
-        def OP(self):
-            return self.getToken(ThreeAddressCodeParser.OP, 0)
-
-        def NEGATE(self):
-            return self.getToken(ThreeAddressCodeParser.NEGATE, 0)
-
-        def LT(self):
-            return self.getToken(ThreeAddressCodeParser.LT, 0)
-
-        def LT_EQUAL(self):
-            return self.getToken(ThreeAddressCodeParser.LT_EQUAL, 0)
-
-        def COMPARE(self):
-            return self.getToken(ThreeAddressCodeParser.COMPARE, 0)
-
-        def getRuleIndex(self):
-            return ThreeAddressCodeParser.RULE_expression
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpression" ):
-                listener.enterExpression(self)
+            if hasattr( listener, "enterLabelExpr" ):
+                listener.enterLabelExpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpression" ):
-                listener.exitExpression(self)
+            if hasattr( listener, "exitLabelExpr" ):
+                listener.exitLabelExpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExpression" ):
-                return visitor.visitExpression(self)
+            if hasattr( visitor, "visitLabelExpr" ):
+                return visitor.visitLabelExpr(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class GraterThanExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def LT(self):
+            return self.getToken(ThreeAddressCodeParser.LT, 0)
+        def NUMBER(self, i:int=None):
+            if i is None:
+                return self.getTokens(ThreeAddressCodeParser.NUMBER)
+            else:
+                return self.getToken(ThreeAddressCodeParser.NUMBER, i)
+        def IDENTIFIER(self, i:int=None):
+            if i is None:
+                return self.getTokens(ThreeAddressCodeParser.IDENTIFIER)
+            else:
+                return self.getToken(ThreeAddressCodeParser.IDENTIFIER, i)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterGraterThanExpr" ):
+                listener.enterGraterThanExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitGraterThanExpr" ):
+                listener.exitGraterThanExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGraterThanExpr" ):
+                return visitor.visitGraterThanExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class GraterEqualExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def LT_EQUAL(self):
+            return self.getToken(ThreeAddressCodeParser.LT_EQUAL, 0)
+        def NUMBER(self, i:int=None):
+            if i is None:
+                return self.getTokens(ThreeAddressCodeParser.NUMBER)
+            else:
+                return self.getToken(ThreeAddressCodeParser.NUMBER, i)
+        def IDENTIFIER(self, i:int=None):
+            if i is None:
+                return self.getTokens(ThreeAddressCodeParser.IDENTIFIER)
+            else:
+                return self.getToken(ThreeAddressCodeParser.IDENTIFIER, i)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterGraterEqualExpr" ):
+                listener.enterGraterEqualExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitGraterEqualExpr" ):
+                listener.exitGraterEqualExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGraterEqualExpr" ):
+                return visitor.visitGraterEqualExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class BoolExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def BOOLEAN(self):
+            return self.getToken(ThreeAddressCodeParser.BOOLEAN, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBoolExpr" ):
+                listener.enterBoolExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBoolExpr" ):
+                listener.exitBoolExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBoolExpr" ):
+                return visitor.visitBoolExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class IdExprContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ThreeAddressCodeParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IDENTIFIER(self):
+            return self.getToken(ThreeAddressCodeParser.IDENTIFIER, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIdExpr" ):
+                listener.enterIdExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIdExpr" ):
+                listener.exitIdExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIdExpr" ):
+                return visitor.visitIdExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1068,80 +1353,66 @@ class ThreeAddressCodeParser ( Parser ):
         self.enterRule(localctx, 12, self.RULE_expression)
         self._la = 0 # Token type
         try:
-            self.state = 119
+            self.state = 123
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
             if la_ == 1:
+                localctx = ThreeAddressCodeParser.SelfExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 101
-                self.match(ThreeAddressCodeParser.IDENTIFIER)
+                self.state = 103
+                self.match(ThreeAddressCodeParser.SELF)
                 pass
 
             elif la_ == 2:
+                localctx = ThreeAddressCodeParser.IdExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 102
-                self.match(ThreeAddressCodeParser.NUMBER)
+                self.state = 104
+                self.match(ThreeAddressCodeParser.IDENTIFIER)
                 pass
 
             elif la_ == 3:
+                localctx = ThreeAddressCodeParser.BoolExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 103
-                self.match(ThreeAddressCodeParser.STRING)
+                self.state = 105
+                self.match(ThreeAddressCodeParser.BOOLEAN)
                 pass
 
             elif la_ == 4:
+                localctx = ThreeAddressCodeParser.NumberExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 104
-                self.match(ThreeAddressCodeParser.LABEL)
+                self.state = 106
+                self.match(ThreeAddressCodeParser.NUMBER)
                 pass
 
             elif la_ == 5:
+                localctx = ThreeAddressCodeParser.StringExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
-                self.state = 105
-                _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 106
-                self.match(ThreeAddressCodeParser.OP)
                 self.state = 107
-                _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
+                self.match(ThreeAddressCodeParser.STRING)
                 pass
 
             elif la_ == 6:
+                localctx = ThreeAddressCodeParser.LabelExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
                 self.state = 108
-                self.match(ThreeAddressCodeParser.NEGATE)
-                self.state = 109
-                _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
+                self.match(ThreeAddressCodeParser.LABEL)
                 pass
 
             elif la_ == 7:
+                localctx = ThreeAddressCodeParser.OperatorExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
-                self.state = 110
+                self.state = 109
                 _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
+                if not(_la==2 or _la==25):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
+                self.state = 110
+                self.match(ThreeAddressCodeParser.OP)
                 self.state = 111
-                self.match(ThreeAddressCodeParser.LT)
-                self.state = 112
                 _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
+                if not(_la==2 or _la==25):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -1149,19 +1420,13 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 8:
+                localctx = ThreeAddressCodeParser.NegateExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 8)
+                self.state = 112
+                self.match(ThreeAddressCodeParser.NEGATE)
                 self.state = 113
                 _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 114
-                self.match(ThreeAddressCodeParser.LT_EQUAL)
-                self.state = 115
-                _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
+                if not(_la==2 or _la==25):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -1169,19 +1434,62 @@ class ThreeAddressCodeParser ( Parser ):
                 pass
 
             elif la_ == 9:
+                localctx = ThreeAddressCodeParser.GraterThanExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 9)
-                self.state = 116
+                self.state = 114
                 _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
+                if not(_la==2 or _la==25):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 117
-                self.match(ThreeAddressCodeParser.COMPARE)
-                self.state = 118
+                self.state = 115
+                self.match(ThreeAddressCodeParser.LT)
+                self.state = 116
                 _la = self._input.LA(1)
-                if not(_la==2 or _la==23):
+                if not(_la==2 or _la==25):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                pass
+
+            elif la_ == 10:
+                localctx = ThreeAddressCodeParser.GraterEqualExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 10)
+                self.state = 117
+                _la = self._input.LA(1)
+                if not(_la==2 or _la==25):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                self.state = 118
+                self.match(ThreeAddressCodeParser.LT_EQUAL)
+                self.state = 119
+                _la = self._input.LA(1)
+                if not(_la==2 or _la==25):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                pass
+
+            elif la_ == 11:
+                localctx = ThreeAddressCodeParser.ComparateExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 11)
+                self.state = 120
+                _la = self._input.LA(1)
+                if not(_la==2 or _la==25):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                self.state = 121
+                self.match(ThreeAddressCodeParser.COMPARE)
+                self.state = 122
+                _la = self._input.LA(1)
+                if not(_la==2 or _la==25):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)

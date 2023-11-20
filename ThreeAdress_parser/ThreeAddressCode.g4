@@ -4,7 +4,9 @@ grammar ThreeAddressCode;
 CLASS: 'class';
 
 NUMBER: [0-9]+('.'[0-9]+)?;
+SELF: 'self';
 STRING: '"' .*? '"';
+BOOLEAN: 'true' | 'false';
 ASSIGN: '<-';
 EQUAL: '=';
 NEGATE: '~';
@@ -37,7 +39,7 @@ globalVarDeclaration: IDENTIFIER ASSIGN expression SEMI ;
 methodDeclaration: IDENTIFIER COLON BEGIN_FUNC NUMBER SEMI instruction* END_FUNC SEMI ;
 
 instruction
-    : 'Return' expression SEMI # returnInstr
+    : 'Return' (expression | SELF) SEMI # returnInstr
     | IDENTIFIER ASSIGN expression SEMI # assignInstr
     | IDENTIFIER EQUAL expression SEMI # equalInstr
     | IDENTIFIER NEGATE expression SEMI # negateInstr
@@ -55,13 +57,15 @@ fCallStatement: (FCALL IDENTIFIER DOT IDENTIFIER SEMI)|(FCALL IDENTIFIER SEMI);
 
 
 expression
-    : IDENTIFIER
-    | NUMBER
-    | STRING
-    | LABEL
-    | (NUMBER|IDENTIFIER) OP (NUMBER|IDENTIFIER)
-    | NEGATE (NUMBER|IDENTIFIER)
-    | (NUMBER|IDENTIFIER) LT (NUMBER|IDENTIFIER)
-    | (NUMBER|IDENTIFIER) LT_EQUAL (NUMBER|IDENTIFIER)
-    | (NUMBER|IDENTIFIER) COMPARE (NUMBER|IDENTIFIER)
+    : SELF # selfExpr
+    | IDENTIFIER # idExpr
+    | BOOLEAN # boolExpr
+    | NUMBER # numberExpr
+    | STRING # stringExpr
+    | LABEL # labelExpr
+    | (NUMBER|IDENTIFIER) OP (NUMBER|IDENTIFIER) # operatorExpr
+    | NEGATE (NUMBER|IDENTIFIER) # negateExpr
+    | (NUMBER|IDENTIFIER) LT (NUMBER|IDENTIFIER) # graterThanExpr
+    | (NUMBER|IDENTIFIER) LT_EQUAL (NUMBER|IDENTIFIER) # graterEqualExpr
+    | (NUMBER|IDENTIFIER) COMPARE (NUMBER|IDENTIFIER) # comparateExpr
     ;

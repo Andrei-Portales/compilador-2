@@ -89,8 +89,58 @@ class ThreeAddressCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ThreeAddressCodeParser#expression.
-    def visitExpression(self, ctx:ThreeAddressCodeParser.ExpressionContext):
+    # Visit a parse tree produced by ThreeAddressCodeParser#selfExpr.
+    def visitSelfExpr(self, ctx:ThreeAddressCodeParser.SelfExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#idExpr.
+    def visitIdExpr(self, ctx:ThreeAddressCodeParser.IdExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#boolExpr.
+    def visitBoolExpr(self, ctx:ThreeAddressCodeParser.BoolExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#numberExpr.
+    def visitNumberExpr(self, ctx:ThreeAddressCodeParser.NumberExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#stringExpr.
+    def visitStringExpr(self, ctx:ThreeAddressCodeParser.StringExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#labelExpr.
+    def visitLabelExpr(self, ctx:ThreeAddressCodeParser.LabelExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#operatorExpr.
+    def visitOperatorExpr(self, ctx:ThreeAddressCodeParser.OperatorExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#negateExpr.
+    def visitNegateExpr(self, ctx:ThreeAddressCodeParser.NegateExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#graterThanExpr.
+    def visitGraterThanExpr(self, ctx:ThreeAddressCodeParser.GraterThanExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#graterEqualExpr.
+    def visitGraterEqualExpr(self, ctx:ThreeAddressCodeParser.GraterEqualExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#comparateExpr.
+    def visitComparateExpr(self, ctx:ThreeAddressCodeParser.ComparateExprContext):
         return self.visitChildren(ctx)
 
 

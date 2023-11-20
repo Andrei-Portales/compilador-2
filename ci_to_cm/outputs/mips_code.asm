@@ -1,9 +1,17 @@
 
 .data
-number1: .word 4
-number2: .word 10
+nmzwhf: .asciiz "hello" ;
+ymcenw: .word 20 ;
+zylmwt: .word 0 ;
+mleuja: .asciiz "world" ;
 
 
 
 .text
-main:
+uiqbdw:
+
+uzosnd:
+
+svmqpr:
+
+uunt_m:

@@ -55,7 +55,7 @@ def main():
     
     try:
         result = visitor.visit(tree)
-        print(result)
+        # print(result)
     except Exception as e:
         print(e)
 
@@ -82,7 +82,7 @@ def main():
     
     try:
         result = ci_to_cmips_visitor.visit(tree)
-        print(result)
+        # print(result)
     except Exception as e:
         print(e)
     
