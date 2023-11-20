@@ -6,7 +6,7 @@ class A {
     method1(param1: Int): String {{
         var1 <- "Adios";
         var5 <- 30 + 40;
-        var5 <- 30 + var5;
+        var5 <- 30 + var5 + 50;
 
         if var6 then {
             var5;

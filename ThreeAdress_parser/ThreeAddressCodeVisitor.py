@@ -34,11 +34,6 @@ class ThreeAddressCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ThreeAddressCodeParser#assignInstr.
-    def visitAssignInstr(self, ctx:ThreeAddressCodeParser.AssignInstrContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by ThreeAddressCodeParser#equalInstr.
     def visitEqualInstr(self, ctx:ThreeAddressCodeParser.EqualInstrContext):
         return self.visitChildren(ctx)
@@ -89,23 +84,8 @@ class ThreeAddressCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ThreeAddressCodeParser#selfExpr.
-    def visitSelfExpr(self, ctx:ThreeAddressCodeParser.SelfExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ThreeAddressCodeParser#idExpr.
-    def visitIdExpr(self, ctx:ThreeAddressCodeParser.IdExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ThreeAddressCodeParser#boolExpr.
-    def visitBoolExpr(self, ctx:ThreeAddressCodeParser.BoolExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ThreeAddressCodeParser#numberExpr.
-    def visitNumberExpr(self, ctx:ThreeAddressCodeParser.NumberExprContext):
+    # Visit a parse tree produced by ThreeAddressCodeParser#tempExpr.
+    def visitTempExpr(self, ctx:ThreeAddressCodeParser.TempExprContext):
         return self.visitChildren(ctx)
 
 
@@ -114,8 +94,23 @@ class ThreeAddressCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ThreeAddressCodeParser#labelExpr.
-    def visitLabelExpr(self, ctx:ThreeAddressCodeParser.LabelExprContext):
+    # Visit a parse tree produced by ThreeAddressCodeParser#negateExpr.
+    def visitNegateExpr(self, ctx:ThreeAddressCodeParser.NegateExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#comparateExpr.
+    def visitComparateExpr(self, ctx:ThreeAddressCodeParser.ComparateExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#selfExpr.
+    def visitSelfExpr(self, ctx:ThreeAddressCodeParser.SelfExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#numberExpr.
+    def visitNumberExpr(self, ctx:ThreeAddressCodeParser.NumberExprContext):
         return self.visitChildren(ctx)
 
 
@@ -124,8 +119,8 @@ class ThreeAddressCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ThreeAddressCodeParser#negateExpr.
-    def visitNegateExpr(self, ctx:ThreeAddressCodeParser.NegateExprContext):
+    # Visit a parse tree produced by ThreeAddressCodeParser#labelExpr.
+    def visitLabelExpr(self, ctx:ThreeAddressCodeParser.LabelExprContext):
         return self.visitChildren(ctx)
 
 
@@ -139,8 +134,13 @@ class ThreeAddressCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ThreeAddressCodeParser#comparateExpr.
-    def visitComparateExpr(self, ctx:ThreeAddressCodeParser.ComparateExprContext):
+    # Visit a parse tree produced by ThreeAddressCodeParser#boolExpr.
+    def visitBoolExpr(self, ctx:ThreeAddressCodeParser.BoolExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ThreeAddressCodeParser#idExpr.
+    def visitIdExpr(self, ctx:ThreeAddressCodeParser.IdExprContext):
         return self.visitChildren(ctx)
 
 

@@ -14,6 +14,7 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         self.classes_vars_map = {}
         self.actual_class = None
         self.actual_function = None
+        self.insertIOFunctions()
 
     def insertIOFunctions(self):
         self.functions['out_int'] = {
@@ -75,6 +76,14 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
                     'has_semicolon': True,
                 },
                 {
+                    'instruction': 'li $a1, 1024',
+                    'has_semicolon': True,
+                },
+                {
+                    'instruction': 'la $a0, buffer',
+                    'has_semicolon': True,
+                },
+                {
                     'instruction': 'syscall',
                     'has_semicolon': True,
                 },
@@ -84,6 +93,15 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
                 },
             ],
         }
+
+        if not self.classes_vars_map.get('out_int'):
+            self.classes_vars_map['out_int'] = {}
+        if not self.classes_vars_map.get('out_string'):
+            self.classes_vars_map['out_string'] = {}
+        if not self.classes_vars_map.get('in_int'):
+            self.classes_vars_map['in_int'] = {}
+        if not self.classes_vars_map.get('in_string'):
+            self.classes_vars_map['in_string'] = {}
 
     def fillTemplate(self):
         TEMPLATE_PATH = 'ci_to_cm/templates/mips_code_template.j2'
@@ -197,18 +215,21 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
         self.add_instruction('jr $ra')
 
-    def visitAssignInstr(self, ctx: ThreeAddressCodeParser.AssignInstrContext):
-        return self.visitChildren(ctx)
-
     def visitEqualInstr(self, ctx: ThreeAddressCodeParser.EqualInstrContext):
-        identifier = self.rename_vars(str(ctx.IDENTIFIER()))
-        expr = self.visit(ctx.expression())
+        # identifier = self.rename_vars(str(ctx.IDENTIFIER()))
+        
+        expr = ctx.expression()
+        
+        left = self.visit(expr[0])
+        right = self.visit(expr[1])
+        
+        print(left, right)
 
-        value = expr.value if expr is not None else 'None'  # FIXME: Arreglar None
+        # value = expr.value if expr is not None else 'None'  # FIXME: Arreglar None
 
-        self.add_instruction(f'la $t0, {identifier}')
-        self.add_instruction(f'li $t1, {value}')
-        self.add_instruction(f'sw $t1, 0($t0)')
+        # self.add_instruction(f'la $t0, {identifier}')
+        # self.add_instruction(f'li $t1, {value}')
+        # self.add_instruction(f'sw $t1, 0($t0)')
 
     def visitNegateInstr(self, ctx: ThreeAddressCodeParser.NegateInstrContext):
         return self.visitChildren(ctx)
@@ -216,15 +237,17 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
     def visitLtInstr(self, ctx: ThreeAddressCodeParser.LtInstrContext):
         return self.visitChildren(ctx)
 
-    def visitIfInstr(self, ctx: ThreeAddressCodeParser.IfInstrContext):
-        id = self.rename_vars(ctx.IDENTIFIER())
-        label = ctx.LABEL()
-
-        print(id, label)
-        pass
-
-    def visitGotoInstr(self, ctx: ThreeAddressCodeParser.GotoInstrContext):
-        return self.visitChildren(ctx)
+    def visitIfInstr(self, ctx: ThreeAddressCodeParser.IfInstrContext):  # ✅
+        predicate = self.rename_vars(ctx.IDENTIFIER())
+        label = str(ctx.LABEL())
+        
+        self.add_instruction(f'lw $t0, {predicate}')
+        self.add_instruction(f'beq $t0, $zero, {label}')
+        
+    def visitGotoInstr(self, ctx: ThreeAddressCodeParser.GotoInstrContext):  # ✅
+        lable = str(ctx.LABEL())
+        
+        self.add_instruction(f'j {lable}')
 
     def visitPushParamInstr(self, ctx: ThreeAddressCodeParser.PushParamInstrContext):
         return self.visitChildren(ctx)
@@ -243,6 +266,9 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
     def visitSelfExpr(self, ctx: ThreeAddressCodeParser.SelfExprContext):  # ✅
         return 'self'
+    
+    def visitTempExpr(self, ctx:ThreeAddressCodeParser.TempExprContext): # ✅
+        return str(ctx.TEMPORAL())
 
     def visitIdExpr(self, ctx: ThreeAddressCodeParser.IdExprContext):  # ✅
         return self.rename_vars(ctx.IDENTIFIER())

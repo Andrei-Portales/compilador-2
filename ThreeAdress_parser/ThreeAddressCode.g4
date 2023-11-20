@@ -25,6 +25,7 @@ FCALL: 'FCall';
 OP: [+\-*/];
 SEMI: ';';
 COLON: ':';
+TEMPORAL: '_t' [0-9]+ ;
 LABEL: '_L' [0-9]+ ;
 IDENTIFIER: [a-zA-Z_][a-zA-Z_0-9]*;
 WHITESPACE: [ \n\f\r\t]+ -> skip;
@@ -40,10 +41,9 @@ methodDeclaration: IDENTIFIER COLON BEGIN_FUNC NUMBER SEMI instruction* END_FUNC
 
 instruction
     : 'Return' (expression | SELF) SEMI # returnInstr
-    | IDENTIFIER ASSIGN expression SEMI # assignInstr
-    | IDENTIFIER EQUAL expression SEMI # equalInstr
-    | IDENTIFIER NEGATE expression SEMI # negateInstr
-    | IDENTIFIER LT expression SEMI # ltInstr
+    | expression EQUAL expression SEMI # equalInstr
+    | expression NEGATE expression SEMI # negateInstr
+    | expression LT expression SEMI # ltInstr
     | IFZ IDENTIFIER GOTO LABEL SEMI # ifInstr
     | GOTO LABEL SEMI # gotoInstr
     | PUSH_PARAM IDENTIFIER SEMI # pushParamInstr
@@ -58,12 +58,13 @@ fCallStatement: (FCALL IDENTIFIER DOT IDENTIFIER SEMI)|(FCALL IDENTIFIER SEMI);
 
 expression
     : SELF # selfExpr
+    | TEMPORAL # tempExpr
+    | LABEL # labelExpr
     | IDENTIFIER # idExpr
     | BOOLEAN # boolExpr
     | NUMBER # numberExpr
     | STRING # stringExpr
-    | LABEL # labelExpr
-    | (NUMBER|IDENTIFIER) OP (NUMBER|IDENTIFIER) # operatorExpr
+    | expression OP expression # operatorExpr
     | NEGATE (NUMBER|IDENTIFIER) # negateExpr
     | (NUMBER|IDENTIFIER) LT (NUMBER|IDENTIFIER) # graterThanExpr
     | (NUMBER|IDENTIFIER) LT_EQUAL (NUMBER|IDENTIFIER) # graterEqualExpr

@@ -1,35 +1,51 @@
 
 .data
-hbvfdf: .asciiz "hello" ;
-vcfpfo: .word 20 ;
-nuucfy: .word 0 ;
-wwzsdp: .asciiz "world" ;
+onsqwd: .asciiz "hello" ;
+zqwnqu: .word 20 ;
+rrqemo: .word 0 ;
+f_tgot: .asciiz "world" ;
 
 
 
 .text
-yzclui:
-    la $t0, hbvfdf;
-    li $t1, "Adios";
-    sw $t1, 0($t0);
-    la $t0, vcfpfo;
-    li $t1, 70;
-    sw $t1, 0($t0);
-    la $t0, vcfpfo;
-    li $t1, None;
-    sw $t1, 0($t0);
+out_int:
+    li $v0, 1;
+    syscall;
+    jr $ra;
+
+out_string:
+    li $v0, 4;
+    syscall;
+    jr $ra;
+
+in_int:
+    li $v0, 5;
+    syscall;
+    jr $ra;
+
+in_string:
+    li $v0, 8;
+    li $a1, 1024;
+    la $a0, buffer;
+    syscall;
+    jr $ra;
+
+tnhcsm:
+    lw $t0, rrqemo;
+    beq $t0, $zero, _L0;
+    j _L1;
     _L0:
     _L1:
-    la $v0, hbvfdf;
+    la $v0, onsqwd;
     jr $ra;
 
-lgcwyl:
+mccohn:
     jr $ra;
 
-neueaq:
-    la $v0, wwzsdp;
+sfrrxm:
+    la $v0, f_tgot;
     jr $ra;
 
-peezmf:
+jccuid:
     la $v0, self;
     jr $ra;
