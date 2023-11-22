@@ -1,39 +1,12 @@
-class A:
-    var1 <- "hello";
-    var5 <- 20;
-    var6 <- false;
-    
-    method1:
-        BeginFunc 0;
-            var1 = "Adios";
-            var5 = 70;
-            _t0 = 30 + var5;
-            var5 = _t0 + 50;
-            Ifz var6 Goto _L0;
-            Goto _L1;
-            _L0:
-            _L1:
-            Return var1;
-        EndFunc;
-    
-class B:
-    var2 <- "world";
-    
-    method1:
-        BeginFunc 0;
-            Return "Hola mundo!";
-        EndFunc;
-    
-    method2:
-        BeginFunc 0;
-            Return var2;
-        EndFunc;
-    
 class Main:
     
     main:
         BeginFunc 0;
-            Return self;
+            _t0 = "Hello, World.\n";
+            PushParam _t0;
+            FCall out_string;
+            PopParams 1;
+            Return Main;
         EndFunc;
     
 

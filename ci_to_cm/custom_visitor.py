@@ -17,20 +17,24 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         self.insertIOFunctions()
 
     def insertIOFunctions(self):
+        class_name = 'IO'
+        self.classes_vars_map[class_name] = {}
+        self.actual_class = class_name
+        # print(self.rename_vars('out_int'))
         self.functions['out_int'] = {
-            'name': 'out_int',
+            'name': self.rename_vars('out_int'),
             'instructions': [
                 {
                     'instruction': 'li $v0, 1',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
                 {
                     'instruction': 'syscall',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
                 {
                     'instruction': 'jr $ra',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
             ],
         }
@@ -39,15 +43,15 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
             'instructions': [
                 {
                     'instruction': 'li $v0, 4',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
                 {
                     'instruction': 'syscall',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
                 {
                     'instruction': 'jr $ra',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
             ],
         }
@@ -56,52 +60,43 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
             'instructions': [
                 {
                     'instruction': 'li $v0, 5',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
                 {
                     'instruction': 'syscall',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
                 {
                     'instruction': 'jr $ra',
-                    'has_semicolon': True,
+                    'has_semicolon': False,
                 },
             ],
         }
-        self.functions['in_string'] = {
-            'name': 'in_string',
-            'instructions': [
-                {
-                    'instruction': 'li $v0, 8',
-                    'has_semicolon': True,
-                },
-                {
-                    'instruction': 'li $a1, 1024',
-                    'has_semicolon': True,
-                },
-                {
-                    'instruction': 'la $a0, buffer',
-                    'has_semicolon': True,
-                },
-                {
-                    'instruction': 'syscall',
-                    'has_semicolon': True,
-                },
-                {
-                    'instruction': 'jr $ra',
-                    'has_semicolon': True,
-                },
-            ],
-        }
-
-        if not self.classes_vars_map.get('out_int'):
-            self.classes_vars_map['out_int'] = {}
-        if not self.classes_vars_map.get('out_string'):
-            self.classes_vars_map['out_string'] = {}
-        if not self.classes_vars_map.get('in_int'):
-            self.classes_vars_map['in_int'] = {}
-        if not self.classes_vars_map.get('in_string'):
-            self.classes_vars_map['in_string'] = {}
+        # self.functions['in_string'] = {
+        #     'name': 'in_string',
+        #     'instructions': [
+        #         {
+        #             'instruction': 'li $v0, 8',
+        #             'has_semicolon': False,
+        #         },
+        #         {
+        #             'instruction': 'li $a1, 1024',
+        #             'has_semicolon': False,
+        #         },
+        #         {
+        #             'instruction': 'la $a0, buffer',
+        #             'has_semicolon': False,
+        #         },
+        #         {
+        #             'instruction': 'syscall',
+        #             'has_semicolon': False,
+        #         },
+        #         {
+        #             'instruction': 'jr $ra',
+        #             'has_semicolon': False,
+        #         },
+        #     ],
+        # }
 
     def fillTemplate(self):
         TEMPLATE_PATH = 'ci_to_cm/templates/mips_code_template.j2'
@@ -130,7 +125,7 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
         return self.classes_vars_map[self.actual_class][var_name]
 
-    def add_instruction(self, instruction: str, has_semicolon: bool = True):
+    def add_instruction(self, instruction: str, has_semicolon: bool = False):
         self.functions[self.actual_function]['instructions'].append({
             'instruction': instruction,
             'has_semicolon': has_semicolon,
@@ -198,36 +193,72 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         self.actual_function = None
 
     def visitReturnInstr(self, ctx: ThreeAddressCodeParser.ReturnInstrContext):
-        if ctx.expression():
-            expr = self.visit(ctx.expression())
+        expr = self.visit(ctx.expression())
+        print(expr)
+        
+        # if expr value = Main, finish program with li $v0, 10 and syscall
+        if expr == 'Main':
+            self.add_instruction('li $v0, 10')
+            self.add_instruction('syscall')
 
-            if type(expr) == str:
-                self.add_instruction(f'la $v0, {expr}')
-            elif isinstance(expr, IntermediateCodeType):
-                if expr.type == IntermediateCodeTypeEnum.INTEGER:
-                    self.add_instruction(f'li $vo, {expr.value}')
-                elif expr.type == IntermediateCodeTypeEnum.STRING:
-                    # No se como manejar en este caso cadenas
-                    pass
+        # if ctx.expression():
+        #     expr = self.visit(ctx.expression())
 
-        elif ctx.SELF():
-            self.add_instruction('move $v0, $s0')
+        #     if type(expr) == str:
+        #         self.add_instruction(f'la $v0, {expr}')
+        #     elif isinstance(expr, IntermediateCodeType):
+        #         if expr.type == IntermediateCodeTypeEnum.INTEGER:
+        #             self.add_instruction(f'li $vo, {expr.value}')
+        #         elif expr.type == IntermediateCodeTypeEnum.STRING:
+        #             # No se como manejar en este caso cadenas
+        #             pass
 
-        self.add_instruction('jr $ra')
+        # elif ctx.SELF():
+        #     self.add_instruction('move $v0, $s0')
+
+        # self.add_instruction('jr $ra')
+        pass
 
     def visitEqualInstr(self, ctx: ThreeAddressCodeParser.EqualInstrContext):        
         expr = ctx.expression()
-        
+
         left = self.visit(expr[0])
         right = self.visit(expr[1])
-        value = None
-        
-        if isinstance(right, IntermediateCodeType):
-            value = right.value
 
-        self.add_instruction(f'la $t0, {left}')
-        self.add_instruction(f'li $t1, {right}')
-        self.add_instruction(f'sw $t1, 0($t0)')
+        id_name = self.rename_vars(left)
+
+        print('left', left)
+        print('right', right)
+
+        type_var = None
+
+        if right.type == IntermediateCodeTypeEnum.INTEGER:
+            type_var = '.word'
+        elif right.type == IntermediateCodeTypeEnum.STRING:
+            type_var = '.asciiz'
+        elif right.type == IntermediateCodeTypeEnum.BOOLEAN:
+            type_var = '.word'
+        else:
+            raise Exception('Type not supported')
+
+        # check if left exist in variables. If not, save it in variables, else, change the value of the variable
+        if not self.variables.get(id_name):
+            self.variables[id_name] = {
+                'name': id_name,
+                'type': type_var,
+                'value': right,
+            }
+
+        else:
+            self.variables[id_name]['value'] = right
+            # self.add_instruction(f'la $t0, {id_name}')
+            # self.add_instruction(f'li $t1, {right}')
+            # self.add_instruction(f'sw $t1, 0($t0)')
+
+
+        # self.add_instruction(f'la $t0, {left}')
+        # self.add_instruction(f'li $t1, {right}')
+        # self.add_instruction(f'sw $t1, 0($t0)')
 
     def visitNegateInstr(self, ctx: ThreeAddressCodeParser.NegateInstrContext):
         return self.visitChildren(ctx)
@@ -250,18 +281,53 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         self.add_instruction(f'j {lable}')
 
     def visitPushParamInstr(self, ctx: ThreeAddressCodeParser.PushParamInstrContext):
-        return self.visitChildren(ctx)
+        expr = self.visit(ctx.expression())
+        id_name = self.rename_vars(expr)
+
+        self.add_instruction(f'la $a0, {id_name}')
+
+        # return self.visitChildren(ctx)
 
     def visitPopParamInstr(self, ctx: ThreeAddressCodeParser.PopParamInstrContext):
         return self.visitChildren(ctx)
 
     def visitFCallInstr(self, ctx: ThreeAddressCodeParser.FCallInstrContext):
+        # expr = ctx.IDENTIFIER()
+
+        # if expr has only one element, call that function, else, first identifier is the class name and the second is the function name
+        # if len(expr) == 1:
+        #     function_name = self.rename_vars(expr[0])
+        #     self.add_instruction(f'jal {function_name}')
+        # else:
+        #     class_name = self.rename_vars(expr[0])
+        #     function_name = self.rename_vars(expr[1])
+        #     self.add_instruction(f'jal {class_name}_{function_name}')
+
         return self.visitChildren(ctx)
 
     def visitLabelInstr(self, ctx: ThreeAddressCodeParser.LabelInstrContext):  # ✅
         self.add_instruction(f'{ctx.LABEL()}:', has_semicolon=False)
 
     def visitFCallStatement(self, ctx: ThreeAddressCodeParser.FCallStatementContext):
+        expr = ctx.IDENTIFIER()
+        if len(expr) == 1:
+            name = expr[0].getText()
+            print(name)
+            if name == 'out_int':
+                self.add_instruction('jal out_int')
+            elif name == 'out_string':
+                self.add_instruction('jal out_string')
+            elif name == 'in_int':
+                self.add_instruction('jal in_int')
+            elif name == 'in_string':
+                self.add_instruction('jal in_string')
+            else:
+                function_name = self.rename_vars(expr[0])
+                self.add_instruction(f'jal {function_name}')
+        else:
+            class_name = self.rename_vars(expr[0])
+            function_name = self.rename_vars(expr[1])
+            self.add_instruction(f'jal {class_name}_{function_name}')
         return self.visitChildren(ctx)
 
     def visitSelfExpr(self, ctx: ThreeAddressCodeParser.SelfExprContext):  # ✅
@@ -271,7 +337,8 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         return str(ctx.TEMPORAL())
 
     def visitIdExpr(self, ctx: ThreeAddressCodeParser.IdExprContext):  # ✅
-        return self.rename_vars(ctx.IDENTIFIER())
+        # return self.rename_vars(ctx.IDENTIFIER())
+        return str(ctx.IDENTIFIER())
 
     def visitNumberExpr(self, ctx: ThreeAddressCodeParser.NumberExprContext):  # ✅
         return IntermediateCodeType(
