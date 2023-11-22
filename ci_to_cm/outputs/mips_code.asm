@@ -1,10 +1,16 @@
 
 .data
-rlvdwl: .asciiz "Hello, World.\n"
+qrjmdi: .asciiz "Hello, World.\n"
 
 
 
 .text
+main:
+    la $a0, qrjmdi
+    jal out_string
+    li $v0, 10
+    syscall
+
 out_int:
     li $v0, 1
     syscall
@@ -19,9 +25,3 @@ in_int:
     li $v0, 5
     syscall
     jr $ra
-
-golu_e:
-    la $a0, rlvdwl
-    jal out_string
-    li $v0, 10
-    syscall

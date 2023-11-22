@@ -178,14 +178,26 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         }
 
     def visitMethodDeclaration(self, ctx: ThreeAddressCodeParser.MethodDeclarationContext):  # ✅
-        id_method = self.rename_vars(ctx.IDENTIFIER())
+        # id_method = self.rename_vars(ctx.IDENTIFIER())
+        id_method = ctx.IDENTIFIER()
 
         self.actual_function = id_method
 
-        self.functions[id_method] = {
-            'name': id_method,
-            'instructions': [],
-        }
+        # if id_method == 'main' save it on the first position of the functions list
+        if id_method.getText() == 'main':
+            self.functions = {
+                id_method: {
+                    'name': id_method,
+                    'instructions': [],
+                },
+                **self.functions,
+            }
+        else:
+
+            self.functions[id_method] = {
+                'name': id_method,
+                'instructions': [],
+            }
 
         for instruct in ctx.instruction():
             self.visit(instruct)
@@ -194,7 +206,7 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
     def visitReturnInstr(self, ctx: ThreeAddressCodeParser.ReturnInstrContext):
         expr = self.visit(ctx.expression())
-        print(expr)
+        # print(expr)
         
         # if expr value = Main, finish program with li $v0, 10 and syscall
         if expr == 'Main':
@@ -227,8 +239,8 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
         id_name = self.rename_vars(left)
 
-        print('left', left)
-        print('right', right)
+        # print('left', left)
+        # print('right', right)
 
         type_var = None
 
@@ -312,7 +324,7 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         expr = ctx.IDENTIFIER()
         if len(expr) == 1:
             name = expr[0].getText()
-            print(name)
+            # print(name)
             if name == 'out_int':
                 self.add_instruction('jal out_int')
             elif name == 'out_string':

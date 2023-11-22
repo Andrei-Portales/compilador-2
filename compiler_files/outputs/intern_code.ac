@@ -2,8 +2,12 @@ class Main:
     
     main:
         BeginFunc 0;
-            _t0 = "Hello, World.\n";
-            PushParam _t0;
+            _t22 = None;
+            PushParam _t22;
+            FCall None.out_string;
+            PopParams 1;
+            _t23 = "\n";
+            PushParam _t23;
             FCall out_string;
             PopParams 1;
             Return Main;
