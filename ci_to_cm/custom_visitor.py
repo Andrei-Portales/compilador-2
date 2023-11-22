@@ -220,8 +220,6 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         
         left = self.visit(expr[0])
         right = self.visit(expr[1])
-        
-
         value = None
         
         if isinstance(right, IntermediateCodeType):
@@ -235,10 +233,12 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         return self.visitChildren(ctx)
 
     def visitLtInstr(self, ctx: ThreeAddressCodeParser.LtInstrContext):
+        exprs = ctx.expression()
+        print(exprs)
         return self.visitChildren(ctx)
 
     def visitIfInstr(self, ctx: ThreeAddressCodeParser.IfInstrContext):  # ✅
-        predicate = self.rename_vars(ctx.IDENTIFIER())
+        predicate = self.rename_vars(ctx.expression())
         label = str(ctx.LABEL())
         
         self.add_instruction(f'lw $t0, {predicate}')
@@ -295,6 +295,10 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         return str(ctx.LABEL())
 
     def visitOperatorExpr(self, ctx: ThreeAddressCodeParser.OperatorExprContext):
+        operator = str(ctx.OP())
+        exprs = ctx.expression()
+        
+        print(operator, exprs)
         return self.visitChildren(ctx)
 
     def visitNegateExpr(self, ctx: ThreeAddressCodeParser.NegateExprContext):

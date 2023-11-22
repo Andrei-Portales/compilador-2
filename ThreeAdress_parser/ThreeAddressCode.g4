@@ -44,9 +44,9 @@ instruction
     | expression EQUAL expression SEMI # equalInstr
     | expression NEGATE expression SEMI # negateInstr
     | expression LT expression SEMI # ltInstr
-    | IFZ IDENTIFIER GOTO LABEL SEMI # ifInstr
+    | IFZ expression GOTO LABEL SEMI # ifInstr
     | GOTO LABEL SEMI # gotoInstr
-    | PUSH_PARAM IDENTIFIER SEMI # pushParamInstr
+    | PUSH_PARAM expression SEMI # pushParamInstr
     | POP_PARAMS NUMBER SEMI # popParamInstr
     | fCallStatement # fCallInstr
     | LABEL COLON # labelInstr
@@ -65,8 +65,8 @@ expression
     | NUMBER # numberExpr
     | STRING # stringExpr
     | expression OP expression # operatorExpr
-    | NEGATE (NUMBER|IDENTIFIER) # negateExpr
-    | (NUMBER|IDENTIFIER) LT (NUMBER|IDENTIFIER) # graterThanExpr
-    | (NUMBER|IDENTIFIER) LT_EQUAL (NUMBER|IDENTIFIER) # graterEqualExpr
-    | (NUMBER|IDENTIFIER) COMPARE (NUMBER|IDENTIFIER) # comparateExpr
+    | NEGATE expression # negateExpr
+    | expression LT expression # graterThanExpr
+    | expression LT_EQUAL expression # graterEqualExpr
+    | expression COMPARE expression # comparateExpr
     ;

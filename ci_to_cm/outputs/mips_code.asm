@@ -1,9 +1,9 @@
 
 .data
-ntgewz: .asciiz "hello" ;
-xgstom: .word 20 ;
-wsvcbb: .word 0 ;
-tvaysd: .asciiz "world" ;
+nialfr: .asciiz "hello" ;
+znrowg: .word 20 ;
+rtgg_x: .word 0 ;
+szswxq: .asciiz "world" ;
 
 
 
@@ -30,34 +30,34 @@ in_string:
     syscall;
     jr $ra;
 
-uejb_w:
-    la $t0, ntgewz;
+qgynqm:
+    la $t0, nialfr;
     li $t1, "Adios";
     sw $t1, 0($t0);
-    la $t0, xgstom;
+    la $t0, znrowg;
     li $t1, 70;
     sw $t1, 0($t0);
     la $t0, _t0;
-    li $t1, xgstom;
+    li $t1, znrowg;
     sw $t1, 0($t0);
-    la $t0, xgstom;
+    la $t0, znrowg;
     li $t1, 50;
     sw $t1, 0($t0);
-    lw $t0, wsvcbb;
+    lw $t0, vrlgbh;
     beq $t0, $zero, _L0;
     j _L1;
     _L0:
     _L1:
-    la $v0, ntgewz;
+    la $v0, nialfr;
     jr $ra;
 
-ysvrrz:
+xngocb:
     jr $ra;
 
-ktjfjs:
-    la $v0, tvaysd;
+xqd_ez:
+    la $v0, szswxq;
     jr $ra;
 
-rajdcz:
+lsmupe:
     la $v0, self;
     jr $ra;
