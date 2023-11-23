@@ -503,6 +503,9 @@ class ThreeAddress:
             return assosiated_code
         elif isinstance(assosiated_code, ThreeAddressLabel):
             return assosiated_code
+      
+        # print(assosiated_code, type(assosiated_code))
+        # input()
 
         return None  # FIXME encontrar mejor forma de devolver algo y no None
 

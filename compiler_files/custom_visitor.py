@@ -69,8 +69,8 @@ class CustomVisitor(YALPParserVisitor):
                     ThreeAddressClassDefinition(value.type.custom_type_name),
                 ]
             )
-        
-        return  value.type
+
+        return value.type
 
     def get_type_definition(self, type_name, level_search=None) -> SymbolTableClass | SymbolTableMethod | SymbolTableValue:
         if self.is_strict_mode:
@@ -1259,7 +1259,9 @@ class CustomVisitor(YALPParserVisitor):
                     ThreeAddressOperators.POPPARAMS,
                     ThreeAddressInteger(len(params)),
                     None,
-                    None,
+                    ThreeAddressVariable(
+                        method_definition.type.custom_type_name,
+                    ),
                 ),
             ]
 
@@ -1371,6 +1373,9 @@ class CustomVisitor(YALPParserVisitor):
             call_value = self.three_address.get_value_code(
                 obj_expr_type.associated_code[-1])
 
+            # print('call_value', call_value, obj_expr_type.associated_code[-1])
+            # input()
+
             dot_call_code = [
                 *dot_call_code,
                 ThreeAddressOperation(
@@ -1383,7 +1388,9 @@ class CustomVisitor(YALPParserVisitor):
                     ThreeAddressOperators.POPPARAMS,
                     ThreeAddressInteger(len(params)),
                     None,
-                    None,
+                    ThreeAddressVariable(
+                        return_type.custom_type_name,
+                    ),
                 ),
             ]
 
