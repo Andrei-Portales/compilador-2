@@ -152,30 +152,21 @@ class ThreeAddressCodeListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ThreeAddressCodeParser#stringExpr.
-    def enterStringExpr(self, ctx:ThreeAddressCodeParser.StringExprContext):
-        pass
-
-    # Exit a parse tree produced by ThreeAddressCodeParser#stringExpr.
-    def exitStringExpr(self, ctx:ThreeAddressCodeParser.StringExprContext):
-        pass
-
-
-    # Enter a parse tree produced by ThreeAddressCodeParser#negateExpr.
-    def enterNegateExpr(self, ctx:ThreeAddressCodeParser.NegateExprContext):
-        pass
-
-    # Exit a parse tree produced by ThreeAddressCodeParser#negateExpr.
-    def exitNegateExpr(self, ctx:ThreeAddressCodeParser.NegateExprContext):
-        pass
-
-
     # Enter a parse tree produced by ThreeAddressCodeParser#comparateExpr.
     def enterComparateExpr(self, ctx:ThreeAddressCodeParser.ComparateExprContext):
         pass
 
     # Exit a parse tree produced by ThreeAddressCodeParser#comparateExpr.
     def exitComparateExpr(self, ctx:ThreeAddressCodeParser.ComparateExprContext):
+        pass
+
+
+    # Enter a parse tree produced by ThreeAddressCodeParser#nullExpr.
+    def enterNullExpr(self, ctx:ThreeAddressCodeParser.NullExprContext):
+        pass
+
+    # Exit a parse tree produced by ThreeAddressCodeParser#nullExpr.
+    def exitNullExpr(self, ctx:ThreeAddressCodeParser.NullExprContext):
         pass
 
 
@@ -212,6 +203,24 @@ class ThreeAddressCodeListener(ParseTreeListener):
 
     # Exit a parse tree produced by ThreeAddressCodeParser#labelExpr.
     def exitLabelExpr(self, ctx:ThreeAddressCodeParser.LabelExprContext):
+        pass
+
+
+    # Enter a parse tree produced by ThreeAddressCodeParser#stringExpr.
+    def enterStringExpr(self, ctx:ThreeAddressCodeParser.StringExprContext):
+        pass
+
+    # Exit a parse tree produced by ThreeAddressCodeParser#stringExpr.
+    def exitStringExpr(self, ctx:ThreeAddressCodeParser.StringExprContext):
+        pass
+
+
+    # Enter a parse tree produced by ThreeAddressCodeParser#negateExpr.
+    def enterNegateExpr(self, ctx:ThreeAddressCodeParser.NegateExprContext):
+        pass
+
+    # Exit a parse tree produced by ThreeAddressCodeParser#negateExpr.
+    def exitNegateExpr(self, ctx:ThreeAddressCodeParser.NegateExprContext):
         pass
 
 

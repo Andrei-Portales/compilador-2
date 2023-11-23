@@ -7,6 +7,7 @@ NUMBER: [0-9]+('.'[0-9]+)?;
 SELF: 'self';
 STRING: '"' .*? '"';
 BOOLEAN: 'true' | 'false';
+NULL: 'null';
 ASSIGN: '<-';
 EQUAL: '=';
 NEGATE: '~';
@@ -62,6 +63,7 @@ expression
     | LABEL # labelExpr
     | IDENTIFIER # idExpr
     | BOOLEAN # boolExpr
+    | NULL # nullExpr
     | NUMBER # numberExpr
     | STRING # stringExpr
     | expression OP expression # operatorExpr

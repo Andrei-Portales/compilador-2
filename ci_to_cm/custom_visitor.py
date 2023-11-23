@@ -161,14 +161,17 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
         type_var = None
 
-        if exp.type == IntermediateCodeTypeEnum.INTEGER:
-            type_var = '.word'
-        elif exp.type == IntermediateCodeTypeEnum.STRING:
-            type_var = '.asciiz'
-        elif exp.type == IntermediateCodeTypeEnum.BOOLEAN:
-            type_var = '.word'
+        if isinstance(exp, IntermediateCodeType):
+            if exp.type == IntermediateCodeTypeEnum.INTEGER:
+                type_var = '.word'
+            elif exp.type == IntermediateCodeTypeEnum.STRING:
+                type_var = '.asciiz'
+            elif exp.type == IntermediateCodeTypeEnum.BOOLEAN:
+                type_var = '.word'
+            else:
+                raise Exception('Type not supported')
         else:
-            raise Exception('Type not supported')
+            type_var = exp
 
         # registrar variable
         self.variables[id_name] = {
@@ -244,14 +247,17 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
         type_var = None
 
-        if right.type == IntermediateCodeTypeEnum.INTEGER:
-            type_var = '.word'
-        elif right.type == IntermediateCodeTypeEnum.STRING:
-            type_var = '.asciiz'
-        elif right.type == IntermediateCodeTypeEnum.BOOLEAN:
-            type_var = '.word'
-        else:
-            raise Exception('Type not supported')
+        if isinstance(right, IntermediateCodeType):
+            if right.type == IntermediateCodeTypeEnum.INTEGER:
+                type_var = '.word'
+            elif right.type == IntermediateCodeTypeEnum.STRING:
+                type_var = '.asciiz'
+            elif right.type == IntermediateCodeTypeEnum.BOOLEAN:
+                type_var = '.word'
+            else:
+                raise Exception('Type not supported')
+        else: # if right is a variable
+            type_var = right
 
         # check if left exist in variables. If not, save it in variables, else, change the value of the variable
         if not self.variables.get(id_name):
@@ -368,6 +374,12 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         return IntermediateCodeType(
             value=1 if str(ctx.BOOLEAN()) == 'true' else 0,
             type=IntermediateCodeTypeEnum.BOOLEAN,
+        )
+        
+    def visitNullExpr(self, ctx:ThreeAddressCodeParser.NullExprContext):
+        return IntermediateCodeType(
+            value=ctx.NUMBER(),
+            type=IntermediateCodeTypeEnum.INTEGER,
         )
 
     def visitLabelExpr(self, ctx: ThreeAddressCodeParser.LabelExprContext):  # ✅

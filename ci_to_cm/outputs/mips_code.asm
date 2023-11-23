@@ -1,12 +1,15 @@
 
 .data
-qrjmdi: .asciiz "Hello, World.\n"
+k_hqxg: None None
+odpazf: .asciiz "\n"
 
 
 
 .text
 main:
-    la $a0, qrjmdi
+    la $a0, k_hqxg
+    jal ucbcnp_tdcflk
+    la $a0, odpazf
     jal out_string
     li $v0, 10
     syscall
