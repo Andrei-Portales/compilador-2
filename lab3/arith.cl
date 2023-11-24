@@ -1,11 +1,11 @@
-class Main {
-    var1: Int <- 1;
+class Main inherits IO {
+    var1: Int <- 3;
+    var2: Int <- 8;
 
     main(): SELF_TYPE {{
-        var1 <- 20 + 30;
-        var1 <- 50 / 5;
-        var1 <- 20 * 30;
-        var1 <- 40 / 30;
+        var1 <- var2 + 10;
+        var2 <- var1 - var2;
+        out_int(var2);
 
         self;
     }};

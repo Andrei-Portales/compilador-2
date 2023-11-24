@@ -12,6 +12,7 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         # {'class_name': {'var1': 'asdgdfg'}}
         # Record[str, Record[str, str]]Record[str, Record[str, str]]
         self.classes_vars_map = {}
+        self.registers = {'$t0', '$t1', '$t2', '$t3', '$t4', '$t5', '$t6', '$t7'}
         self.actual_class = None
         self.actual_function = None
         self.insertIOFunctions()
@@ -212,9 +213,20 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         # print(expr)
         
         # if expr value = Main, finish program with li $v0, 10 and syscall
+        if expr == 'self':
+            # get actual function name
+            # function_name = self.actual_function
+            # get actual class name
+            class_name = self.actual_class.getText()
+            if class_name == 'Main':
+                self.add_instruction('li $v0, 10')
+                self.add_instruction('syscall')
+            else:
+                self.add_instruction(f'jr $ra')
         if expr == 'Main':
             self.add_instruction('li $v0, 10')
             self.add_instruction('syscall')
+
 
         # if ctx.expression():
         #     expr = self.visit(ctx.expression())
@@ -242,10 +254,15 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
 
         id_name = self.rename_vars(left)
 
-        # print('left', left)
-        # print('right', right)
+        print('left', left)
+        print('right', right)
 
         type_var = None
+        variable = False
+
+        if right == 'OperatorExpr':
+            self.add_instruction(f'sw $t0, {id_name}')
+            return
 
         if isinstance(right, IntermediateCodeType):
             if right.type == IntermediateCodeTypeEnum.INTEGER:
@@ -257,17 +274,30 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
             else:
                 raise Exception('Type not supported')
         else: # if right is a variable
-            type_var = right
+            # buscar la variable en variables y obtener su tipo y valor
+            # if self.variables.get(right):
+            #     type_var = self.variables[right]['type']
+            #     right = self.variables[right]['value']
+            variable = True
+            type_var = self.variables[self.rename_vars(right)]['type']
 
         # check if left exist in variables. If not, save it in variables, else, change the value of the variable
         if not self.variables.get(id_name):
-            self.variables[id_name] = {
-                'name': id_name,
-                'type': type_var,
-                'value': right,
-            }
-
+            if variable:
+                self.variables[id_name] = {
+                    'name': id_name,
+                    'type': type_var,
+                    'value': '',
+                }
+            else:
+                self.variables[id_name] = {
+                    'name': id_name,
+                    'type': type_var,
+                    'value': right,
+                }
         else:
+            # print('id_name', id_name)
+            # print('right', right)
             self.variables[id_name]['value'] = right
             # self.add_instruction(f'la $t0, {id_name}')
             # self.add_instruction(f'li $t1, {right}')
@@ -386,11 +416,74 @@ class CI2MPIPSVisitor(ThreeAddressCodeVisitor):
         return str(ctx.LABEL())
 
     def visitOperatorExpr(self, ctx: ThreeAddressCodeParser.OperatorExprContext):
+        # validar que registros estan disponibles
+        # registers = {'$t0': False, '$t1': False, '$t2': False, '$t3': False, '$t4': False, '$t5': False, '$t6': False, '$t7': False}
+        # registro_actual = ''
+
         operator = str(ctx.OP())
         exprs = ctx.expression()
         
-        print(operator, exprs)
-        return self.visitChildren(ctx)
+        left = self.visit(exprs[0])
+        right = self.visit(exprs[1])
+
+        left_register = ''
+        right_register = ''
+
+        if isinstance(left, IntermediateCodeType):
+            # obtener registro disponible
+            # for register in registers:
+            #     if not registers[register]:
+            #         registro_actual = register
+            #         registers[register] = True
+            #         break
+            # mover el valor a ese registro
+            self.add_instruction(f'li $t0, {left.value}')
+            left_register = '$t0'
+        else:
+            # obtener registro disponible
+            # for register in registers:
+            #     if not registers[register]:
+            #         registro_actual = register
+            #         registers[register] = True
+            #         break
+            # buscar la variable en variables y obtener su valor
+            if self.variables.get(self.rename_vars(left)):
+                nombre = self.rename_vars(left)
+                self.add_instruction(f'la $t0, {nombre}')
+                # for register in registers:
+                #     if not registers[register]:
+                #         registro_actual = register
+                #         registers[register] = True
+                #         break
+                self.add_instruction(f'lw $t1, 0($t0)')
+                left_register = '$t1'
+
+        if isinstance(right, IntermediateCodeType):
+            self.add_instruction(f'li $t2, {right.value}')
+            right_register = '$t2'
+        else:
+            # buscar la variable en variables y obtener su valor
+            if self.variables.get(self.rename_vars(right)):
+                nombre = self.rename_vars(right)
+                self.add_instruction(f'la $t2, {nombre}')
+                self.add_instruction(f'lw $t3, 0($t2)')
+                right_register = '$t3'
+
+        if operator == '+':
+            self.add_instruction(f'add $t0, {left_register}, {right_register}')
+        elif operator == '-':
+            self.add_instruction(f'sub $t0, {left_register}, {right_register}')
+        elif operator == '*':
+            self.add_instruction(f'mul $t0, {left_register}, {right_register}')
+        elif operator == '/':
+            self.add_instruction(f'div $t0, {left_register}, {right_register}')
+
+            
+
+        # print(left, operator, right)
+        
+        # print(operator, exprs)
+        return 'OperatorExpr'
 
     def visitNegateExpr(self, ctx: ThreeAddressCodeParser.NegateExprContext):
         return self.visitChildren(ctx)

@@ -1,21 +1,15 @@
-class A:
-    
-    method1:
-        BeginFunc 0;
-            Return A;
-        EndFunc;
-    
 class Main:
-    
-    method1:
-        BeginFunc 0;
-            Return A;
-        EndFunc;
+    var1 <- 3;
+    var2 <- 8;
     
     main:
         BeginFunc 0;
-            FCall A.method1;
-            PopParams 0;
+            var1 = var2 + 10;
+            var2 = var1 - var2;
+            _t0 = var2;
+            PushParam _t0;
+            FCall out_int;
+            PopParams 1;
             Return self;
         EndFunc;
     
